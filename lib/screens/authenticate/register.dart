@@ -1,17 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mediminder/services/auth.dart';
-
-
-class SignIn extends StatefulWidget {
+class Register extends StatefulWidget {
   final Function toggleView;
-  SignIn({this.toggleView});
+  Register({this.toggleView});
   @override
-  _SignInState createState() => _SignInState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
-
+class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
   //text field state
   String email="";
@@ -23,18 +19,18 @@ class _SignInState extends State<SignIn> {
       appBar: AppBar(
         backgroundColor: Colors.blue[600],
         elevation: 1.0,
-        title: Text('Mediminder'),
+        title: Text('Registro supervisor?'),
         actions: <Widget>[
           TextButton.icon(
             icon: Icon(Icons.person),
-            label: Text("Registrarse"),
+            label: Text("Iniciar sesion"),
             style: ButtonStyle(
               foregroundColor: MaterialStateProperty.all(Colors.black),
             ),
 
             onPressed: (){
               widget.toggleView();
-          },
+            },
           )
         ],
       ),
@@ -45,9 +41,9 @@ class _SignInState extends State<SignIn> {
             children: <Widget>[
               SizedBox(height: 20.0),
               TextFormField(
-                onChanged: (val){
-                  setState(()=>email=val);
-                }
+                  onChanged: (val){
+                    setState(()=>email=val);
+                  }
               ),
               SizedBox(height: 20.0),
               TextFormField(
@@ -58,9 +54,9 @@ class _SignInState extends State<SignIn> {
               ),
               SizedBox(height: 20.0),
               ElevatedButton(
-                child: Text("Iniciar sesion",
-                style: TextStyle(color: Colors.black),
-              ),
+                child: Text("Registrarse",
+                  style: TextStyle(color: Colors.black),
+                ),
                 onPressed: () async{
                   print(email);
                   print(password);
