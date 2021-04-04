@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:mediminder/models/user.dart';
+import 'package:mediminder/models/userLocal.dart';
 
 class AuthService {
 
@@ -8,18 +8,56 @@ class AuthService {
   UserLocal _userFromFirebaseUser(User user){
     return user !=null? UserLocal(uid:user.uid): null;
   }
+  //deteccion de auth --- main detecta get user
+  Stream<UserLocal> get user{
+    return _auth.authStateChanges().map(_userFromFirebaseUser);
+        //.map((User user)=> _userFromFirebaseUser(user));
+  }
+
+
   //sign anon
   Future signInAnon() async {
     try{
       UserCredential result =  await _auth.signInAnonymously();
       User user = result.user;
-      return user;
+      return _userFromFirebaseUser(user);
     }catch(e){
       print(e.toString());
       return null;
     }
 }
   //sign with email and password
+  Future signInEmailPass(String email, String password) async{
+    try{
+      UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      User user = result.user;
+      return _userFromFirebaseUser(user);
+    }catch(e){
+      print(e.toString());
+      return null;
+    }
 
+  }
 
+  //register email and password
+  Future registerEmailPass(String email, String password) async{
+    try{
+      UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      User user = result.user;
+      return _userFromFirebaseUser(user);
+    }catch(e){
+      print(e.toString());
+      return null;
+    }
+
+  }
+
+  Future signOut()async{
+    try{
+      return await _auth.signOut();
+    }catch(e){
+      print(e.toString());
+      return null;
+    }
+  }
 }

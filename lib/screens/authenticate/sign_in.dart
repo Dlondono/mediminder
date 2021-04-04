@@ -13,9 +13,11 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
 
   final AuthService _auth = AuthService();
-  //text field state
+  final _formKey= GlobalKey<FormState>();
+  //text field para setState
   String email="";
   String password="";
+  String error="";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,17 +43,20 @@ class _SignInState extends State<SignIn> {
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
         child: Form(
+          key: _formKey,
           child: Column(
             children: <Widget>[
               SizedBox(height: 20.0),
               TextFormField(
-                onChanged: (val){
+                  validator: (val)=> val.isEmpty ? "Ingrese su correo":null,
+                  onChanged: (val){
                   setState(()=>email=val);
                 }
               ),
               SizedBox(height: 20.0),
               TextFormField(
                 obscureText: true,
+                validator: (val)=> val.length<6 ? "Su clave debe ser mayor a 6 caracteres":null,
                 onChanged:(val){
                   setState(() => password = val);
                 },
@@ -62,9 +67,18 @@ class _SignInState extends State<SignIn> {
                 style: TextStyle(color: Colors.black),
               ),
                 onPressed: () async{
-                  print(email);
-                  print(password);
+                  if(_formKey.currentState.validate()){
+                    dynamic result= await _auth.signInEmailPass(email, password);
+                    if(result==null){
+                      setState(()=>error="Correo o clave no validos");
+                    }
+                  }
                 },
+              ),
+              SizedBox(height: 15.0),
+              Text(
+                error,
+                style: TextStyle(color: Colors.red),
               )
             ],
           ),
