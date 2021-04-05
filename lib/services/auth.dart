@@ -47,7 +47,7 @@ class AuthService {
       User user = result.user;
 
       //creacion de documento en firestore por uid
-      await DatabaseService(uid:user.uid).updateUserData("nombre", "medicamento");
+      await DatabaseService(uid:user.uid).updateUserData("nombre", "medicamento","id");
 
       return _userFromFirebaseUser(user);
     }catch(e){
