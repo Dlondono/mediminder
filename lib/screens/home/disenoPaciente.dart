@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mediminder/XDRegistropaciente.dart';
 import 'package:mediminder/models/paciente.dart';
 import 'package:mediminder/screens/home/settings_form.dart';
 
