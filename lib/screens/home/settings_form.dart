@@ -15,6 +15,7 @@ class _SettingsFormState extends State<SettingsForm> {
 
   String _currentName;
   String _currentId;
+  String _currentMeds;
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +61,15 @@ class _SettingsFormState extends State<SettingsForm> {
 
                     ),
                     onPressed: () async {
-                      print(_currentName);
-                      print(_currentId);
+                      if(_formKey.currentState.validate()){
+                        await DatabaseService(uid: user.uid).updateUserData(
+                          _currentId ?? Datos.id,
+                          _currentMeds ?? Datos.medicamento,
+                          _currentName ?? Datos.nombre,
+
+                        );
+                        Navigator.pop(context);
+                      }
                     }
                 ),
 

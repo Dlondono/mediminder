@@ -12,7 +12,7 @@ class Pacientes extends StatefulWidget {
 class _PacientesState extends State<Pacientes> {
   @override
   Widget build(BuildContext context) {
-    final pacientes= Provider.of<List<Paciente>>(context);
+    final pacientes= Provider.of<List<Paciente>>(context)?? [];
 
     return ListView.builder(
       itemCount: pacientes.length,

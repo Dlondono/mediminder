@@ -31,6 +31,7 @@ class DatabaseService{
       uid: uid,
       nombre: snapshot.data()['nombre'],
       medicamento: snapshot.data()['medicamento'],
+      id: snapshot.data()['id'],
     );
   }
 
@@ -44,4 +45,3 @@ class DatabaseService{
     return coleccionUsuarios.doc(uid).snapshots().map(_userDataFromSnapshot);
   }
 }
-  
