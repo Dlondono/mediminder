@@ -42,19 +42,7 @@ class PacienteDiseno extends StatelessWidget {
                 _showSettingsPanel();
               },
             ),
-            TextButton.icon(
-              icon: Icon(Icons.person),
-              label: Text("Agregar"),
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all(Colors.black),
-              ),
-
-              onPressed:(){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> PacienteNuevo()));
-
-              },
-            )
-      ],
+          ],
         ),
       ),
     );

@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:mediminder/screens/home/ListaPacientes.dart';
 import 'package:mediminder/screens/home/pacienteNuevo.dart';
 
+import 'ListaPacientes.dart';
+
 class Home extends StatelessWidget {
   final AuthService _auth=AuthService();
   @override
@@ -31,12 +33,30 @@ class Home extends StatelessWidget {
             )
           ],
         ),
-        body:Pacientes(),
+        body: Container(
+          child: Column(
+              children: <Widget>[
+                Expanded(child: Pacientes()),
 
 
+                TextButton.icon(
+                  icon: Icon(Icons.person),
+                  label: Text("Agregar"),
+                  style: ButtonStyle(
+                    foregroundColor: MaterialStateProperty.all(Colors.black),
+                  ),
+
+                  onPressed:(){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> PacienteNuevo()));
+
+                  },
+                )
+              ],
+            )
 
           ),
-        );
+        ),
+      );
 
   }
 }
