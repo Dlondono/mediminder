@@ -1,0 +1,88 @@
+import 'package:flutter/material.dart';
+
+import '../../services/auth.dart';
+import '../../services/database.dart';
+import '../../services/database.dart';
+class PacienteNuevo extends StatefulWidget {
+  @override
+  _PacienteNuevoState createState() => _PacienteNuevoState();
+}
+
+class _PacienteNuevoState extends State<PacienteNuevo> {
+    final DatabaseService _database = DatabaseService();
+    final _formKey= GlobalKey<FormState>();
+    //text field para setState
+    String nombre="";
+    String cedula="";
+    String medicamento="";
+    String codigo="";
+    String error="";
+    @override
+    Widget build(BuildContext context) {
+      return Scaffold(
+        //backgroundColor: Colors.blue[100],
+        appBar: AppBar(
+          backgroundColor: Colors.blue[600],
+          elevation: 1.0,
+          title: Text('Registro paciente?'),
+        ),
+        body: Container(
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: 20.0),
+                TextFormField(
+                    validator: (val)=> val.isEmpty ? "Ingrese el nombre de su paciente":null,
+                    onChanged: (val){
+                      setState(()=>nombre=val);
+                    }
+                ),
+                SizedBox(height: 20.0),
+                TextFormField(
+                    validator: (val)=> val.isEmpty ? "Ingrese la cedula de su paciente":null,
+                    onChanged: (val){
+                      setState(()=>cedula=val);
+                    }
+                ),
+                SizedBox(height: 20.0),
+                TextFormField(
+                    validator: (val)=> val.isEmpty ? "Ingrese el nombre del medicamento":null,
+                    onChanged: (val){
+                      setState(()=>medicamento=val);
+                    }
+                ),
+                SizedBox(height: 20.0),
+                TextFormField(
+                    validator: (val)=> val.length<6 ? "El codigo de acceso debe ser mayor a 6 caracteres":null,
+                    onChanged: (val){
+                      setState(()=>codigo=val);
+                    }
+                ),
+
+
+                SizedBox(height: 20.0),
+                ElevatedButton(
+                  child: Text("Agregar",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  onPressed: () async{
+                    if(_formKey.currentState.validate()){
+                      _database.addPaciente(nombre, cedula, medicamento);
+                    }
+                  },
+                ),
+                SizedBox(height: 15.0),
+                Text(
+                  error,
+                  style: TextStyle(color: Colors.red),
+                )
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
+}

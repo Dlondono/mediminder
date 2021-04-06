@@ -13,6 +13,8 @@ class _RegisterState extends State<Register> {
   //text field para setState
   String email="";
   String password="";
+  String nombre="";
+  String id="";
   String error="";
   @override
   Widget build(BuildContext context) {
@@ -51,6 +53,22 @@ class _RegisterState extends State<Register> {
               ),
               SizedBox(height: 20.0),
               TextFormField(
+                  validator: (val)=> val.isEmpty ? "Nombre":null,
+                  onChanged: (val){
+                    setState(()=>nombre=val);
+                  }
+              ),
+              SizedBox(height: 20.0),
+              TextFormField(
+                  validator: (val)=> val.isEmpty ? "Identificacion":null,
+                  onChanged: (val){
+                    setState(()=>id=val);
+                  }
+              ),
+
+
+              SizedBox(height: 20.0),
+              TextFormField(
                 obscureText: true,
                 validator: (val)=> val.length<6 ? "Su clave debe ser mayor a 6 caracteres":null,
                 onChanged:(val){
@@ -64,7 +82,7 @@ class _RegisterState extends State<Register> {
                 ),
                 onPressed: () async{
                   if(_formKey.currentState.validate()){
-                    dynamic result= await _auth.registerEmailPass(email, password);
+                    dynamic result= await _auth.registerEmailPass(email, password,nombre,id);
                     if(result==null){
                       setState(()=>error="Correo o clave no validos");
                     }

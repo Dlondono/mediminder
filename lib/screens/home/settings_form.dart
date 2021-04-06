@@ -64,7 +64,7 @@ class _SettingsFormState extends State<SettingsForm> {
                       if(_formKey.currentState.validate()){
                         await DatabaseService(uid: user.uid).updateUserData(
                           _currentId ?? Datos.id,
-                          _currentMeds ?? Datos.medicamento,
+  //                        _currentMeds ?? Datos.medicamento,
                           _currentName ?? Datos.nombre,
 
                         );

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mediminder/models/medicamento.dart';
 import 'package:mediminder/models/paciente.dart';
 import 'package:mediminder/models/userLocal.dart';
 
@@ -8,11 +9,11 @@ class DatabaseService{
   final String uid;
   DatabaseService({this.uid});
   final CollectionReference coleccionUsuarios = FirebaseFirestore.instance.collection("Usuarios");
+  final CollectionReference coleccionPacientes = FirebaseFirestore.instance.collection("Pacientes");
 
-  Future updateUserData(String nombre,String medicamento,String id) async{
+  Future updateUserData(String nombre,String id) async{
     return await coleccionUsuarios.doc(uid).set({
       "nombre": nombre,
-      "medicamento": medicamento,
       "id": id,
     });
   }
@@ -37,11 +38,18 @@ class DatabaseService{
 
   // actualizacion de pacientes a supervisor
   Stream<List<Paciente>> get pacientes{
-    return coleccionUsuarios.snapshots().map(_listaPacientesFromSnapshot);
+    return coleccionPacientes.snapshots().map(_listaPacientesFromSnapshot);
   }
 
   //ger user doc stream
   Stream<UserData> get userData{
-    return coleccionUsuarios.doc(uid).snapshots().map(_userDataFromSnapshot);
+    return coleccionPacientes.doc(uid).snapshots().map(_userDataFromSnapshot);
   }
+
+  Future addPaciente(String nombre, String cedula, String medicina) async{
+    return await coleccionPacientes.doc(cedula).set({
+      "nombre": nombre,
+      "cedula": cedula,
+      "medicina": medicina});
+}
 }
