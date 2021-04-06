@@ -3,6 +3,8 @@ import 'package:mediminder/XDRegistropaciente.dart';
 import 'package:mediminder/models/paciente.dart';
 import 'package:mediminder/screens/home/settings_form.dart';
 
+import 'pacienteNuevo.dart';
+
 class PacienteDiseno extends StatelessWidget {
   final Paciente paciente;
   PacienteDiseno({this.paciente});
@@ -40,6 +42,18 @@ class PacienteDiseno extends StatelessWidget {
                 _showSettingsPanel();
               },
             ),
+            TextButton.icon(
+              icon: Icon(Icons.person),
+              label: Text("Agregar"),
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all(Colors.black),
+              ),
+
+              onPressed:(){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> PacienteNuevo()));
+
+              },
+            )
       ],
         ),
       ),
