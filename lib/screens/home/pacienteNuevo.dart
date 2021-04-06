@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'home.dart';
 import '../../services/auth.dart';
 import '../../services/database.dart';
 import '../../services/database.dart';
+
 class PacienteNuevo extends StatefulWidget {
   @override
   _PacienteNuevoState createState() => _PacienteNuevoState();
@@ -70,6 +71,7 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                   onPressed: () async{
                     if(_formKey.currentState.validate()){
                       _database.addPaciente(nombre, cedula, medicamento);
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> Home()));
                     }
                   },
                 ),

@@ -31,7 +31,9 @@ class Home extends StatelessWidget {
             )
           ],
         ),
-        body: //Pacientes(),
+        body:
+
+        //Pacientes(),
               TextButton.icon(
                 icon: Icon(Icons.person),
                 label: Text("Agregar"),
