@@ -22,12 +22,22 @@ class DatabaseService{
       "id": id,
     });
   }
+
+  Future updatePacienteData(String id,String nombre,String medicina, String uid) async{
+    return await coleccionPacientes.doc(id).set({
+      "cedula": id,
+      "idSuper": uid,
+      "medicina" : medicina,
+      "nombre" : nombre,
+    });
+  }
+
   //convetir pacientes desde la snapshot de firebase
   List<Paciente> _listaPacientesFromSnapshot(QuerySnapshot snapshot){
     return snapshot.docs.map((doc){
       return Paciente(
         nombre: doc.data()['nombre'] ?? "",
-        id: doc.data()['id'] ?? "",
+        id: doc.data()['cedula'] ?? "",
         idSuper: doc.data()['idSuper']??"",
       );
     }).toList();
@@ -59,10 +69,7 @@ class DatabaseService{
                 ),
 
       );
-
     }
-
-
   // actualizacion de pacientes a supervisor
   Stream<List<Paciente>> get pacientes{
     return coleccionPacientes.snapshots().map(_listaPacientesFromSnapshot);

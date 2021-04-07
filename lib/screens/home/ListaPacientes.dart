@@ -25,26 +25,12 @@ class _PacientesState extends State<Pacientes> {
     final User user= auth.currentUser;
     final uid=user.uid;
     pacientes.removeWhere((item) => item.idSuper!=uid);
-    //print(uid);
-    /*for(int i=0;i<pacientes.length;i++){
-      if(uid==pacientes[i].idSuper) {
-        print(pacientes[i].idSuper);
-      }
-    }
-    */
-    //print(pacientes[0].idSuper);
-    /*
-    FirebaseFirestore.instance.collection('Pacientes').where('uid',isEqualTo: uid)
-        .snapshots().listen(
-                  (data) =>print('uid ${data.docs[0]['nombre']}'));
-*/
+
     return ListView.builder(
       itemCount: pacientes.length,
       itemBuilder: (context,index) {
-
          return PacienteDiseno(paciente: pacientes[index]);
         }
-
     );
   }
 }
