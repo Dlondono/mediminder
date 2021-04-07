@@ -11,8 +11,6 @@ class SettingsForm extends StatefulWidget {
 
 class _SettingsFormState extends State<SettingsForm> {
   final _formKey=GlobalKey<FormState>();
-  final List<String> medicamentos=["acetaminofen","aspirina"];
-
   String _currentName;
   String _currentId;
   String _currentMeds;
@@ -64,7 +62,6 @@ class _SettingsFormState extends State<SettingsForm> {
                       if(_formKey.currentState.validate()){
                         await DatabaseService(uid: user.uid).updateUserData(
                           _currentId ?? Datos.id,
-  //                        _currentMeds ?? Datos.medicamento,
                           _currentName ?? Datos.nombre,
 
                         );

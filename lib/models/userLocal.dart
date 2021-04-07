@@ -9,6 +9,6 @@ class UserData{
   final String uid;
   final String id;
   final String nombre;
-  final String medicamento;
-  UserData({this.uid,this.id,this.nombre,this.medicamento});
+  //final String medicamento;
+  UserData({this.uid,this.id,this.nombre});
 }
