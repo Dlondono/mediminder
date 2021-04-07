@@ -46,10 +46,12 @@ class DatabaseService{
     return coleccionPacientes.doc(uid).snapshots().map(_userDataFromSnapshot);
   }
 
-  Future addPaciente(String nombre, String cedula, String medicina) async{
+  Future addPaciente(String nombre, String cedula, String medicina,String uid) async{
     return await coleccionPacientes.doc(cedula).set({
       "nombre": nombre,
       "cedula": cedula,
-      "medicina": medicina});
+      "medicina": medicina,
+      "uid":uid}
+      );
 }
 }

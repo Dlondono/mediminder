@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mediminder/models/paciente.dart';
@@ -10,9 +11,12 @@ class Pacientes extends StatefulWidget {
 }
 
 class _PacientesState extends State<Pacientes> {
+  final FirebaseAuth auth=FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     final pacientes= Provider.of<List<Paciente>>(context)?? [];
+    final User user= auth.currentUser;
+    final uid=user.uid;
 
     return ListView.builder(
       itemCount: pacientes.length,

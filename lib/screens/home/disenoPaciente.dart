@@ -11,6 +11,7 @@ class PacienteDiseno extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     void _showSettingsPanel(){
       showModalBottomSheet(context: context, builder: (context){
         return Container(

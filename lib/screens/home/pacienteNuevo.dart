@@ -1,4 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../models/userLocal.dart';
+import '../../services/database.dart';
 import 'home.dart';
 import '../../services/auth.dart';
 import '../../services/database.dart';
@@ -10,7 +14,8 @@ class PacienteNuevo extends StatefulWidget {
 }
 
 class _PacienteNuevoState extends State<PacienteNuevo> {
-    final DatabaseService _database = DatabaseService();
+  final FirebaseAuth auth=FirebaseAuth.instance;
+  final DatabaseService _database = DatabaseService();
     final _formKey= GlobalKey<FormState>();
     //text field para setState
     String nombre="";
@@ -20,6 +25,8 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
     String error="";
     @override
     Widget build(BuildContext context) {
+      final User user= auth.currentUser;
+      final uid=user.uid;
       return Scaffold(
         //backgroundColor: Colors.blue[100],
         appBar: AppBar(
@@ -70,7 +77,7 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                   ),
                   onPressed: () async{
                     if(_formKey.currentState.validate()){
-                      _database.addPaciente(nombre, cedula, medicamento);
+                      _database.addPaciente(nombre, cedula, medicamento,uid);
                       Navigator.push(context, MaterialPageRoute(builder: (context)=> Home()));
                     }
                   },
