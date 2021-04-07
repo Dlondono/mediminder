@@ -69,7 +69,6 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                     }
                 ),
 
-
                 SizedBox(height: 20.0),
                 ElevatedButton(
                   child: Text("Agregar",

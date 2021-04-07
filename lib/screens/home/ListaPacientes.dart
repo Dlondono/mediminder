@@ -18,21 +18,21 @@ class Pacientes extends StatefulWidget {
 class _PacientesState extends State<Pacientes> {
   final DatabaseService database=DatabaseService();
   final FirebaseAuth auth=FirebaseAuth.instance;
+  List<Paciente> pac;
   @override
   Widget build(BuildContext context) {
     final pacientes= Provider.of<List<Paciente>>(context)?? [];
     final User user= auth.currentUser;
     final uid=user.uid;
-    List<Paciente> test;
-    FirebaseFirestore.instance.collection('Pacientes').where('uid',isEqualTo: uid)
-        .get()
-        .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        //print(doc['nombre']);
-        Future <List<Paciente>> pac=database.pacienteFromQuery(querySnapshot);
-
-      });
-    });
+    pacientes.removeWhere((item) => item.idSuper!=uid);
+    //print(uid);
+    /*for(int i=0;i<pacientes.length;i++){
+      if(uid==pacientes[i].idSuper) {
+        print(pacientes[i].idSuper);
+      }
+    }
+    */
+    //print(pacientes[0].idSuper);
     /*
     FirebaseFirestore.instance.collection('Pacientes').where('uid',isEqualTo: uid)
         .snapshots().listen(
@@ -42,7 +42,7 @@ class _PacientesState extends State<Pacientes> {
       itemCount: pacientes.length,
       itemBuilder: (context,index) {
 
-          return PacienteDiseno(paciente: pacientes[index]);
+         return PacienteDiseno(paciente: pacientes[index]);
         }
 
     );

@@ -28,6 +28,7 @@ class DatabaseService{
       return Paciente(
         nombre: doc.data()['nombre'] ?? "",
         id: doc.data()['id'] ?? "",
+        idSuper: doc.data()['idSuper']??"",
       );
     }).toList();
   }
@@ -48,14 +49,13 @@ class DatabaseService{
     );
     }
 
-    Future <List<Paciente>> pacienteFromQuery(QuerySnapshot snapshot)async{
+    List<Paciente> pacienteFromQuery(QuerySnapshot snapshot){
       //QuerySnapshot snapshot=
       //await FirebaseFirestore.instance.collection("Pacientes").where('uid',isEqualTo: uid).get()
       return snapshot.docs.map(
               (doc)=> Paciente(
                 id: doc['id'],
                 idSuper: doc['uid'],
-
                 ),
 
       );
@@ -81,7 +81,7 @@ class DatabaseService{
       "nombre": nombre,
       "cedula": cedula,
       "medicina": medicina,
-      "uid":uid}
+      "idSuper":uid}
       );
 }
 }
