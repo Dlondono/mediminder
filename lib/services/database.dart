@@ -17,7 +17,7 @@ class DatabaseService{
   final CollectionReference coleccionPacientes = FirebaseFirestore.instance.collection("Pacientes");
 
   Future updateUserData(String nombre,String id) async{
-    return await coleccionPacientes.doc(uid).set({
+    return await coleccionUsuarios.doc(uid).set({
       "nombre": nombre,
       "id": id,
     });
