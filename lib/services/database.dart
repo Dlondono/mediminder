@@ -16,10 +16,11 @@ class DatabaseService{
   final CollectionReference coleccionUsuarios = FirebaseFirestore.instance.collection("Usuarios");
   final CollectionReference coleccionPacientes = FirebaseFirestore.instance.collection("Pacientes");
 
-  Future updateUserData(String nombre,String id) async{
+  Future updateUserData(String nombre,String id, String tipo) async{
     return await coleccionUsuarios.doc(uid).set({
       "nombre": nombre,
       "id": id,
+      "tipo": tipo,
     });
   }
 
@@ -42,15 +43,26 @@ class DatabaseService{
       );
     }).toList();
   }
+
+  List<UserData> _listaUsuariosFromSnapshot(QuerySnapshot snapshot){
+    return snapshot.docs.map((doc){
+      return UserData(
+        nombre: doc.data()['nombre'] ?? "",
+        uid: doc.data()['id'] ?? "",
+        tipo: doc.data()['tipo']??"",
+      );
+    }).toList();
+  }
   //userData from snapshot
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot){
     return UserData(
       uid: uid,
       nombre: snapshot.data()['nombre'],
-      //medicamento: snapshot.data()['medicamento'],
       id: snapshot.data()['id'],
+      tipo: snapshot.data()['tipo'],
     );
   }
+
   Paciente _pacienteDataFromSnapshot(DocumentSnapshot snapshot){
     return Paciente(
       idSuper:snapshot.data()['uid'],
@@ -74,6 +86,11 @@ class DatabaseService{
   Stream<List<Paciente>> get pacientes{
     return coleccionPacientes.snapshots().map(_listaPacientesFromSnapshot);
   }
+
+  Stream<List<UserData>> get users{
+    return coleccionPacientes.snapshots().map(_listaUsuariosFromSnapshot);
+  }
+
   Stream<Paciente> get paciente{
     return coleccionPacientes.doc(uid).snapshots().map(_pacienteDataFromSnapshot);
   }
