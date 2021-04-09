@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screens/wrapper.dart';
+import 'package:sizer/sizer.dart';
 
 class Registropaciente extends StatefulWidget {
   @override
@@ -18,16 +19,16 @@ class _RegistropacienteState extends State<Registropaciente> {
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(top: 60.0),
+              padding: EdgeInsets.symmetric(vertical: 1.0.h, horizontal: 1.0.h),
               child: Center(
                 child: Container(
-                    width: 200,
-                    height: 150,
-                    child: Image.asset('assets/Fondo.png')),
+                    width: 60.0.w,
+                    height: 30.0.h,
+                    child: Image.asset('assets/Medico.png')),
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: EdgeInsets.symmetric(vertical: 1.0.h, horizontal: 3.0.h),
               child: TextField(
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -36,8 +37,7 @@ class _RegistropacienteState extends State<Registropaciente> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(
-                  left: 15.0, right: 15.0, top: 15, bottom: 0),
+              padding: EdgeInsets.symmetric(vertical: 1.0.h, horizontal: 3.0.h),
               child: TextField(
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -46,8 +46,7 @@ class _RegistropacienteState extends State<Registropaciente> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(
-                  left: 15.0, right: 15.0, top: 15, bottom: 0),
+              padding: EdgeInsets.symmetric(vertical: 1.0.h, horizontal: 3.0.h),
               child: TextField(
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -59,8 +58,8 @@ class _RegistropacienteState extends State<Registropaciente> {
               height: 10,
             ),
             Container(
-              height: 50,
-              width: 250,
+              width: 60.0.w,
+              height: 7.0.h,
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: FlatButton(
@@ -70,7 +69,7 @@ class _RegistropacienteState extends State<Registropaciente> {
                 },
                 child: Text(
                   'Completar registro',
-                  style: TextStyle(color: Colors.white, fontSize: 25),
+                  style: TextStyle(color: Colors.white, fontSize: 15.0.sp),
                 ),
               ),
             ),
@@ -78,8 +77,8 @@ class _RegistropacienteState extends State<Registropaciente> {
               height: 10,
             ),
             Container(
-              height: 50,
-              width: 250,
+              width: 60.0.w,
+              height: 7.0.h,
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: FlatButton(
@@ -89,7 +88,7 @@ class _RegistropacienteState extends State<Registropaciente> {
                 },
                 child: Text(
                   'Regresar',
-                  style: TextStyle(color: Colors.white, fontSize: 25),
+                  style: TextStyle(color: Colors.white, fontSize: 15.0.sp),
                 ),
               ),
             ),
