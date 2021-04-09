@@ -48,6 +48,9 @@ class _SettingsFormState extends State<SettingsForm> {
                   ),
                   SizedBox(height: 20.0),
                   TextFormField(
+                    decoration: InputDecoration(border: OutlineInputBorder(),
+                    hintText: "Nombre del paciente"
+                    ),
                     initialValue: _paciente.nombre,
                     validator: (val) =>
                     val.isEmpty
@@ -57,6 +60,9 @@ class _SettingsFormState extends State<SettingsForm> {
                   ),
                   SizedBox(height: 20.0),
                   TextFormField(
+                    decoration: InputDecoration(border: OutlineInputBorder(),
+                      hintText: "Id del paciente"
+                    ),
                     initialValue: _paciente.id,
                     validator: (val) =>
                     val.isEmpty
@@ -65,6 +71,9 @@ class _SettingsFormState extends State<SettingsForm> {
                     onChanged: (val) => setState(() => _currentId = val),
                   ),
                   TextFormField(
+                    decoration: InputDecoration(border: OutlineInputBorder(),
+                        hintText: "Medicina del paciente"
+                    ),
                     initialValue: _paciente.medicina,
                     validator: (val) =>
                     val.isEmpty

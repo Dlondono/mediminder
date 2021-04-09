@@ -35,7 +35,6 @@ class _SignInState extends State<SignIn> {
             style: ButtonStyle(
               foregroundColor: MaterialStateProperty.all(Colors.black),
             ),
-
             onPressed: (){
               widget.toggleView();
           },
@@ -50,6 +49,9 @@ class _SignInState extends State<SignIn> {
             children: <Widget>[
               SizedBox(height: 20.0),
               TextFormField(
+                  decoration: InputDecoration(border: OutlineInputBorder(),
+                      hintText: "Correo"
+                  ),
                   validator: (val)=> val.isEmpty ? "Ingrese su correo":null,
                   onChanged: (val){
                   setState(()=>email=val);
@@ -57,6 +59,9 @@ class _SignInState extends State<SignIn> {
               ),
               SizedBox(height: 20.0),
               TextFormField(
+                decoration: InputDecoration(border: OutlineInputBorder(),
+                    hintText: "Clave"
+                ),
                 obscureText: true,
                 validator: (val)=> val.length<6 ? "Su clave debe ser mayor a 6 caracteres":null,
                 onChanged:(val){

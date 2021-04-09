@@ -8,6 +8,7 @@ import 'package:mediminder/models/userLocal.dart';
 import 'package:mediminder/screens/authenticate/authenticate.dart';
 import 'package:mediminder/screens/authenticate/sign_in.dart';
 import 'package:mediminder/screens/home/home.dart';
+import 'package:mediminder/screens/home/vistaPaciente.dart';
 import 'package:mediminder/services/database.dart';
 import 'package:provider/provider.dart';
 import 'home/inicio.dart';
@@ -20,7 +21,6 @@ class Wrapper extends StatelessWidget {
     //user para provider
     final user=Provider.of<UserLocal>(context);
     userGlob=user;
-
     // return either Home or Authentic widget
     if(user==null) {
       return Authenticate();
@@ -28,7 +28,7 @@ class Wrapper extends StatelessWidget {
       buscarTipo();
       if(userGlob.uid!=null) {
         print("inicio");
-        print(userGlob.tipo);
+        print(tipo);
         print(userGlob.uid);
         print("fin");
       }
@@ -36,13 +36,13 @@ class Wrapper extends StatelessWidget {
       print(user.uid);
       if(tipo=="Supervisor"){
         print(user);
-        return XDRegistropaciente();
+        return Home();
       }
       else if(tipo=="Paciente"){
         print("paciente");
-        return Registropaciente();
+        return VistaPaciente();
       }else{
-        print("hpat");
+
         return Home();
       }
     }
