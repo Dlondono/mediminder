@@ -46,8 +46,9 @@ class AuthService {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User user = result.user;
 
+
       //creacion de documento en firestore por uid
-      await DatabaseService(uid:user.uid).updateUserData(nombre,id);
+      await DatabaseService(uid:user.uid).updateUserData(nombre,id,"Supervisor");
 
       return _userFromFirebaseUser(user);
     }catch(e){
