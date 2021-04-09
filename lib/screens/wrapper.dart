@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'home/inicio.dart';
 
 class Wrapper extends StatelessWidget {
+  String tipo;
   @override
   Widget build(BuildContext context) {
     //user para provider
@@ -18,9 +19,21 @@ class Wrapper extends StatelessWidget {
     if(user==null) {
       return Authenticate();
     }else{
-      //print(userD.tipo);
-      //print(userD.uid);
-      return Home();
+      print(user.uid);
+      FirebaseFirestore.instance.collection("Usuarios").doc(user.uid).get().then((value) => {verificar(value["tipo"])});
+      if(tipo=="Supervisor"){
+        print(tipo);
+        return Home();
+      }
+      else if(tipo=="Paciente"){
+        print(tipo);
+        return Home();
+      }
     }
+  }
+
+  void verificar(String t){
+    this.tipo = t;
+    return;
   }
 }

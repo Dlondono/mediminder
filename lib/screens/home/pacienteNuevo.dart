@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/userLocal.dart';
 import '../../services/database.dart';
+import '../wrapper.dart';
 import 'home.dart';
 import '../../services/auth.dart';
 import '../../services/database.dart';
@@ -23,6 +24,7 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
     String medicamento="";
     String codigo="";
     String error="";
+
     @override
     Widget build(BuildContext context) {
       final User user= auth.currentUser;

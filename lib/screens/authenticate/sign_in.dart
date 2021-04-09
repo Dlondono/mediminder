@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mediminder/services/auth.dart';
 
+import '../wrapper.dart';
+
 
 class SignIn extends StatefulWidget {
   final Function toggleView;
@@ -71,6 +73,9 @@ class _SignInState extends State<SignIn> {
                     dynamic result= await _auth.signInEmailPass(email, password);
                     if(result==null){
                       setState(()=>error="Correo o clave no validos");
+                    }
+                    else{
+                      Wrapper();
                     }
                   }
                 },
