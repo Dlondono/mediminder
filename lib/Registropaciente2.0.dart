@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screens/wrapper.dart';
+import 'screens/home/home.dart';
 import 'package:sizer/sizer.dart';
 
 class Registropaciente extends StatefulWidget {
@@ -65,7 +65,7 @@ class _RegistropacienteState extends State<Registropaciente> {
               child: FlatButton(
                 onPressed: () {
                   Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => Wrapper()));
+                      context, MaterialPageRoute(builder: (_) => Home()));
                 },
                 child: Text(
                   'Completar registro',
@@ -84,7 +84,7 @@ class _RegistropacienteState extends State<Registropaciente> {
               child: FlatButton(
                 onPressed: () {
                   Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => Wrapper()));
+                      context, MaterialPageRoute(builder: (_) => Home()));
                 },
                 child: Text(
                   'Regresar',

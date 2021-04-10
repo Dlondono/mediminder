@@ -31,7 +31,6 @@ class _RegisterState extends State<Register> {
             style: ButtonStyle(
               foregroundColor: MaterialStateProperty.all(Colors.black),
             ),
-
             onPressed: (){
               widget.toggleView();
             },
@@ -65,8 +64,6 @@ class _RegisterState extends State<Register> {
                     setState(()=>id=val);
                   }
               ),
-
-
               SizedBox(height: 20.0),
               TextFormField(
                 obscureText: true,
