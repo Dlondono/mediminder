@@ -33,6 +33,7 @@ dependencies:
   provider: ^5.0.0
   adobe_xd: ^1.1.0+1
   sizer: ^1.1.8
+  slide_digital_clock: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -52,9 +53,11 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/Medico.png
+    - assets/Pastillas.png
     - assets/Fondo.png
     - assets/Codigo.png
     - assets/cedula-de-identidad-con-foto-de-mujer.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
