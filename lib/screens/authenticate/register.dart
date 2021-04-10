@@ -45,6 +45,9 @@ class _RegisterState extends State<Register> {
             children: <Widget>[
               SizedBox(height: 20.0),
               TextFormField(
+                  decoration: InputDecoration(border: OutlineInputBorder(),
+                      hintText: "Correo"
+                  ),
                 validator: (val)=> val.isEmpty ? "Ingrese su correo":null,
                   onChanged: (val){
                     setState(()=>email=val);
@@ -52,6 +55,9 @@ class _RegisterState extends State<Register> {
               ),
               SizedBox(height: 20.0),
               TextFormField(
+                  decoration: InputDecoration(border: OutlineInputBorder(),
+                      hintText: "Nombre"
+                  ),
                   validator: (val)=> val.isEmpty ? "Nombre":null,
                   onChanged: (val){
                     setState(()=>nombre=val);
@@ -59,6 +65,9 @@ class _RegisterState extends State<Register> {
               ),
               SizedBox(height: 20.0),
               TextFormField(
+                  decoration: InputDecoration(border: OutlineInputBorder(),
+                      hintText: "Identificacion"
+                  ),
                   validator: (val)=> val.isEmpty ? "Identificacion":null,
                   onChanged: (val){
                     setState(()=>id=val);
@@ -66,6 +75,9 @@ class _RegisterState extends State<Register> {
               ),
               SizedBox(height: 20.0),
               TextFormField(
+                decoration: InputDecoration(border: OutlineInputBorder(),
+                    hintText: "Clave "
+                ),
                 obscureText: true,
                 validator: (val)=> val.length<6 ? "Su clave debe ser mayor a 6 caracteres":null,
                 onChanged:(val){
