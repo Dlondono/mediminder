@@ -46,7 +46,6 @@ class AuthService {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User user = result.user;
 
-
       //creacion de documento en firestore por uid
       await DatabaseService(uid:user.uid).updateUserData(nombre,id,"Supervisor");
 
@@ -57,6 +56,22 @@ class AuthService {
     }
 
   }
+
+  Future registerEmailPassP(String email, String password, String nombre, String id) async{
+    try{
+      UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      User user = result.user;
+
+      //creacion de documento en firestore por uid
+      await DatabaseService(uid:user.uid).updateUserData(nombre,id,"Paciente");
+      return _userFromFirebaseUser(user);
+    }catch(e){
+      print(e.toString());
+      return null;
+    }
+
+  }
+
 
   Future signOut()async{
     try{

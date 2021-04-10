@@ -16,6 +16,7 @@ class PacienteNuevo extends StatefulWidget {
 class _PacienteNuevoState extends State<PacienteNuevo> {
   final FirebaseAuth auth=FirebaseAuth.instance;
   final DatabaseService _database = DatabaseService();
+  final AuthService _auth = AuthService();
     final _formKey= GlobalKey<FormState>();
     //text field para setState
     String nombre="";
@@ -23,6 +24,7 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
     String medicamento="";
     String codigo="";
     String error="";
+    String correo="";
 
     @override
     Widget build(BuildContext context) {
@@ -41,6 +43,13 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
             key: _formKey,
             child: Column(
               children: <Widget>[
+                SizedBox(height: 20.0),
+                TextFormField(
+                    validator: (val)=> val.isEmpty ? "Ingrese el nombre de su correo":null,
+                    onChanged: (val){
+                      setState(()=>correo=val);
+                    }
+                ),
                 SizedBox(height: 20.0),
                 TextFormField(
                     validator: (val)=> val.isEmpty ? "Ingrese el nombre de su paciente":null,
@@ -77,6 +86,7 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                   ),
                   onPressed: () async{
                     if(_formKey.currentState.validate()){
+                      dynamic result= await _auth.registerEmailPassP(correo, codigo,nombre,cedula);
                       _database.addPaciente(nombre, cedula, medicamento,uid);
                       Navigator.push(context, MaterialPageRoute(builder: (context)=> InterfazSupervisor()));
                     }
