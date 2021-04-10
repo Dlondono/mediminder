@@ -45,13 +45,19 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
               children: <Widget>[
                 SizedBox(height: 20.0),
                 TextFormField(
-                    validator: (val)=> val.isEmpty ? "Ingrese el nombre de su correo":null,
+                    decoration: InputDecoration(border: OutlineInputBorder(),
+                        hintText: "Correo"
+                    ),
+                    validator: (val)=> val.isEmpty ? "Ingrese el correo de su paciente":null,
                     onChanged: (val){
                       setState(()=>correo=val);
                     }
                 ),
                 SizedBox(height: 20.0),
                 TextFormField(
+                    decoration: InputDecoration(border: OutlineInputBorder(),
+                        hintText: "Nombre"
+                    ),
                     validator: (val)=> val.isEmpty ? "Ingrese el nombre de su paciente":null,
                     onChanged: (val){
                       setState(()=>nombre=val);
@@ -59,6 +65,9 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                 ),
                 SizedBox(height: 20.0),
                 TextFormField(
+                    decoration: InputDecoration(border: OutlineInputBorder(),
+                        hintText: "Cedula"
+                    ),
                     validator: (val)=> val.isEmpty ? "Ingrese la cedula de su paciente":null,
                     onChanged: (val){
                       setState(()=>cedula=val);
@@ -66,6 +75,9 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                 ),
                 SizedBox(height: 20.0),
                 TextFormField(
+                    decoration: InputDecoration(border: OutlineInputBorder(),
+                        hintText: "Medicamento"
+                    ),
                     validator: (val)=> val.isEmpty ? "Ingrese el nombre del medicamento":null,
                     onChanged: (val){
                       setState(()=>medicamento=val);
@@ -73,6 +85,10 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                 ),
                 SizedBox(height: 20.0),
                 TextFormField(
+                    decoration: InputDecoration(border: OutlineInputBorder(),
+                        hintText: "Clave"
+                    ),
+                    obscureText: true,
                     validator: (val)=> val.length<6 ? "El codigo de acceso debe ser mayor a 6 caracteres":null,
                     onChanged: (val){
                       setState(()=>codigo=val);
