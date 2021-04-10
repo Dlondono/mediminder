@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mediminder/models/userLocal.dart';
 import 'package:mediminder/screens/authenticate/sign_in.dart';
 import 'package:mediminder/screens/home/InterfazSupervisor.dart';
+import 'package:mediminder/screens/home/vistaPaciente.dart';
 import 'package:mediminder/services/auth.dart';
 import 'package:mediminder/services/database.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +28,7 @@ class Home extends StatelessWidget {
                     return InterfazSupervisor();
                   }else{
                     print("paciente");
-                    return InterfazSupervisor();
+                    return VistaPaciente();
                   }
                 }else{
                   return Material(

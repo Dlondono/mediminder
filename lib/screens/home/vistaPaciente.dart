@@ -33,10 +33,10 @@ class _VistaPacienteState extends State<VistaPaciente> {
       body: Container(
           child: Column(
             children: <Widget>[
-              Expanded(child: Medicamentos()),
+              //Expanded(child: Medicamentos()),
               TextButton.icon(
-                icon: Icon(Icons.person),
-                label: Text("Agregar"),
+                icon: Icon(Icons.medical_services),
+                label: Text("Medicamentos"),
                 style: ButtonStyle(
                   foregroundColor: MaterialStateProperty.all(Colors.black),
                 ),
