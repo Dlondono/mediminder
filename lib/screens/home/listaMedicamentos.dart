@@ -1,18 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mediminder/models/paciente.dart';
-import 'package:mediminder/screens/home/disenoPaciente.dart';
-import 'package:provider/provider.dart';
-import '../../models/paciente.dart';
+import 'package:mediminder/screens/home/disenoMedicamento.dart';
 import 'package:mediminder/services/database.dart';
-import '../../services/database.dart';
+import 'package:provider/provider.dart';
 
-class Pacientes extends StatefulWidget {
+class Medicamentos extends StatefulWidget {
   @override
-  _PacientesState createState() => _PacientesState();
+  _MedicamentosState createState() => _MedicamentosState();
 }
 
-class _PacientesState extends State<Pacientes> {
+class _MedicamentosState extends State<Medicamentos> {
+
   final DatabaseService database=DatabaseService();
   final FirebaseAuth auth=FirebaseAuth.instance;
   @override
@@ -20,12 +19,12 @@ class _PacientesState extends State<Pacientes> {
     final pacientes= Provider.of<List<Paciente>>(context)?? [];
     final User user= auth.currentUser;
     final uid=user.uid;
-    pacientes.removeWhere((item) => item.idSuper!=uid);
+    pacientes.removeWhere((item) => item.id!=uid);
 
     return ListView.builder(
-      itemCount: pacientes.length,
-      itemBuilder: (context,index) {
-         return PacienteDiseno(paciente: pacientes[index]);
+        itemCount: pacientes.length,
+        itemBuilder: (context,index) {
+          return MedicamentoDiseno(paciente: pacientes[index]);
         }
     );
   }
