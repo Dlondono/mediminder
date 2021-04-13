@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mediminder/Registropaciente2.0.dart';
 import 'package:mediminder/models/userLocal.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mediminder/screens/wrapper.dart';
 import 'package:mediminder/services/auth.dart';
 import 'package:provider/provider.dart';
-
-import 'screens/home/home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

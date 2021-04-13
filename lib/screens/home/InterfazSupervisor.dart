@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:mediminder/models/paciente.dart';
 import 'package:mediminder/services/auth.dart';
 import 'package:mediminder/services/database.dart';
+import 'package:mediminder/services/notificacion.dart';
 import 'package:provider/provider.dart';
 import 'package:mediminder/screens/home/ListaPacientes.dart';
 import 'package:mediminder/screens/home/pacienteNuevo.dart';
-
-import '../../services/auth.dart';
 import '../../services/auth.dart';
 import 'ListaPacientes.dart';
 
@@ -53,6 +52,12 @@ class InterfazSupervisor extends StatelessWidget {
                   onPressed:(){
                     Navigator.push(context, MaterialPageRoute(builder: (context)=> PacienteNuevo()));
 
+                  },
+                ),
+                TextButton(
+                  child: Text("Notificacion"),
+                  onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> Notificacion()));
                   },
                 )
               ],
