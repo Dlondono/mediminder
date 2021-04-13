@@ -33,6 +33,7 @@ dependencies:
   provider: ^5.0.0
   adobe_xd: ^1.1.0+1
   sizer: ^1.1.8
+  awesome_notifications: any
 
 dev_dependencies:
   flutter_test:
