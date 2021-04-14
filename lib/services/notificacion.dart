@@ -8,15 +8,6 @@ class Notificacion extends StatefulWidget {
 
 class _NotificacionState extends State<Notificacion> {
   FlutterLocalNotificationsPlugin localNotification;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    var androidInitialize=new AndroidInitializationSettings('ic_launcher');
-    var initializationSettings=new InitializationSettings(android: androidInitialize);
-    localNotification=new FlutterLocalNotificationsPlugin();
-    localNotification.initialize(initializationSettings);
-  }
 
   Future _showNotification() async{
     var androidDetails =new AndroidNotificationDetails(

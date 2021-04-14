@@ -54,12 +54,7 @@ class InterfazSupervisor extends StatelessWidget {
 
                   },
                 ),
-                TextButton(
-                  child: Text("Notificacion"),
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> Notificacion()));
-                  },
-                )
+
               ],
             )
 
