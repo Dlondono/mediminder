@@ -12,7 +12,7 @@ class VistaPaciente extends StatefulWidget {
 class _VistaPacienteState extends State<VistaPaciente> {
   FlutterLocalNotificationsPlugin localNotification;
   final AuthService _auth=AuthService();
-  Future showNotification() async{
+  /*Future showNotification() async{
     var androidDetails =new AndroidNotificationDetails(
         "channelId", "channelName", "Descripcion de la notificacion",
         importance: Importance.max,
@@ -20,7 +20,7 @@ class _VistaPacienteState extends State<VistaPaciente> {
     var notificationDetails=new NotificationDetails(android: androidDetails);
     await localNotification.show(0, "Titulo icono", "body",
         notificationDetails,payload: 'test');
-  }
+  }*/
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +54,7 @@ class _VistaPacienteState extends State<VistaPaciente> {
 
                 onPressed:(){
 
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> Notificacion()));
+                  //Navigator.push(context, MaterialPageRoute(builder: (context)=> Notificacion()));
                 },
               )
             ],

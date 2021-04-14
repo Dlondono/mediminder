@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       initialData: null,
       child: MaterialApp(
-        home: Wrapper(),
+        home: notificacionMain(),
       ),
     );
   }
@@ -30,7 +30,6 @@ class notificacionMain extends StatefulWidget {
   @override
   _notificacionMainState createState() => _notificacionMainState();
 }
-
 class _notificacionMainState extends State<notificacionMain> {
 
   FlutterLocalNotificationsPlugin localNotification;
@@ -42,6 +41,15 @@ class _notificacionMainState extends State<notificacionMain> {
     localNotification=new FlutterLocalNotificationsPlugin();
     localNotification.initialize(initializationSettings);
   }
+  Future _showNotification() async{
+    var androidDetails =new AndroidNotificationDetails(
+        "channelId", "channelName", "Descripcion de la notificacion",
+        importance: Importance.max,
+        priority: Priority.high);
+    var notificationDetails=new NotificationDetails(android: androidDetails);
+    await localNotification.show(0, "Titulo main", "body",
+        notificationDetails,payload: 'test');
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +58,7 @@ class _notificacionMainState extends State<notificacionMain> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.alarm),
-
+          onPressed: _showNotification,
       ),
     );
   }
