@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:mediminder/services/auth.dart';
@@ -8,16 +10,12 @@ class VistaPaciente extends StatefulWidget {
 }
 
 class _VistaPacienteState extends State<VistaPaciente> {
-
+  final FirebaseAuth auth=  FirebaseAuth.instance;
   final AuthService _auth=AuthService();
   @override
   Widget build(BuildContext context) {
-    AwesomeNotifications().actionStream.listen((receivedNotification) {
-      Navigator.of(context).pushNamed('/listaMedicamentos',
-          arguments:{receivedNotification.id}
-      );
-    }
-    );
+  final User user=auth.currentUser;
+  final String uid=user.uid;
     return Scaffold(
       //backgroundColor: ,
       appBar: AppBar(
@@ -52,8 +50,9 @@ class _VistaPacienteState extends State<VistaPaciente> {
                       content: NotificationContent(
                         id:10,
                         channelKey: 'basic',
-                        title: 'tituloo',
+                        title: 'tituloooo'+uid,
                         body: 'body',
+
                       )
                   );
                 },
