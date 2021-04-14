@@ -1,12 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:mediminder/models/medicamento.dart';
 import 'package:mediminder/models/paciente.dart';
 import 'package:mediminder/models/userLocal.dart';
-
-import '../models/paciente.dart';
-import '../models/paciente.dart';
 import '../models/paciente.dart';
 
 class DatabaseService{

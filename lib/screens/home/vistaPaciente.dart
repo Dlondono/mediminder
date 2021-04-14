@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mediminder/screens/home/listaMedicamentos.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:mediminder/services/auth.dart';
 
 class VistaPaciente extends StatefulWidget {
@@ -12,6 +12,12 @@ class _VistaPacienteState extends State<VistaPaciente> {
   final AuthService _auth=AuthService();
   @override
   Widget build(BuildContext context) {
+    AwesomeNotifications().actionStream.listen((receivedNotification) {
+      Navigator.of(context).pushNamed('/listaMedicamentos',
+          arguments:{receivedNotification.id}
+      );
+    }
+    );
     return Scaffold(
       //backgroundColor: ,
       appBar: AppBar(
@@ -42,7 +48,14 @@ class _VistaPacienteState extends State<VistaPaciente> {
                 ),
 
                 onPressed:(){
-
+                  AwesomeNotifications().createNotification(
+                      content: NotificationContent(
+                        id:10,
+                        channelKey: 'basic',
+                        title: 'tituloo',
+                        body: 'body',
+                      )
+                  );
                 },
               )
             ],
