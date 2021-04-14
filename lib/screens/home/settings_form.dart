@@ -89,12 +89,13 @@ class _SettingsFormState extends State<SettingsForm> {
                       ),
                       onPressed: () async {
                         if(_formKey.currentState.validate()){
-                          await DatabaseService(uid:  _paciente.id).updatePacienteData(
+                         /* await DatabaseService(uid:  _paciente.id).updatePacienteData(
                             _currentId ?? _paciente.id,
                             _currentName ?? _paciente.nombre,
-                            _currentMeds ?? _paciente.medicina,
+                            //_currentMeds ?? _paciente.medicina,
                             _currentUid ?? _paciente.idSuper,
-                          );
+                          ); */
+                          await DatabaseService(uid: _paciente.id).addMedicine(_paciente.id);
                           Navigator.pop(context);
                         }
                       }

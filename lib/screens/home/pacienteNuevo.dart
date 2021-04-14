@@ -7,6 +7,7 @@ import 'InterfazSupervisor.dart';
 import '../../services/auth.dart';
 import '../../services/database.dart';
 import '../../services/database.dart';
+import 'home.dart';
 
 class PacienteNuevo extends StatefulWidget {
   @override
@@ -104,7 +105,7 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                     if(_formKey.currentState.validate()){
                       dynamic result= await _auth.registerEmailPassP(correo, codigo,nombre,cedula);
                       _database.addPaciente(nombre, cedula, medicamento,uid);
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> InterfazSupervisor()));
+                      Navigator.pop(context);
                     }
                   },
                 ),
