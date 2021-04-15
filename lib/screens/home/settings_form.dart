@@ -95,7 +95,7 @@ class _SettingsFormState extends State<SettingsForm> {
                             //_currentMeds ?? _paciente.medicina,
                             _currentUid ?? _paciente.idSuper,
                           ); */
-                          await DatabaseService(uid: _paciente.id).addMedicine(_paciente.id);
+                          await DatabaseService(uid: _paciente.id).addMedicine(_paciente.id,"30","23:00","acetominafen","8");
                           Navigator.pop(context);
                         }
                       }

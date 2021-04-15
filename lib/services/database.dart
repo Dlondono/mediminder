@@ -26,14 +26,14 @@ class DatabaseService{
     });
   }
 
-  Future addMedicine(String id) async{
+  Future addMedicine(String id, String cantidad, String hora, String medicina, String periodo) async{
     return await coleccionPacientes.doc(id).update({
       "medicines":FieldValue.arrayUnion([
         {
-          "cantidad": "11",
-          "hora": "17:00",
-          "medicina": "jarabe",
-          "periodo": "7",
+          "cantidad": cantidad,
+          "hora": hora,
+          "medicina": medicina,
+          "periodo": periodo,
         }
       ])
     });
@@ -106,7 +106,7 @@ class DatabaseService{
     return coleccionUsuarios.doc(uid).snapshots().map(_userDataFromSnapshot);
   }
 
-  Future addPaciente(String nombre, String cedula, String medicina,String uid) async{
+  Future addPaciente(String nombre, String cedula, String medicina,String uid, String cantidad, String hora, String periodo) async{
     return await coleccionPacientes.doc(cedula).set({
       "nombre": nombre,
       "cedula": cedula,
@@ -114,9 +114,9 @@ class DatabaseService{
       "medicines": FieldValue.arrayUnion([
         {
           "medicina": medicina,
-          "cantidad": "30",
-          "hora": "18:00",
-          "periodo": "5",
+          "cantidad": cantidad,
+          "hora": hora,
+          "periodo": periodo,
         },
         {
           "medicina": "medicina2",

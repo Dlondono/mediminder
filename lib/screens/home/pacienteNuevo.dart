@@ -104,7 +104,7 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                   onPressed: () async{
                     if(_formKey.currentState.validate()){
                       dynamic result= await _auth.registerEmailPassP(correo, codigo,nombre,cedula);
-                      _database.addPaciente(nombre, cedula, medicamento,uid);
+                      _database.addPaciente(nombre, cedula, medicamento,uid, "13", "18:00", "12");
                       Navigator.pop(context);
                     }
                   },
