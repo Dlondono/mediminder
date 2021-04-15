@@ -29,6 +29,7 @@ class PacienteDiseno extends StatelessWidget {
             Icons.person
           ),
           title: Text(paciente.nombre),
+            subtitle: Text(paciente.id),
         ),
             TextButton.icon(
               icon: Icon(Icons.settings),
@@ -38,7 +39,9 @@ class PacienteDiseno extends StatelessWidget {
               ),
 
               onPressed: (){
-                _showSettingsPanel();
+                Navigator.push(context, MaterialPageRoute(
+                    builder: (context)=> SettingsForm(paciente: paciente)));
+
               },
             ),
           ],
