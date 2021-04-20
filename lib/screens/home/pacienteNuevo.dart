@@ -1,12 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../models/userLocal.dart';
 import '../../services/database.dart';
-import 'InterfazSupervisor.dart';
 import '../../services/auth.dart';
-import '../../services/database.dart';
-import '../../services/database.dart';
 
 class PacienteNuevo extends StatefulWidget {
   @override
@@ -37,7 +32,7 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
           elevation: 1.0,
           title: Text('Registro paciente?'),
         ),
-        body: Container(
+        body: SingleChildScrollView(
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
           child: Form(
             key: _formKey,
@@ -103,8 +98,8 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                   onPressed: () async{
                     if(_formKey.currentState.validate()){
                       dynamic result= await _auth.registerEmailPassP(correo, codigo,nombre,cedula);
-                      _database.addPaciente(nombre, cedula, medicamento,uid);
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> InterfazSupervisor()));
+                      _database.addPaciente(nombre, cedula, medicamento,uid, "13", "18:00", "12");
+                      Navigator.pop(context);
                     }
                   },
                 ),

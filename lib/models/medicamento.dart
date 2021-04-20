@@ -1,9 +1,9 @@
 class Medicamento{
   final String medicamentoNombre;
-  final String idM;
-  final int cantidad;
-  final double dosis;
+  final String cantidad;
+  final String hora;
+  final String periodo;
 
-  Medicamento({this.medicamentoNombre, this.idM, this.cantidad, this.dosis});
+  Medicamento({this.medicamentoNombre, this.cantidad, this.hora, this.periodo});
 
 }

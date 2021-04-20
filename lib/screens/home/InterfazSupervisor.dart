@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mediminder/models/paciente.dart';
@@ -7,8 +6,6 @@ import 'package:mediminder/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:mediminder/screens/home/ListaPacientes.dart';
 import 'package:mediminder/screens/home/pacienteNuevo.dart';
-
-import '../../services/auth.dart';
 import '../../services/auth.dart';
 import 'ListaPacientes.dart';
 

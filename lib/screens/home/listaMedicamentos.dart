@@ -14,6 +14,7 @@ class _MedicamentosState extends State<Medicamentos> {
 
   final DatabaseService database=DatabaseService();
   final FirebaseAuth auth=FirebaseAuth.instance;
+  
   @override
   Widget build(BuildContext context) {
     final pacientes= Provider.of<List<Paciente>>(context)?? [];
