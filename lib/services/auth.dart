@@ -5,6 +5,7 @@ import 'package:mediminder/services/database.dart';
 class AuthService {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _authPac= FirebaseAuth.instance;
   //crear objeto de user con base en el de firebase
   UserLocal _userFromFirebaseUser(User user){
     return user !=null? UserLocal(uid:user.uid): null;
@@ -59,7 +60,7 @@ class AuthService {
 
   Future registerEmailPassP(String email, String password, String nombre, String id) async{
     try{
-      UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential result = await _authPac.createUserWithEmailAndPassword(email: email, password: password);
       User user = result.user;
 
       //creacion de documento en firestore por uid
