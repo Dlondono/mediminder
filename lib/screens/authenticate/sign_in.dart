@@ -42,56 +42,58 @@ class _SignInState extends State<SignIn> {
           )
         ],
       ),
-      body: Container(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: <Widget>[
-              SizedBox(height: 20.0),
-              TextFormField(
-                  decoration: InputDecoration(border: OutlineInputBorder(),
-                      hintText: "Correo"
-                  ),
-                  validator: (val)=> val.isEmpty ? "Ingrese su correo":null,
-                  onChanged: (val){
-                  setState(()=>email=val);
-                }
-              ),
-              SizedBox(height: 20.0),
-              TextFormField(
-                decoration: InputDecoration(border: OutlineInputBorder(),
-                    hintText: "Clave"
-                ),
-                obscureText: true,
-                validator: (val)=> val.length<6 ? "Su clave debe ser mayor a 6 caracteres":null,
-                onChanged:(val){
-                  setState(() => password = val);
-                },
-              ),
-              SizedBox(height: 20.0),
-              ElevatedButton(
-                child: Text("Iniciar sesion",
-                style: TextStyle(color: Colors.black),
-              ),
-                onPressed: () async{
-                  if(_formKey.currentState.validate()){
-                    dynamic result= await _auth.signInEmailPass(email, password);
-                    if(result==null){
-                      setState(()=>error="Correo o clave no validos");
-                    }
-                    else{
-                      Wrapper();
-                    }
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: 20.0),
+                TextFormField(
+                    decoration: InputDecoration(border: OutlineInputBorder(),
+                        hintText: "Correo"
+                    ),
+                    validator: (val)=> val.isEmpty ? "Ingrese su correo":null,
+                    onChanged: (val){
+                    setState(()=>email=val);
                   }
-                },
-              ),
-              SizedBox(height: 15.0),
-              Text(
-                error,
-                style: TextStyle(color: Colors.red),
-              )
-            ],
+                ),
+                SizedBox(height: 20.0),
+                TextFormField(
+                  decoration: InputDecoration(border: OutlineInputBorder(),
+                      hintText: "Clave"
+                  ),
+                  obscureText: true,
+                  validator: (val)=> val.length<6 ? "Su clave debe ser mayor a 6 caracteres":null,
+                  onChanged:(val){
+                    setState(() => password = val);
+                  },
+                ),
+                SizedBox(height: 20.0),
+                ElevatedButton(
+                  child: Text("Iniciar sesion",
+                  style: TextStyle(color: Colors.black),
+                ),
+                  onPressed: () async{
+                    if(_formKey.currentState.validate()){
+                      dynamic result= await _auth.signInEmailPass(email, password);
+                      if(result==null){
+                        setState(()=>error="Correo o clave no validos");
+                      }
+                      else{
+                        Wrapper();
+                      }
+                    }
+                  },
+                ),
+                SizedBox(height: 15.0),
+                Text(
+                  error,
+                  style: TextStyle(color: Colors.red),
+                )
+              ],
+            ),
           ),
         ),
       ),
