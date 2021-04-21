@@ -19,15 +19,15 @@ class _MedicamentosState extends State<Medicamentos> {
   
   @override
   Widget build(BuildContext context) {
-    final users= Provider.of<List<UserData>>(context)?? [];
+    //final users= Provider.of<List<UserData>>(context)?? [];
     final medicamentos= Provider.of<List<Medicamento>>(context)?? [];
     final User user= auth.currentUser;
     final uid=user.uid;
 
-    users.removeWhere((item) => item.uid!=uid);
+    /*users.removeWhere((item) => item.uid!=uid);
     print(users[0].id);
     medicamentos.removeWhere((item) => item.idPaciente!=users[0].id);
-
+    */
     return ListView.builder(
         itemCount: medicamentos.length,
         itemBuilder: (context,index) {

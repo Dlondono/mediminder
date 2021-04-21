@@ -69,7 +69,6 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                     }
                 ),
                 SizedBox(height: 20.0),
-                SizedBox(height: 20.0),
                 TextFormField(
                     decoration: InputDecoration(border: OutlineInputBorder(),
                         hintText: "Clave"
