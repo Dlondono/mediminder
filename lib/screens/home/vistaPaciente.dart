@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:mediminder/models/medicamento.dart';
+import 'package:mediminder/models/userLocal.dart';
 import 'package:mediminder/screens/home/listaMedicamentos.dart';
 import 'package:mediminder/services/auth.dart';
 import 'package:mediminder/services/database.dart';
@@ -21,6 +22,7 @@ class _VistaPacienteState extends State<VistaPaciente> {
   final User user=auth.currentUser;
   final String uid=user.uid;
 
+  final CollectionReference coleccion = FirebaseFirestore.instance.collection("Usuarios");
         return StreamProvider<List<Medicamento>>.value(
           value: DatabaseService().medicamentos,
           child: Scaffold(

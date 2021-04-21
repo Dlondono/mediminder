@@ -8,6 +8,8 @@ import 'package:mediminder/services/database.dart';
 import 'package:provider/provider.dart';
 
 class Medicamentos extends StatefulWidget {
+  final String id;
+  Medicamentos({this.id});
   @override
   _MedicamentosState createState() => _MedicamentosState();
 }
@@ -23,11 +25,8 @@ class _MedicamentosState extends State<Medicamentos> {
     final medicamentos= Provider.of<List<Medicamento>>(context)?? [];
     final User user= auth.currentUser;
     final uid=user.uid;
-
-    /*users.removeWhere((item) => item.uid!=uid);
-    print(users[0].id);
-    medicamentos.removeWhere((item) => item.idPaciente!=users[0].id);
-    */
+    medicamentos.removeWhere((item) => item.idPaciente!=uid);
+    
     return ListView.builder(
         itemCount: medicamentos.length,
         itemBuilder: (context,index) {

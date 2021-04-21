@@ -16,7 +16,7 @@ class _SettingsFormState extends State<SettingsForm> {
   Paciente _paciente;
   @override
   void initState() {
-      _paciente = Paciente(id: this.widget.paciente.id,nombre: this.widget.paciente.nombre);
+      _paciente = Paciente(id: this.widget.paciente.id, nombre: this.widget.paciente.nombre, idPaciente: this.widget.paciente.idPaciente);
       super.initState();
   }
 
@@ -115,7 +115,7 @@ class _SettingsFormState extends State<SettingsForm> {
                           onPressed: () async {
                             if(_formKey.currentState.validate()){
                               await DatabaseService()
-                                  .addMedicine(_currentName,_paciente.id,_currentCantidad,_currentHora,_currentMinuto,_currentPeriodo);
+                                  .addMedicine(_currentName,_paciente.idPaciente,_currentCantidad,_currentHora,_currentMinuto,_currentPeriodo);
                               Navigator.pop(context);
                             }
                           }

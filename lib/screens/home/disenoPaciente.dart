@@ -18,6 +18,7 @@ class PacienteDiseno extends StatelessWidget {
         );
       });
     }
+
     return Padding(
         padding: EdgeInsets.symmetric(vertical: 2.0,horizontal: 20.0),
       child: Card(

@@ -38,6 +38,7 @@ class DatabaseService{
         nombre: doc.data()['nombre'] ?? "",
         id: doc.data()['cedula'] ?? "",
         idSuper: doc.data()['idSuper']??"",
+        idPaciente: doc.data()['uidPac']??"",
       );
     }).toList();
   }
@@ -79,7 +80,8 @@ class DatabaseService{
     return Paciente(
       idSuper:snapshot.data()['uid'],
       id: snapshot.data()['cedula'],
-      nombre:snapshot.data()['nombre']
+      nombre:snapshot.data()['nombre'],
+      idPaciente: snapshot.data()['uidPac'],
     );
     }
 
@@ -101,6 +103,7 @@ class DatabaseService{
               (doc)=> Paciente(
                 id: doc['id'],
                 idSuper: doc['uid'],
+                idPaciente: doc['uidPac'],
                 ),
       );
     }
@@ -131,11 +134,12 @@ class DatabaseService{
     return coleccionUsuarios.doc(uid).snapshots().map(_userDataFromSnapshot);
   }
 
-  Future addPaciente(String nombre, String cedula, String medicina,String uid) async{
+  Future addPaciente(String nombre, String cedula,String uid,String uidPac) async{
     return await coleccionPacientes.doc(cedula).set({
       "nombre": nombre,
       "cedula": cedula,
       "idSuper":uid,
+      "uidPac": uidPac,
       }
       );
 }

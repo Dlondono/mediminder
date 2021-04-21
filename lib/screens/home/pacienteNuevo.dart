@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mediminder/models/userLocal.dart';
 import '../../services/database.dart';
 import '../../services/auth.dart';
 
@@ -88,7 +89,9 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                   onPressed: () async{
                     if(_formKey.currentState.validate()){
                       dynamic result= await _auth.registerEmailPassP(correo, codigo,nombre,cedula);
-                      _database.addPaciente(nombre, cedula, medicamento,uid);
+                      UserLocal user = result;
+                      print(user.uid);
+                      _database.addPaciente(nombre, cedula,uid,user.uid);
                       Navigator.pop(context);
                     }
                   },
