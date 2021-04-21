@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mediminder/models/medicamento.dart';
 import 'package:mediminder/models/paciente.dart';
+import 'package:mediminder/models/userLocal.dart';
 import 'package:mediminder/screens/home/disenoMedicamento.dart';
 import 'package:mediminder/services/database.dart';
 import 'package:provider/provider.dart';
@@ -17,15 +19,19 @@ class _MedicamentosState extends State<Medicamentos> {
   
   @override
   Widget build(BuildContext context) {
-    final pacientes= Provider.of<List<Paciente>>(context)?? [];
+    final users= Provider.of<List<UserData>>(context)?? [];
+    final medicamentos= Provider.of<List<Medicamento>>(context)?? [];
     final User user= auth.currentUser;
     final uid=user.uid;
-    pacientes.removeWhere((item) => item.id!=uid);
+
+    users.removeWhere((item) => item.uid!=uid);
+    print(users[0].id);
+    medicamentos.removeWhere((item) => item.idPaciente!=users[0].id);
 
     return ListView.builder(
-        itemCount: pacientes.length,
+        itemCount: medicamentos.length,
         itemBuilder: (context,index) {
-          return MedicamentoDiseno(paciente: pacientes[index]);
+          return MedicamentoDiseno(medicamento: medicamentos[index]);
         }
     );
   }

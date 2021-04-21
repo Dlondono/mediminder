@@ -24,7 +24,8 @@ class _SettingsFormState extends State<SettingsForm> {
   String _currentName;
   String _currentPeriodo;
   String _currentHora;
-  String _currentUid;
+  String _currentCantidad;
+  String _currentMinuto;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,6 @@ class _SettingsFormState extends State<SettingsForm> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 UserData Datos=snapshot.data;
-                _currentUid = Datos.uid;
                 return Form(
                   key: _formKey,
                   child: Column(
@@ -67,14 +67,13 @@ class _SettingsFormState extends State<SettingsForm> {
                       ),
                       TextFormField(
                         decoration: InputDecoration(border: OutlineInputBorder(),
-                          hintText: "Cada cuanto debe tomar el medicamento"
+                            hintText: "Unidades del medicamento"
                         ),
-                        //initialValue: _paciente.id,
                         validator: (val) =>
                         val.isEmpty
-                            ? "Por favor ingrese periodo del medicamento"
+                            ? "Por favor ingrese una unidad"
                             : null,
-                        onChanged: (val) => setState(() => _currentPeriodo = val),
+                        onChanged: (val) => setState(() => _currentCantidad = val),
                       ),
                       TextFormField(
                         decoration: InputDecoration(border: OutlineInputBorder(),
@@ -87,6 +86,26 @@ class _SettingsFormState extends State<SettingsForm> {
                             : null,
                         onChanged: (val) => setState(() => _currentHora = val),
                       ),
+                      TextFormField(
+                        decoration: InputDecoration(border: OutlineInputBorder(),
+                            hintText: "Minuto para tomar el medicamento"
+                        ),
+                        validator: (val) =>
+                        val.isEmpty
+                            ? "Por favor ingrese la hora del medicamento"
+                            : null,
+                        onChanged: (val) => setState(() => _currentMinuto = val),
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(border: OutlineInputBorder(),
+                            hintText: "Cada cuanto debe tomar el medicamento"
+                        ),
+                        validator: (val) =>
+                        val.isEmpty
+                            ? "Por favor ingrese periodo del medicamento"
+                            : null,
+                        onChanged: (val) => setState(() => _currentPeriodo = val),
+                      ),
                       ElevatedButton(
                           child: Text(
                             "Actualizar",
@@ -95,14 +114,8 @@ class _SettingsFormState extends State<SettingsForm> {
                           ),
                           onPressed: () async {
                             if(_formKey.currentState.validate()){
-                             /* await DatabaseService(uid:  _paciente.id).updatePacienteData(
-                                _currentId ?? _paciente.id,
-                                _currentName ?? _paciente.nombre,
-                                //_currentMeds ?? _paciente.medicina,
-                                _currentUid ?? _paciente.idSuper,
-                              ); */
-                              await DatabaseService(uid: _paciente.id)
-                                  .addMedicine(_paciente.id,"30",_currentHora,_currentName,_currentPeriodo);
+                              await DatabaseService()
+                                  .addMedicine(_currentName,_paciente.id,_currentCantidad,_currentHora,_currentMinuto,_currentPeriodo);
                               Navigator.pop(context);
                             }
                           }

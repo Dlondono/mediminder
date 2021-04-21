@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mediminder/models/medicamento.dart';
 import 'package:mediminder/models/paciente.dart';
 
 class MedicamentoDiseno extends StatelessWidget {
 
-  final Paciente paciente;
-  MedicamentoDiseno({this.paciente});
+  final Medicamento medicamento;
+  MedicamentoDiseno({this.medicamento});
   @override
   Widget build(BuildContext context) {
 
@@ -18,7 +19,8 @@ class MedicamentoDiseno extends StatelessWidget {
               leading: Icon( //imagen medicamento?
                   Icons.person
               ),
-              title: Text(paciente.medicina),
+              title: Text(medicamento.medicamentoNombre),
+
             ),
             TextButton.icon(
               icon: Icon(Icons.medical_services),
@@ -26,9 +28,7 @@ class MedicamentoDiseno extends StatelessWidget {
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all(Colors.black),
               ),
-
               onPressed: (){
-
               },
             ),
           ],

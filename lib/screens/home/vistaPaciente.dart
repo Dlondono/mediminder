@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:mediminder/screens/home/listaMedicamentos.dart';
 import 'package:mediminder/services/auth.dart';
 
 class VistaPaciente extends StatefulWidget {
@@ -44,7 +45,6 @@ class _VistaPacienteState extends State<VistaPaciente> {
                 style: ButtonStyle(
                   foregroundColor: MaterialStateProperty.all(Colors.black),
                 ),
-
                 onPressed:(){
                   AwesomeNotifications().createNotification(
                       content: NotificationContent(
@@ -52,11 +52,11 @@ class _VistaPacienteState extends State<VistaPaciente> {
                         channelKey: 'basic',
                         title: 'tituloooo'+uid,
                         body: 'body',
-
                       )
                   );
                 },
               )
+
             ],
           )
 

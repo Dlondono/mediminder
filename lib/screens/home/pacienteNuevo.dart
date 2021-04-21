@@ -69,15 +69,6 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                     }
                 ),
                 SizedBox(height: 20.0),
-                TextFormField(
-                    decoration: InputDecoration(border: OutlineInputBorder(),
-                        hintText: "Medicamento"
-                    ),
-                    validator: (val)=> val.isEmpty ? "Ingrese el nombre del medicamento":null,
-                    onChanged: (val){
-                      setState(()=>medicamento=val);
-                    }
-                ),
                 SizedBox(height: 20.0),
                 TextFormField(
                     decoration: InputDecoration(border: OutlineInputBorder(),
@@ -98,7 +89,7 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                   onPressed: () async{
                     if(_formKey.currentState.validate()){
                       dynamic result= await _auth.registerEmailPassP(correo, codigo,nombre,cedula);
-                      _database.addPaciente(nombre, cedula, medicamento,uid, "13", "18:00", "12");
+                      _database.addPaciente(nombre, cedula, medicamento,uid);
                       Navigator.pop(context);
                     }
                   },
