@@ -37,6 +37,9 @@ dependencies:
   timezone: ^0.7.0
   flutter_native_timezone: ^1.0.10
   slide_digital_clock: ^1.0.0
+  flutter_local_notifications: ^5.0.0+1
+  timezone: ^0.7.0
+  flutter_native_timezone: ^1.0.10
 
 dev_dependencies:
   flutter_test:
