@@ -1,8 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
-import 'dart:developer';
+import 'dart:developer' as dev;
 
 
 class Notifications {
@@ -28,7 +30,7 @@ class Notifications {
         aHour.toString() +
         ":" +
         aMin.toString();
-    log('alarm Date:$alarmDate');
+    dev.log('alarm Date:$alarmDate');
   }
 
   init() async {
@@ -92,12 +94,14 @@ class Notifications {
   }
 
   Future<void> scheduleweeklyNotification() async {
+    var random= new Random();
+    var idR=random.nextInt(50);
     final details = NotificationDetails(
       android: AndroidNotificationDetails("id", "name", "description",
           priority: Priority.max, importance: Importance.max),
     );
     await this.flutterLocalNotificationsPlugin.zonedSchedule(
-      0,
+      idR,
       "Notificación programada",
       "body",
       _nextinstanceOfDay(),
@@ -107,6 +111,7 @@ class Notifications {
       androidAllowWhileIdle: true,
       matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
     );
+    print(idR);
   }
 
   tz.TZDateTime _nextinstanceOfDay() {

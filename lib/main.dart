@@ -3,6 +3,7 @@ import 'package:mediminder/models/userLocal.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mediminder/screens/wrapper.dart';
 import 'package:mediminder/services/auth.dart';
+import 'package:mediminder/services/local_noti.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -15,6 +16,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+    final Notifications noti = new Notifications();
+    noti.init();
     return StreamProvider<UserLocal>.value(
       value: AuthService().user,
       initialData: null,
