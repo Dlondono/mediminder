@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:mediminder/models/medicamento.dart';
-import 'package:mediminder/models/userLocal.dart';
 import 'package:mediminder/screens/home/listaMedicamentos.dart';
 import 'package:mediminder/services/auth.dart';
 import 'package:mediminder/services/database.dart';
+import 'package:mediminder/services/local_noti.dart';
 import 'package:provider/provider.dart';
 
 class VistaPaciente extends StatefulWidget {
@@ -54,20 +53,16 @@ class _VistaPacienteState extends State<VistaPaciente> {
                         foregroundColor: MaterialStateProperty.all(Colors.black),
                       ),
                       onPressed:(){
-                        AwesomeNotifications().createNotification(
-                            content: NotificationContent(
-                              id:10,
-                              channelKey: 'basic',
-                              title: 'tituloooo'+uid,
-                              body: 'body',
-                            )
-                        );
+                        final Notifications noti = new Notifications();
+                        noti.init();
+                        noti.setTime(2021, 4, 27, 16, 02);
+                        noti.scheduleweeklyNotification();
+                        //noti.showNotification("Mi notif");
+                        //noti.myTimedNotification();
                       },
-                    )
-
+                    ),
                   ],
                 )
-
             ),
           ),
         );
