@@ -1,18 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:mediminder/models/medicamento.dart';
 import 'package:mediminder/services/local_noti.dart';
-import 'package:mediminder/services/local_noti.dart';
+
 
 class MedicamentoDiseno extends StatelessWidget {
-
+  DateTime t;
   final Medicamento medicamento;
   final Notifications noti = new Notifications();
+  int hora;
+  int minuto;
   MedicamentoDiseno({this.medicamento});
   //noti.init();
   //noti.showNotification("Mi notif");
   //noti.myTimedNotification();
   @override
   Widget build(BuildContext context) {
+    t=noti.localTime();
+    hora = medicamento.hora;
+    minuto = medicamento.minuto;
+    while(t.hour>hora){
+      hora = hora + medicamento.periodo;
+    }
+    if(hora == t.hour){
+      if(t.minute>minuto){
+        hora = hora + medicamento.periodo;
+      }
+    }
+
     noti.setTime(2021, 4, 28,medicamento.hora,medicamento.minuto);
     noti.scheduleweeklyNotification();
     return Padding(
@@ -25,12 +39,13 @@ class MedicamentoDiseno extends StatelessWidget {
               leading: Icon( //imagen medicamento?
                   Icons.person
               ),
-              title: Text(medicamento.medicamentoNombre),
+              title: Text("Medicamento: " +medicamento.medicamentoNombre),
+              subtitle: Text("Cantidad disponible: " + medicamento.cantidad.toString()),
 
             ),
             TextButton.icon(
               icon: Icon(Icons.medical_services),
-              label: Text("ASD"),
+              label: Text("Hora de toma de medicamento: " + hora.toString() + ":" + minuto.toString()),
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all(Colors.black),
               ),
