@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:mediminder/models/userLocal.dart';
 import 'package:mediminder/services/database.dart';
 
@@ -15,8 +16,6 @@ class AuthService {
     return _auth.authStateChanges().map(_userFromFirebaseUser);
         //.map((User user)=> _userFromFirebaseUser(user));
   }
-
-
   //sign anon
   Future signInAnon() async {
     try{
@@ -38,7 +37,6 @@ class AuthService {
       print(e.toString());
       return null;
     }
-
   }
 
   //register email and password
@@ -55,15 +53,20 @@ class AuthService {
       print(e.toString());
       return null;
     }
-
   }
 
   Future registerEmailPassP(String email, String password, String nombre, String id) async{
     try{
-      UserCredential result = await _authPac.createUserWithEmailAndPassword(email: email, password: password);
+      FirebaseApp tempApp =await Firebase.initializeApp(
+          name: 'temporaryRegister',options: Firebase.app().options);
+      UserCredential result = await FirebaseAuth.instanceFor(app: tempApp).
+      createUserWithEmailAndPassword(email: email, password: password);
+
       User user = result.user;
+
       //creacion de documento en firestore por uid
       await DatabaseService(uid:user.uid).updateUserData(nombre,id,"Paciente");
+      tempApp.delete();
       return _userFromFirebaseUser(user);
     }catch(e){
       print(e.toString());
