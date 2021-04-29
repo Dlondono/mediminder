@@ -55,8 +55,8 @@ class _VistaPacienteState extends State<VistaPaciente> {
                       onPressed:(){
                         final Notifications noti = new Notifications();
                         //noti.init();
-                        noti.setTime(2021, 4, 27, 17, 21);
-                        noti.scheduleweeklyNotification();
+                        //noti.setTime(2021, 4, 27, 17, 21);
+                        //noti.scheduleweeklyNotification();
                         //noti.showNotification("Mi notif");
                         //noti.myTimedNotification();
                       },

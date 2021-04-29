@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mediminder/models/medicamento.dart';
 import 'package:mediminder/services/local_noti.dart';
-import 'package:mediminder/services/local_noti.dart';
 
 class MedicamentoDiseno extends StatelessWidget {
 
@@ -13,8 +12,8 @@ class MedicamentoDiseno extends StatelessWidget {
   //noti.myTimedNotification();
   @override
   Widget build(BuildContext context) {
-    noti.setTime(2021, 4, 28,medicamento.hora,medicamento.minuto);
-    noti.scheduleweeklyNotification();
+    noti.setTime(2021, 4, 29,medicamento.hora,medicamento.minuto);
+    noti.scheduleweeklyNotification("1",medicamento.medicamentoNombre,medicamento.idPaciente);
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 2.0,horizontal: 20.0),
       child: Card(

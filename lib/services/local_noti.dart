@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -92,8 +91,7 @@ class Notifications {
       matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
     );
   }
-
-  Future<void> scheduleweeklyNotification() async {
+  Future<void> scheduleweeklyNotification(String id,String name,String description) async {
     var random= new Random();
     var idR=random.nextInt(50);
     final details = NotificationDetails(
@@ -102,8 +100,8 @@ class Notifications {
     );
     await this.flutterLocalNotificationsPlugin.zonedSchedule(
       idR,
-      "Notificación programada",
-      "body",
+      name,
+      description,
       _nextinstanceOfDay(),
       details,
       uiLocalNotificationDateInterpretation:
