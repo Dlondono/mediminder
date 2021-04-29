@@ -3,17 +3,27 @@ import 'package:mediminder/models/medicamento.dart';
 import 'package:mediminder/services/local_noti.dart';
 
 class MedicamentoDiseno extends StatelessWidget {
-
+  DateTime t;
   final Medicamento medicamento;
   final Notifications noti = new Notifications();
   MedicamentoDiseno({this.medicamento});
-  //noti.init();
-  //noti.showNotification("Mi notif");
-  //noti.myTimedNotification();
+  int hora;
+  int minuto;
   @override
   Widget build(BuildContext context) {
-    noti.setTime(2021, 4, 29,medicamento.hora,medicamento.minuto);
-    noti.scheduleweeklyNotification("1",medicamento.medicamentoNombre,medicamento.idPaciente);
+    t=noti.localTime();
+    hora = medicamento.hora;
+    minuto = medicamento.minuto;
+    while(t.hour>hora){
+      hora = hora + medicamento.periodo;
+    }
+    if(hora == t.hour){
+      if(t.minute>minuto){
+        hora = hora + medicamento.periodo;
+      }
+    }
+    noti.setTime(2021, 4, 29,hora,minuto);
+    noti.scheduleweeklyNotification(medicamento.idPaciente,medicamento.medicamentoNombre,medicamento.idPaciente);
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 2.0,horizontal: 20.0),
       child: Card(
@@ -24,12 +34,13 @@ class MedicamentoDiseno extends StatelessWidget {
               leading: Icon( //imagen medicamento?
                   Icons.person
               ),
-              title: Text(medicamento.medicamentoNombre),
+              title: Text("Medicamento: " +medicamento.medicamentoNombre),
+              subtitle: Text("Cantidad disponible: " + medicamento.cantidad.toString()),
 
             ),
             TextButton.icon(
               icon: Icon(Icons.medical_services),
-              label: Text("ASD"),
+              label: Text("Hora de toma de medicamento: " + hora.toString() + ":" + minuto.toString()),
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all(Colors.black),
               ),

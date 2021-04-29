@@ -76,7 +76,7 @@ class Notifications {
       android: AndroidNotificationDetails("id", "name", "description",
           priority: Priority.max, importance: Importance.max),
     );
-    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    final tz.TZDateTime now = localTime();
     tz.TZDateTime scheduleDate = now.add(Duration(seconds: 5));
     await this.flutterLocalNotificationsPlugin.zonedSchedule(
       0,
@@ -90,6 +90,11 @@ class Notifications {
       matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
     );
   }
+
+  tz.TZDateTime localTime(){
+    return tz.TZDateTime.now(tz.local);
+  }
+
   Future<void> scheduleweeklyNotification(String id,String name,String description) async {
     var random= new Random();
     var idR=random.nextInt(50);
