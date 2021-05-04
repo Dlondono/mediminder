@@ -9,20 +9,31 @@ class MedicamentoDiseno extends StatelessWidget {
   MedicamentoDiseno({this.medicamento});
   int hora;
   int minuto;
+  int dia;
   @override
   Widget build(BuildContext context) {
     t=noti.localTime();
     hora = medicamento.hora;
     minuto = medicamento.minuto;
-    while(t.hour>hora){
-      hora = hora + medicamento.periodo;
+    dia = t.day;
+    while(t.hour>hora && dia==t.day){
+      if(hora+medicamento.periodo<=23) {
+        hora = hora + medicamento.periodo;
+      }
+      else{
+        int cstn = 24-hora;
+        int c = medicamento.periodo - cstn;
+        hora = c;
+        t = t.add(const Duration(days: 1));
+      }
     }
+
     if(hora == t.hour){
       if(t.minute>minuto){
         hora = hora + medicamento.periodo;
       }
     }
-    noti.setTime(2021, 4, 29,hora,minuto);
+    noti.setTime(t.year, t.month, t.day,hora,minuto);
     noti.scheduleweeklyNotification(medicamento.idPaciente,medicamento.medicamentoNombre,medicamento.idPaciente);
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 2.0,horizontal: 20.0),
