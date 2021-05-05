@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mediminder/models/medicamento.dart';
 import 'package:mediminder/services/local_noti.dart';
+import 'package:sizer/sizer.dart';
 
 class MedicamentoDiseno extends StatelessWidget {
   DateTime t;
@@ -36,25 +37,27 @@ class MedicamentoDiseno extends StatelessWidget {
     noti.setTime(t.year, t.month, t.day,hora,minuto);
     noti.scheduleweeklyNotification(medicamento.idPaciente,medicamento.medicamentoNombre,medicamento.idPaciente);
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 2.0,horizontal: 20.0),
+      padding: EdgeInsets.symmetric(vertical: 1.0.h, horizontal: 1.0.h),
       child: Card(
-        margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
+        color: Colors.blue[100],
+        margin: EdgeInsets.symmetric(vertical: 1.0.h, horizontal: 3.0.h),
         child: Column(
           children: <Widget>[
             ListTile(
-              leading: Icon( //imagen medicamento?
-                  Icons.person
-              ),
-              title: Text("Medicamento: " +medicamento.medicamentoNombre),
-              subtitle: Text("Cantidad disponible: " + medicamento.cantidad.toString()),
 
-            ),
+              title: Text("Medicamento: " +medicamento.medicamentoNombre,
+                style: TextStyle(fontSize: 20,color: Colors.black)),
+              subtitle: Text("Cantidad disponible: " + medicamento.cantidad.toString(),
+                style: TextStyle(fontSize: 18,color: Colors.black)) ,
+              ),
             TextButton.icon(
               icon: Icon(Icons.medical_services),
-              label: Text("Hora de toma de medicamento: " + hora.toString() + ":" + minuto.toString()),
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all(Colors.black),
-              ),
+              label: Text("Hora de medicamento: " + hora.toString() +
+                  ":" + minuto.toString()),
+                style: ButtonStyle(
+                  textStyle: MaterialStateProperty.all(TextStyle(fontSize: 18,color: Colors.black)),
+                  foregroundColor: MaterialStateProperty.all(Colors.black),
+                ),
               onPressed: (){
               },
             ),

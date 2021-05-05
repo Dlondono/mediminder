@@ -5,6 +5,7 @@ import 'package:mediminder/screens/wrapper.dart';
 import 'package:mediminder/services/auth.dart';
 import 'package:mediminder/services/local_noti.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,12 +20,21 @@ class MyApp extends StatelessWidget {
 
     final Notifications noti = new Notifications();
     noti.init();
-    return StreamProvider<UserLocal>.value(
-      value: AuthService().user,
-      initialData: null,
-      child: MaterialApp(
-        home: Wrapper(),
-      ),
-    );
+    return LayoutBuilder(
+        builder: (context,constraints){
+          return OrientationBuilder(
+              builder: (context,orientation) {
+                SizerUtil().init(constraints,orientation);
+                return StreamProvider<UserLocal>.value(
+                  value: AuthService().user,
+                  initialData: null,
+                  child: MaterialApp(
+                    home: Wrapper(),
+                  ),
+                );
+              }
+            );
+          }
+        );
+    }
   }
-}

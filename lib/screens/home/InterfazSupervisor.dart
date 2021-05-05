@@ -22,12 +22,13 @@ class InterfazSupervisor extends StatelessWidget {
         //backgroundColor: ,
         appBar: AppBar(
           title: Text("Mediminder supervisor"),
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.teal,
           actions: <Widget>[
             TextButton.icon(
               icon: Icon(Icons.person),
               label: Text("Salir"),
               style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.teal),
                 foregroundColor: MaterialStateProperty.all(Colors.black),
               ),
               onPressed: ()async{
@@ -37,6 +38,7 @@ class InterfazSupervisor extends StatelessWidget {
           ],
         ),
         body: Container(
+          decoration: BoxDecoration(color: Colors.white),
           child: Column(
               children: <Widget>[
                 Expanded(child: Pacientes()),
@@ -44,6 +46,7 @@ class InterfazSupervisor extends StatelessWidget {
                   icon: Icon(Icons.person),
                   label: Text("Agregar"),
                   style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.teal),
                     foregroundColor: MaterialStateProperty.all(Colors.black),
                   ),
 

@@ -5,7 +5,6 @@ import 'package:mediminder/models/medicamento.dart';
 import 'package:mediminder/screens/home/listaMedicamentos.dart';
 import 'package:mediminder/services/auth.dart';
 import 'package:mediminder/services/database.dart';
-import 'package:mediminder/services/local_noti.dart';
 import 'package:provider/provider.dart';
 
 class VistaPaciente extends StatefulWidget {
@@ -25,9 +24,9 @@ class _VistaPacienteState extends State<VistaPaciente> {
         return StreamProvider<List<Medicamento>>.value(
           value: DatabaseService().medicamentos,
           child: Scaffold(
-            //backgroundColor: ,
+            //backgroundColor: Colors.blue[300],
             appBar: AppBar(
-              title: Text("Mediminder paciente"),
+              title: Text("Lista de medicamentos"),
               backgroundColor: Colors.blue,
               actions: <Widget>[
                 TextButton.icon(
@@ -46,21 +45,6 @@ class _VistaPacienteState extends State<VistaPaciente> {
                 child: Column(
                   children: <Widget>[
                     Expanded(child: Medicamentos()),
-                    TextButton.icon(
-                      icon: Icon(Icons.medical_services),
-                      label: Text("Medicamentos"),
-                      style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all(Colors.black),
-                      ),
-                      onPressed:(){
-                        final Notifications noti = new Notifications();
-                        //noti.init();
-                        //noti.setTime(2021, 4, 27, 17, 21);
-                        //noti.scheduleweeklyNotification();
-                        //noti.showNotification("Mi notif");
-                        //noti.myTimedNotification();
-                      },
-                    ),
                   ],
                 )
             ),

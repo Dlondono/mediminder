@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mediminder/models/userLocal.dart';
+import 'package:mediminder/shared/constants.dart';
 import '../../services/database.dart';
 import '../../services/auth.dart';
+import 'package:sizer/sizer.dart';
 
 class PacienteNuevo extends StatefulWidget {
   @override
@@ -27,23 +29,21 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
       final User user= auth.currentUser;
       final uid=user.uid;
       return Scaffold(
-        //backgroundColor: Colors.blue[100],
+        backgroundColor: Colors.grey[400],
         appBar: AppBar(
-          backgroundColor: Colors.blue[600],
+          backgroundColor: Colors.teal[400],
           elevation: 1.0,
-          title: Text('Registro paciente?'),
+          title: Text('Nuevo paciente'),
         ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+          padding: EdgeInsets.symmetric(vertical: 1.0.h, horizontal: 5.0.h),
           child: Form(
             key: _formKey,
             child: Column(
               children: <Widget>[
                 SizedBox(height: 20.0),
                 TextFormField(
-                    decoration: InputDecoration(border: OutlineInputBorder(),
-                        hintText: "Correo"
-                    ),
+                    decoration: textInputDecoraton.copyWith(hintText: "Correo"),
                     validator: (val)=> val.isEmpty ? "Ingrese el correo de su paciente":null,
                     onChanged: (val){
                       setState(()=>correo=val);
@@ -51,9 +51,7 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                 ),
                 SizedBox(height: 20.0),
                 TextFormField(
-                    decoration: InputDecoration(border: OutlineInputBorder(),
-                        hintText: "Nombre"
-                    ),
+                    decoration: textInputDecoraton.copyWith(hintText: "Nombre"),
                     validator: (val)=> val.isEmpty ? "Ingrese el nombre de su paciente":null,
                     onChanged: (val){
                       setState(()=>nombre=val);
@@ -61,9 +59,7 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                 ),
                 SizedBox(height: 20.0),
                 TextFormField(
-                    decoration: InputDecoration(border: OutlineInputBorder(),
-                        hintText: "Cedula"
-                    ),
+                    decoration: textInputDecoraton.copyWith(hintText: "Cedula"),
                     validator: (val)=> val.isEmpty ? "Ingrese la cedula de su paciente":null,
                     onChanged: (val){
                       setState(()=>cedula=val);
@@ -71,9 +67,7 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                 ),
                 SizedBox(height: 20.0),
                 TextFormField(
-                    decoration: InputDecoration(border: OutlineInputBorder(),
-                        hintText: "Clave"
-                    ),
+                    decoration: textInputDecoraton.copyWith(hintText: "Clave"),
                     obscureText: true,
                     validator: (val)=> val.length<6 ? "El codigo de acceso debe ser mayor a 6 caracteres":null,
                     onChanged: (val){
@@ -83,8 +77,11 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
 
                 SizedBox(height: 20.0),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.teal[400],
+                  ),
                   child: Text("Agregar",
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Colors.black,fontSize: 16),
                   ),
                   onPressed: () async{
                     if(_formKey.currentState.validate()){

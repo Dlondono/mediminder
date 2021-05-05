@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mediminder/screens/home/pacienteNuevo.dart';
 import 'screens/home/home.dart';
 import 'package:sizer/sizer.dart';
 
@@ -65,7 +66,7 @@ class _RegistropacienteState extends State<Registropaciente> {
               child: FlatButton(
                 onPressed: () {
                   Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => Home()));
+                      context, MaterialPageRoute(builder: (_) => PacienteNuevo()));
                 },
                 child: Text(
                   'Completar registro',
