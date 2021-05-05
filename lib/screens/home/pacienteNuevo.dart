@@ -29,7 +29,7 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
       final User user= auth.currentUser;
       final uid=user.uid;
       return Scaffold(
-        backgroundColor: Colors.grey[400],
+        backgroundColor: Colors.teal[100],
         appBar: AppBar(
           backgroundColor: Colors.teal[400],
           elevation: 1.0,
