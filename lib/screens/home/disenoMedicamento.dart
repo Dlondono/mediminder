@@ -28,11 +28,17 @@ class MedicamentoDiseno extends StatelessWidget {
         t = t.add(const Duration(days: 1));
       }
     }
-
     if(hora == t.hour){
       if(t.minute>minuto){
-        hora = hora + medicamento.periodo;
-      }
+        if(hora+medicamento.periodo<=23) {
+          hora = hora + medicamento.periodo;
+        }
+        else{
+          int cstn = 24-hora;
+          int c = medicamento.periodo - cstn;
+          hora = c;
+          t = t.add(const Duration(days: 1));
+        }}
     }
     noti.setTime(t.year, t.month, t.day,hora,minuto);
     noti.scheduleweeklyNotification(medicamento.idPaciente,medicamento.medicamentoNombre,medicamento.idPaciente);
