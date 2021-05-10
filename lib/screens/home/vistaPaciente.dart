@@ -42,7 +42,7 @@ class _VistaPacienteState extends State<VistaPaciente> {
               ],
             ),
             body: Container(
-              decoration: BoxDecoration(color: Color.fromRGBO(116, 204, 224, 10)),
+                decoration: BoxDecoration(color: Color.fromRGBO(157, 221, 234, 50)),
                 child: Column(
                   children: <Widget>[
                     Expanded(child: Medicamentos()),
