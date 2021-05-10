@@ -27,7 +27,7 @@ class _VistaPacienteState extends State<VistaPaciente> {
             //backgroundColor: Colors.blue[300],
             appBar: AppBar(
               title: Text("Lista de medicamentos"),
-              backgroundColor: Colors.blue,
+              backgroundColor: Color.fromRGBO(9, 111, 167, 50),
               actions: <Widget>[
                 TextButton.icon(
                   icon: Icon(Icons.person),
@@ -42,6 +42,7 @@ class _VistaPacienteState extends State<VistaPaciente> {
               ],
             ),
             body: Container(
+              decoration: BoxDecoration(color: Color.fromRGBO(116, 204, 224, 10)),
                 child: Column(
                   children: <Widget>[
                     Expanded(child: Medicamentos()),
