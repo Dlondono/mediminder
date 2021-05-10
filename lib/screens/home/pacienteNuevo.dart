@@ -29,13 +29,14 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
       final User user= auth.currentUser;
       final uid=user.uid;
       return Scaffold(
-        backgroundColor: Colors.teal[100],
+        //backgroundColor: Colors.teal[100],
         appBar: AppBar(
-          backgroundColor: Colors.teal[400],
+          backgroundColor: Color.fromRGBO(9, 111, 167, 50),
           elevation: 1.0,
           title: Text('Nuevo paciente'),
         ),
-        body: SingleChildScrollView(
+        body: Container(
+          color: Color.fromRGBO(157, 221, 234, 50),
           padding: EdgeInsets.symmetric(vertical: 1.0.h, horizontal: 5.0.h),
           child: Form(
             key: _formKey,
@@ -77,11 +78,11 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
 
                 SizedBox(height: 20.0),
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.teal[400],
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
                   ),
                   child: Text("Agregar",
-                    style: TextStyle(color: Colors.black,fontSize: 16),
+                    style: TextStyle(color: Colors.white,fontSize: 16),
                   ),
                   onPressed: () async{
                     if(_formKey.currentState.validate()){
@@ -93,7 +94,7 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                     }
                   },
                 ),
-                SizedBox(height: 15.0),
+                SizedBox(height: 20.0),
                 Text(
                   error,
                   style: TextStyle(color: Colors.red),

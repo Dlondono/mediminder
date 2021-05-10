@@ -22,13 +22,13 @@ class InterfazSupervisor extends StatelessWidget {
         //backgroundColor: ,
         appBar: AppBar(
           title: Text("Mediminder supervisor"),
-          backgroundColor: Colors.teal,
+          backgroundColor: Color.fromRGBO(9, 111, 167, 50),
           actions: <Widget>[
             TextButton.icon(
               icon: Icon(Icons.person),
               label: Text("Salir"),
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.teal),
+                backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
                 foregroundColor: MaterialStateProperty.all(Colors.black),
               ),
               onPressed: ()async{
@@ -38,7 +38,7 @@ class InterfazSupervisor extends StatelessWidget {
           ],
         ),
         body: Container(
-          decoration: BoxDecoration(color: Colors.white),
+          decoration: BoxDecoration(color: Color.fromRGBO(157, 221, 234, 50)),
           child: Column(
               children: <Widget>[
                 Expanded(child: Pacientes()),
@@ -46,18 +46,15 @@ class InterfazSupervisor extends StatelessWidget {
                   icon: Icon(Icons.person),
                   label: Text("Agregar"),
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.teal),
-                    foregroundColor: MaterialStateProperty.all(Colors.black),
-                  ),
-
+                      backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
+                      foregroundColor: MaterialStateProperty.all(Colors.black),
+                    ),
                   onPressed:(){
                     Navigator.push(context, MaterialPageRoute(builder: (context)=> PacienteNuevo()));
-
                   },
                 )
               ],
-            )
-
+            ),
           ),
         ),
       );
