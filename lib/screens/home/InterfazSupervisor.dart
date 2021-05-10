@@ -43,8 +43,11 @@ class InterfazSupervisor extends StatelessWidget {
               children: <Widget>[
                 Expanded(child: Pacientes()),
                 TextButton.icon(
-                  icon: Icon(Icons.person),
-                  label: Text("Agregar"),
+                  icon: Icon(Icons.person,color: Colors.white,),
+                  label: Text("Agregar nuevo paciente",style: TextStyle(
+                    color: Colors.white,
+                    ),
+                  ),
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
                       foregroundColor: MaterialStateProperty.all(Colors.black),
