@@ -15,7 +15,6 @@ class Medicamentos extends StatefulWidget {
 }
 
 class _MedicamentosState extends State<Medicamentos> {
-
   final DatabaseService database=DatabaseService();
   final FirebaseAuth auth=FirebaseAuth.instance;
   
@@ -26,7 +25,7 @@ class _MedicamentosState extends State<Medicamentos> {
     final User user= auth.currentUser;
     final uid=user.uid;
     medicamentos.removeWhere((item) => item.idPaciente!=uid);
-    
+
     return ListView.builder(
         itemCount: medicamentos.length,
         itemBuilder: (context,index) {

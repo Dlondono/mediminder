@@ -6,6 +6,7 @@ import 'package:mediminder/screens/home/listaMedicamentos.dart';
 import 'package:mediminder/services/auth.dart';
 import 'package:mediminder/services/database.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class VistaPaciente extends StatefulWidget {
   @override
