@@ -20,7 +20,7 @@ class DatabaseService{
     });
   }
 
-  Future addMedicine(String medicina,String id, String cantidad, String hora,  String minuto, String periodo) async{
+  Future addMedicine(String medicina,String id, String cantidad, String hora,  String minuto, String periodo, String recomendacion, String dosis) async{
     return await coleccionMedicamentos.add({
       "medicamentoNombre": medicina,
       "idPaciente": id,
@@ -28,6 +28,8 @@ class DatabaseService{
       "hora": int.parse(hora),
       "minuto":int.parse(minuto),
       "periodo": int.parse(periodo),
+      "recomendacion": recomendacion,
+      "dosis": int.parse(dosis),
     });
   }
 
@@ -52,6 +54,8 @@ class DatabaseService{
         hora: doc.data()['hora'] ?? "",
         minuto: doc.data()['minuto'] ?? "",
         periodo: doc.data()['periodo'] ?? "",
+        recomendacion: doc.data()['recomendacion'] ?? "",
+        dosis: doc.data()['dosis'] ?? "",
       );
     }).toList();
   }
@@ -93,6 +97,8 @@ class DatabaseService{
         hora: snapshot.data()['hora'],
         minuto: snapshot.data()['minuto'],
         periodo: snapshot.data()['periodo'],
+        recomendacion: snapshot.data()['recomendacion'],
+        dosis: snapshot.data()['dosis'],
     );
   }
 

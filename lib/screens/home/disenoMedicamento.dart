@@ -12,6 +12,7 @@ class MedicamentoDiseno extends StatelessWidget {
   int hora;
   int minuto;
   int dia;
+  String formato = "am";
   @override
   Widget build(BuildContext context) {
     t=noti.localTime();
@@ -41,8 +42,21 @@ class MedicamentoDiseno extends StatelessWidget {
           t = t.add(const Duration(days: 1));
         }}
     }
+
     noti.setTime(t.year, t.month, t.day,hora,minuto);
-    noti.scheduleweeklyNotification(medicamento.idPaciente,medicamento.medicamentoNombre,medicamento.idPaciente);
+    noti.scheduleweeklyNotification(medicamento.idPaciente,medicamento.medicamentoNombre,medicamento.recomendacion);
+    noti.myTimedNotification(medicamento.medicamentoNombre,medicamento.recomendacion,medicamento.periodo);
+    if(hora>12){
+      hora = hora - 12;
+      formato = "pm";
+    }
+    if(hora==12){
+      formato = "pm";
+    }
+    if(hora==0){
+      hora = 12;
+      formato = "am";
+    }
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 1.0.h, horizontal: 1.0.h),
       child: GestureDetector(//padding
@@ -58,13 +72,13 @@ class MedicamentoDiseno extends StatelessWidget {
               ListTile(
                 title: Text("Medicamento: " +medicamento.medicamentoNombre,
                   style: TextStyle(fontSize: 20,color: Colors.black)),
-                subtitle: Text("Cantidad disponible: " + medicamento.cantidad.toString(),
+                subtitle: Text("Cantidad disponible: " + medicamento.cantidad.toString() + "\n" + "Dosis a tomar: " + medicamento.dosis.toString(),
                   style: TextStyle(fontSize: 18,color: Colors.black)) ,
                 ),
               TextButton.icon(
                 icon: Icon(Icons.medical_services),
                 label: Text("Hora de medicamento: " + hora.toString() +
-                    ":" + minuto.toString()),
+                    ":" + minuto.toString() + " " + formato),
                   style: ButtonStyle(
                     textStyle: MaterialStateProperty.all(TextStyle(fontSize: 18,color: Colors.black)),
                     foregroundColor: MaterialStateProperty.all(Colors.black),

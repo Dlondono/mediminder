@@ -71,17 +71,17 @@ class Notifications {
     );
   }
 
-  Future<void> myTimedNotification(int s) async {
+  Future<void> myTimedNotification(String nombre, String descripcion, int p) async {
     final details = NotificationDetails(
-      android: AndroidNotificationDetails("id", "name", "description",
+      android: AndroidNotificationDetails("id", "name", descripcion,
           priority: Priority.max, importance: Importance.max),
     );
-    final tz.TZDateTime now = localTime();
-    tz.TZDateTime scheduleDate = now.add(Duration(seconds: 5));
+    final tz.TZDateTime now = new tz.TZDateTime(tz.local, aYear, aMonth, aDay, aHour, aMin);
+    tz.TZDateTime scheduleDate = now.add(Duration(hours: p));
     await this.flutterLocalNotificationsPlugin.zonedSchedule(
       0,
-      "Notificación de tiempo",
-      "5 segundos",
+      nombre,
+      descripcion,
       scheduleDate,
       details,
       uiLocalNotificationDateInterpretation:
@@ -113,7 +113,6 @@ class Notifications {
       androidAllowWhileIdle: true,
       matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
     );
-    print(idR);
   }
 
   tz.TZDateTime _nextinstanceOfDay() {

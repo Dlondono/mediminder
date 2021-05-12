@@ -27,6 +27,8 @@ class _SettingsFormState extends State<SettingsForm> {
   String _currentHora;
   String _currentCantidad;
   String _currentMinuto;
+  String _currentRecomendacion;
+  String _currentDosis;
 
   @override
   Widget build(BuildContext context) {
@@ -104,6 +106,24 @@ class _SettingsFormState extends State<SettingsForm> {
                                 onChanged: (val) => setState(() => _currentPeriodo = val),
                               ),
                               SizedBox(height: 2.0.h),
+                              TextFormField(
+                                decoration: textInputDecoraton.copyWith(hintText: "Recomendaciones acerca del medicamento"),
+                                validator: (val) =>
+                                val.isEmpty
+                                    ? "Por favor ingrese las recomendaciones del medicamento"
+                                    : null,
+                                onChanged: (val) => setState(() => _currentRecomendacion = val),
+                              ),
+                              SizedBox(height: 2.0.h),
+                              TextFormField(
+                                decoration: textInputDecoraton.copyWith(hintText: "Dosis a tomar"),
+                                validator: (val) =>
+                                val.isEmpty
+                                    ? "Por favor ingrese la dosis correspondiente"
+                                    : null,
+                                onChanged: (val) => setState(() => _currentDosis = val),
+                              ),
+                              SizedBox(height: 2.0.h),
                               ElevatedButton(
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
@@ -116,7 +136,7 @@ class _SettingsFormState extends State<SettingsForm> {
                                   onPressed: () async {
                                     if(_formKey.currentState.validate()){
                                       await DatabaseService()
-                                          .addMedicine(_currentName,_paciente.idPaciente,_currentCantidad,_currentHora,_currentMinuto,_currentPeriodo);
+                                          .addMedicine(_currentName,_paciente.idPaciente,_currentCantidad,_currentHora,_currentMinuto,_currentPeriodo, _currentRecomendacion, _currentDosis);
                                       Navigator.pop(context);
                                     }
                                   }
