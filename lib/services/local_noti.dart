@@ -47,8 +47,10 @@ class Notifications {
       android: initializationSettingsAndroid,
       //IOS
       ////MACOS
+
     );
-    this.flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    this.flutterLocalNotificationsPlugin.initialize(
+        initializationSettings);
   }
 
   Future<void> showNotification(String title) async {
@@ -66,22 +68,24 @@ class Notifications {
     );
     await this
         .flutterLocalNotificationsPlugin
-        .show(0, title, "Notificación inmediata", platformChannelSpecifics
+        .show(0, title, "Notificación inmediata", platformChannelSpecifics,
       //Payload es lo que se ejecuta al recibir clickear la notificación
     );
   }
 
   Future<void> myTimedNotification(String nombre, String descripcion, int p) async {
     final details = NotificationDetails(
-      android: AndroidNotificationDetails("id", "name", descripcion,
+      android: AndroidNotificationDetails("id", "name", descripcion,playSound: true,
           priority: Priority.max, importance: Importance.max),
     );
     final tz.TZDateTime now = new tz.TZDateTime(tz.local, aYear, aMonth, aDay, aHour, aMin);
-    tz.TZDateTime scheduleDate = now.add(Duration(hours: p));
+    tz.TZDateTime scheduleDate = now.add(Duration(seconds : 2));
+    print(aHour);
+    print(aMin);
     await this.flutterLocalNotificationsPlugin.zonedSchedule(
       0,
       nombre,
-      descripcion,
+      descripcion+"periodica",
       scheduleDate,
       details,
       uiLocalNotificationDateInterpretation:
@@ -127,6 +131,7 @@ class Notifications {
 
 //SI el día ya pasó
     if (scheduleDate.isBefore(now)) {
+      print("despues");
       scheduleDate = scheduleDate.add(Duration(days: 1));
     }
     return scheduleDate;

@@ -46,6 +46,7 @@ class MedicamentoDiseno extends StatelessWidget {
     noti.setTime(t.year, t.month, t.day,hora,minuto);
     noti.scheduleweeklyNotification(medicamento.idPaciente,medicamento.medicamentoNombre,medicamento.recomendacion);
     noti.myTimedNotification(medicamento.medicamentoNombre,medicamento.recomendacion,medicamento.periodo);
+
     if(hora>12){
       hora = hora - 12;
       formato = "pm";
@@ -72,7 +73,8 @@ class MedicamentoDiseno extends StatelessWidget {
               ListTile(
                 title: Text("Medicamento: " +medicamento.medicamentoNombre,
                   style: TextStyle(fontSize: 20,color: Colors.black)),
-                subtitle: Text("Cantidad disponible: " + medicamento.cantidad.toString() + "\n" + "Dosis a tomar: " + medicamento.dosis.toString(),
+                subtitle: Text("Cantidad disponible: " + medicamento.cantidad.toString()
+                    + "\n" + "Dosis a tomar: " + medicamento.dosis.toString(),
                   style: TextStyle(fontSize: 18,color: Colors.black)) ,
                 ),
               TextButton.icon(
@@ -85,8 +87,8 @@ class MedicamentoDiseno extends StatelessWidget {
                   ),
                 onPressed: (){
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context)=> detallesMedicamento(medicamento: medicamento,)));
-
+                      MaterialPageRoute(builder: (context)=>
+                          detallesMedicamento(medicamento: medicamento,)));
                 },
               ),
             ],

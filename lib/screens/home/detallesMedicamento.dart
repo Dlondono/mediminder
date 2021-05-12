@@ -33,7 +33,7 @@ class detallesMedicamento extends StatelessWidget {
                 title: Text(medicamento.medicamentoNombre,
                     style: TextStyle(fontSize: 22,color: Colors.black)),
                 subtitle: Text(medicamento.hora.toString()+":"+ medicamento.minuto.toString()
-                    +"\n"+"\n"+"Recomendacion",
+                    +"\n"+"\n"+medicamento.recomendacion,
                     style: TextStyle(fontSize: 20,color: Colors.black)),
               ),
             ),

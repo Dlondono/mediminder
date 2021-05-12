@@ -29,7 +29,9 @@ class _SettingsFormState extends State<SettingsForm> {
   String _currentMinuto;
   String _currentRecomendacion;
   String _currentDosis;
-
+  String _currentPrioridad;
+  final List<String> prioridades=['1 - Prioridad máxima',
+    '2 - Prioridad media','3 - Prioridad normal'];
   @override
   Widget build(BuildContext context) {
     final user=Provider.of<UserLocal>(context);
@@ -40,8 +42,7 @@ class _SettingsFormState extends State<SettingsForm> {
         title: Text('Nuevo medicamento'),
       ),
         body: SingleChildScrollView(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
+          child:  Container(
             padding: EdgeInsets.symmetric(vertical: 2.0.h, horizontal: 5.0.h),
             color: Color.fromRGBO(157, 221, 234, 50),
             child: StreamBuilder<UserData>(
@@ -50,97 +51,120 @@ class _SettingsFormState extends State<SettingsForm> {
                       if (snapshot.hasData) {
                         return Form(
                           key: _formKey,
-                          child: Column(
-                            children: <Widget>[
-                              Text(
-                                _paciente.nombre,
-                                style: TextStyle(
-                                  fontSize: 20.0,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              SizedBox(height: 3.0.h),
-                              TextFormField(
-                                decoration: textInputDecoraton.copyWith(hintText: "Nombre del medicamento"),
-                                //initialValue: _paciente.nombre,
-                                validator: (val) =>
-                                val.isEmpty
-                                    ? "Por favor ingrese un nombre"
-                                    : null,
-                                onChanged: (val) => setState(() => _currentName = val),
-                              ),
-                              SizedBox(height: 2.0.h),
-                              TextFormField(
-                                decoration: textInputDecoraton.copyWith(hintText: "Cantidad disponible del medicamento"),
-                                validator: (val) =>
-                                val.isEmpty
-                                    ? "Por favor ingrese una unidad"
-                                    : null,
-                                onChanged: (val) => setState(() => _currentCantidad = val),
-                              ),
-                              SizedBox(height: 2.0.h),
-                              TextFormField(
-                                decoration: textInputDecoraton.copyWith(hintText: "Hora del medicamento"),
-                                validator: (val) =>
-                                val.isEmpty
-                                    ? "Por favor ingrese la hora del medicamento"
-                                    : null,
-                                onChanged: (val) => setState(() => _currentHora = val),
-                              ),
-                              SizedBox(height: 2.0.h),
-                              TextFormField(
-                                decoration: textInputDecoraton.copyWith(hintText: "Minuto del medicamento"),
-                                validator: (val) =>
-                                val.isEmpty
-                                    ? "Por favor ingrese la hora del medicamento"
-                                    : null,
-                                onChanged: (val) => setState(() => _currentMinuto = val),
-                              ),
-                              SizedBox(height: 2.0.h),
-                              TextFormField(
-                                decoration: textInputDecoraton.copyWith(hintText: "Cada cuanto debe tomar el medicamento"),
-                                validator: (val) =>
-                                val.isEmpty
-                                    ? "Por favor ingrese periodo del medicamento"
-                                    : null,
-                                onChanged: (val) => setState(() => _currentPeriodo = val),
-                              ),
-                              SizedBox(height: 2.0.h),
-                              TextFormField(
-                                decoration: textInputDecoraton.copyWith(hintText: "Recomendaciones acerca del medicamento"),
-                                validator: (val) =>
-                                val.isEmpty
-                                    ? "Por favor ingrese las recomendaciones del medicamento"
-                                    : null,
-                                onChanged: (val) => setState(() => _currentRecomendacion = val),
-                              ),
-                              SizedBox(height: 2.0.h),
-                              TextFormField(
-                                decoration: textInputDecoraton.copyWith(hintText: "Dosis a tomar"),
-                                validator: (val) =>
-                                val.isEmpty
-                                    ? "Por favor ingrese la dosis correspondiente"
-                                    : null,
-                                onChanged: (val) => setState(() => _currentDosis = val),
-                              ),
-                              SizedBox(height: 2.0.h),
-                              ElevatedButton(
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
-                                    foregroundColor: MaterialStateProperty.all(Colors.black),
+                          child: Row(
+                            children:<Widget>[
+                              Expanded(
+                              child: Column(
+                                children: <Widget>[
+                                  Text(
+                                    _paciente.nombre,
+                                    style: TextStyle(
+                                      fontSize: 20.0,
+                                      color: Colors.black,
+                                    ),
                                   ),
-                                  child: Text(
-                                    "Actualizar",
-                                    style: TextStyle(color: Colors.white),
+                                  SizedBox(height: 3.0.h),
+                                  TextFormField(
+                                    decoration: textInputDecoraton.copyWith(hintText: "Nombre del medicamento"),
+                                    //initialValue: _paciente.nombre,
+                                    validator: (val) =>
+                                    val.isEmpty
+                                        ? "Por favor ingrese un nombre"
+                                        : null,
+                                    onChanged: (val) => setState(() => _currentName = val),
                                   ),
-                                  onPressed: () async {
-                                    if(_formKey.currentState.validate()){
-                                      await DatabaseService()
-                                          .addMedicine(_currentName,_paciente.idPaciente,_currentCantidad,_currentHora,_currentMinuto,_currentPeriodo, _currentRecomendacion, _currentDosis);
-                                      Navigator.pop(context);
-                                    }
-                                  }
+                                  SizedBox(height: 2.0.h),
+                                  DropdownButtonFormField(
+                                    value: _currentPrioridad ,
+                                      items: prioridades.map((prior) {
+                                        return DropdownMenuItem(
+                                          value: prior,
+                                          child:Text('$prior'),
+                                        );
+                                      }).toList(),
+                                    onChanged: (val) =>
+                                        setState(() => _currentPrioridad = val),
+                                    decoration: textInputDecoraton.copyWith(hintText: "Prioridad"),
+                                    validator: (val) =>
+                                    val.isEmpty
+                                        ? "Por favor seleccione una prioridad"
+                                        : null,
+                                  ),
+                                  SizedBox(height: 2.0.h),
+                                  TextFormField(
+                                    decoration: textInputDecoraton.copyWith(hintText: "Cantidad disponible del medicamento"),
+                                    validator: (val) =>
+                                    val.isEmpty
+                                        ? "Por favor ingrese una unidad"
+                                        : null,
+                                    onChanged: (val) => setState(() => _currentCantidad = val),
+                                  ),
+                                  SizedBox(height: 2.0.h),
+                                  TextFormField(
+                                    decoration: textInputDecoraton.copyWith(hintText: "Hora del medicamento"),
+                                    validator: (val) =>
+                                    val.isEmpty
+                                        ? "Por favor ingrese la hora del medicamento"
+                                        : null,
+                                    onChanged: (val) => setState(() => _currentHora = val),
+                                  ),
+                                  SizedBox(height: 2.0.h),
+                                  TextFormField(
+                                    decoration: textInputDecoraton.copyWith(hintText: "Minuto del medicamento"),
+                                    validator: (val) =>
+                                    val.isEmpty
+                                        ? "Por favor ingrese la hora del medicamento"
+                                        : null,
+                                    onChanged: (val) => setState(() => _currentMinuto = val),
+                                  ),
+                                  SizedBox(height: 2.0.h),
+                                  TextFormField(
+                                    decoration: textInputDecoraton.copyWith(hintText: "Cada cuanto debe tomar el medicamento"),
+                                    validator: (val) =>
+                                    val.isEmpty
+                                        ? "Por favor ingrese periodo del medicamento"
+                                        : null,
+                                    onChanged: (val) => setState(() => _currentPeriodo = val),
+                                  ),
+                                  SizedBox(height: 2.0.h),
+                                  TextFormField(
+                                    decoration: textInputDecoraton.copyWith(hintText: "Recomendaciones acerca del medicamento"),
+                                    validator: (val) =>
+                                    val.isEmpty
+                                        ? "Por favor ingrese las recomendaciones del medicamento"
+                                        : null,
+                                    onChanged: (val) => setState(() => _currentRecomendacion = val),
+                                  ),
+                                  SizedBox(height: 2.0.h),
+                                  TextFormField(
+                                    decoration: textInputDecoraton.copyWith(hintText: "Dosis a tomar"),
+                                    validator: (val) =>
+                                    val.isEmpty
+                                        ? "Por favor ingrese la dosis correspondiente"
+                                        : null,
+                                    onChanged: (val) => setState(() => _currentDosis = val),
+                                  ),
+                                  SizedBox(height: 2.0.h),
+                                  ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
+                                        foregroundColor: MaterialStateProperty.all(Colors.black),
+                                      ),
+                                      child: Text(
+                                        "Actualizar",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      onPressed: () async {
+                                        if(_formKey.currentState.validate()){
+                                          await DatabaseService()
+                                              .addMedicine(_currentName,_paciente.idPaciente,_currentCantidad,_currentHora,_currentMinuto,_currentPeriodo, _currentRecomendacion, _currentDosis);
+                                          Navigator.pop(context);
+                                        }
+                                      }
+                                  ),
+                                ],
                               ),
+                            ),
                             ],
                           ),
                         );
