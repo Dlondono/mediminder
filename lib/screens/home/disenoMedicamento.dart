@@ -42,7 +42,7 @@ class MedicamentoDiseno extends StatelessWidget {
           t = t.add(const Duration(days: 1));
         }}
     }
-
+    medicamento.setTime(hora, minuto);
     noti.setTime(t.year, t.month, t.day,hora,minuto);
     noti.scheduleweeklyNotification(medicamento.idPaciente,medicamento.medicamentoNombre,medicamento.recomendacion);
     noti.myTimedNotification(medicamento.medicamentoNombre,medicamento.recomendacion,medicamento.periodo);

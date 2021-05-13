@@ -79,9 +79,7 @@ class Notifications {
           priority: Priority.max, importance: Importance.max),
     );
     final tz.TZDateTime now = new tz.TZDateTime(tz.local, aYear, aMonth, aDay, aHour, aMin);
-    tz.TZDateTime scheduleDate = now.add(Duration(seconds : 2));
-    print(aHour);
-    print(aMin);
+    tz.TZDateTime scheduleDate = now.add(Duration(hours : p));
     await this.flutterLocalNotificationsPlugin.zonedSchedule(
       0,
       nombre,
@@ -129,11 +127,6 @@ class Notifications {
     tz.TZDateTime scheduleDate =
     tz.TZDateTime(tz.local, aYear, aMonth, aDay, aHour, aMin);
 
-//SI el día ya pasó
-    if (scheduleDate.isBefore(now)) {
-      print("despues");
-      scheduleDate = scheduleDate.add(Duration(days: 1));
-    }
     return scheduleDate;
   }
 }
