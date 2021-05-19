@@ -77,7 +77,6 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                         setState(()=>codigo=val);
                       }
                   ),
-
                   SizedBox(height: 20.0),
                   ElevatedButton(
                     style: ButtonStyle(

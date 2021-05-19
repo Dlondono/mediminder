@@ -28,8 +28,7 @@ class InterfazSupervisor extends StatelessWidget {
               icon: Icon(Icons.person),
               label: Text("Salir"),
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
-                foregroundColor: MaterialStateProperty.all(Colors.black),
+                foregroundColor: MaterialStateProperty.all(Colors.white),
               ),
               onPressed: ()async{
                 await _auth.signOut();
@@ -50,8 +49,7 @@ class InterfazSupervisor extends StatelessWidget {
                   ),
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
-                      foregroundColor: MaterialStateProperty.all(Colors.black),
-                    ),
+                      ),
                   onPressed:(){
                     Navigator.push(context, MaterialPageRoute(builder: (context)=> PacienteNuevo()));
                   },
