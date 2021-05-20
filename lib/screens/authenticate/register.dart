@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mediminder/services/auth.dart';
+import 'package:mediminder/shared/constants.dart';
 class Register extends StatefulWidget {
   final Function toggleView;
   Register({this.toggleView});
@@ -21,15 +22,15 @@ class _RegisterState extends State<Register> {
     return Scaffold(
       //backgroundColor: Colors.blue[100],
       appBar: AppBar(
-        backgroundColor: Colors.blue[600],
+        backgroundColor: Color.fromRGBO(9, 111, 167, 50),
         elevation: 1.0,
-        title: Text('Registro supervisor'),
+        title: Text('Registro'),
         actions: <Widget>[
           TextButton.icon(
             icon: Icon(Icons.person),
             label: Text("Iniciar sesion"),
             style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all(Colors.black),
+              foregroundColor: MaterialStateProperty.all(Colors.white),
             ),
             onPressed: (){
               widget.toggleView();
@@ -39,6 +40,8 @@ class _RegisterState extends State<Register> {
       ),
       body: SingleChildScrollView(
         child: Container(
+          height: MediaQuery.of(context).size.height,
+          decoration: BoxDecoration(color: Color.fromRGBO(157, 221, 234, 50)),
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
           child: Form(
             key: _formKey,
@@ -46,19 +49,15 @@ class _RegisterState extends State<Register> {
               children: <Widget>[
                 SizedBox(height: 20.0),
                 TextFormField(
-                    decoration: InputDecoration(border: OutlineInputBorder(),
-                        hintText: "Correo"
-                    ),
-                  validator: (val)=> val.isEmpty ? "Ingrese su correo":null,
+                    decoration: textInputDecoraton.copyWith(hintText: "Correo"),
+                    validator: (val)=> val.isEmpty ? "Ingrese su correo":null,
                     onChanged: (val){
                       setState(()=>email=val);
                     }
                 ),
                 SizedBox(height: 20.0),
                 TextFormField(
-                    decoration: InputDecoration(border: OutlineInputBorder(),
-                        hintText: "Nombre"
-                    ),
+                    decoration: textInputDecoraton.copyWith(hintText: "Nombre"),
                     validator: (val)=> val.isEmpty ? "Nombre":null,
                     onChanged: (val){
                       setState(()=>nombre=val);
@@ -66,9 +65,7 @@ class _RegisterState extends State<Register> {
                 ),
                 SizedBox(height: 20.0),
                 TextFormField(
-                    decoration: InputDecoration(border: OutlineInputBorder(),
-                        hintText: "Identificacion"
-                    ),
+                    decoration: textInputDecoraton.copyWith(hintText: "Identificacion"),
                     validator: (val)=> val.isEmpty ? "Identificacion":null,
                     onChanged: (val){
                       setState(()=>id=val);
@@ -76,9 +73,7 @@ class _RegisterState extends State<Register> {
                 ),
                 SizedBox(height: 20.0),
                 TextFormField(
-                  decoration: InputDecoration(border: OutlineInputBorder(),
-                      hintText: "Clave "
-                  ),
+                  decoration: textInputDecoraton.copyWith(hintText: "Clave"),
                   obscureText: true,
                   validator: (val)=> val.length<6 ? "Su clave debe ser mayor a 6 caracteres":null,
                   onChanged:(val){
@@ -87,8 +82,11 @@ class _RegisterState extends State<Register> {
                 ),
                 SizedBox(height: 20.0),
                 ElevatedButton(
-                  child: Text("Registrarse",
-                    style: TextStyle(color: Colors.black),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
+                  ),
+                  child: Text("Agregar",
+                    style: TextStyle(color: Colors.white,fontSize: 16),
                   ),
                   onPressed: () async{
                     if(_formKey.currentState.validate()){
