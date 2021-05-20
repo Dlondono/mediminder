@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:mediminder/models/alarmaMedicamento.dart';
 import 'package:mediminder/models/medicamento.dart';
 import 'package:mediminder/services/local_noti.dart';
 import 'package:sizer/sizer.dart';
 
 class detallesMedicamento extends StatelessWidget {
-  final Medicamento medicamento;
+  final AlarmaMedicamento medicamento;
   detallesMedicamento({this.medicamento});
   final Notifications noti = new Notifications();
   @override
   Widget build(BuildContext context) {
-    DateTime t = noti.localTime();
-    DateTime t2 = new DateTime(t.year,t.month,t.day,medicamento.hora,medicamento.minuto);
     return Scaffold(
       appBar: AppBar(
         title: Text(medicamento.medicamentoNombre,style: TextStyle(
@@ -36,8 +35,8 @@ class detallesMedicamento extends StatelessWidget {
                 leading: Icon(Icons.medical_services),
                 title: Text(medicamento.medicamentoNombre,
                     style: TextStyle(fontSize: 22,color: Colors.black)),
-                subtitle: Text(medicamento.hora.toString()+":"+ medicamento.minuto.toString()
-                    +"\n"+"\n"+medicamento.recomendacion,
+                subtitle: Text(medicamento.hora.hour.toString()+":"+ medicamento.hora.minute.toString()
+                    +"\n"+"\n"+medicamento.descripcion,
                     style: TextStyle(fontSize: 20,color: Colors.black)),
               ),
             ),
@@ -52,10 +51,9 @@ class detallesMedicamento extends StatelessWidget {
                 foregroundColor: MaterialStateProperty.all(Colors.black),
               ),
               onPressed:(){
-                t2 = t2.add(Duration(hours: medicamento.periodo));
-                noti.setTime(t2.year, t2.month, t2.day, t2.hour, t2.minute);
-                noti.scheduleweeklyNotification(medicamento.idPaciente,medicamento.medicamentoNombre,medicamento.recomendacion);
-                medicamento.setTime(t2.hour, t2.minute);
+                medicamento.hora = medicamento.hora.add(Duration(hours: medicamento.periodo));
+                noti.setTime(medicamento.hora.year, medicamento.hora.month, medicamento.hora.day, medicamento.hora.hour, medicamento.hora.minute);
+                noti.scheduleweeklyNotification(medicamento.idPaciente,medicamento.medicamentoNombre,medicamento.descripcion);
                 Navigator.pop(context);
               },
             ),
@@ -70,10 +68,9 @@ class detallesMedicamento extends StatelessWidget {
                 foregroundColor: MaterialStateProperty.all(Colors.black),
               ),
               onPressed:(){
-                t2 = t2.add(const Duration(minutes: 5));
-                noti.setTime(t2.year, t2.month, t2.day, t2.hour, t2.minute);
-                noti.scheduleweeklyNotification(medicamento.idPaciente,medicamento.medicamentoNombre,medicamento.recomendacion);
-                medicamento.setTime(t2.hour, t2.minute);
+                medicamento.hora = medicamento.hora.add(const Duration(minutes: 5));
+                noti.setTime(medicamento.hora.year, medicamento.hora.month, medicamento.hora.day, medicamento.hora.hour, medicamento.hora.minute);
+                noti.scheduleweeklyNotification(medicamento.idPaciente,medicamento.medicamentoNombre,medicamento.descripcion);
                 Navigator.pop(context);
               },
             )
