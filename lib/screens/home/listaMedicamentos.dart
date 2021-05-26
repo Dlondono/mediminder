@@ -39,7 +39,9 @@ class _MedicamentosState extends State<Medicamentos> {
       if(t.hour==horaNueva.hour && t.minute>horaNueva.minute){
         horaNueva = horaNueva.add(Duration(hours: item.periodo));
       }
-     medi = new AlarmaMedicamento(medicamentoNombre:item.medicamentoNombre,descripcion:item.recomendacion,cantidad:item.cantidad,hora:horaNueva,periodo:item.periodo,idPaciente:item.idPaciente,dosis: item.dosis);
+     medi = new AlarmaMedicamento(medicamentoNombre:item.medicamentoNombre,
+         descripcion:item.recomendacion,cantidad:item.cantidad,hora:horaNueva,
+         periodo:item.periodo,idPaciente:item.idPaciente,dosis: item.dosis,uid: item.uid);
      alarmaLista.add(medi);
     });
     alarmaLista.sort((alarmaA, alarmaB) => alarmaA.hora.hour>= alarmaB.hora.hour ? 1:0);

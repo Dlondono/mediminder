@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mediminder/models/medicamento.dart';
 import 'package:mediminder/models/paciente.dart';
@@ -20,8 +22,12 @@ class DatabaseService{
     });
   }
 
-  Future addMedicine(String medicina,String id, String cantidad, String hora,  String minuto, String periodo, String recomendacion, String dosis) async{
-    return await coleccionMedicamentos.add({
+  Future addMedicine(String medicina,String id, String cantidad, String hora,
+      String minuto, String periodo, String recomendacion, String dosis) async{
+    Random random=new Random(3);
+    int rnd=random.nextInt(100);
+    String idR=id+rnd.toString();
+    return await coleccionMedicamentos.doc(idR).set({
       "medicamentoNombre": medicina,
       "idPaciente": id,
       "cantidad": int.parse(cantidad),
@@ -30,9 +36,15 @@ class DatabaseService{
       "periodo": int.parse(periodo),
       "recomendacion": recomendacion,
       "dosis": int.parse(dosis),
+      "uid":idR,
     });
   }
 
+  Future updateCantidad(int cantidad,String medUid) async{
+    return await coleccionMedicamentos.doc(medUid).update({
+      "cantidad":cantidad,
+    });
+  }
   //convetir pacientes desde la snapshot de firebase
   List<Paciente> _listaPacientesFromSnapshot(QuerySnapshot snapshot){
     return snapshot.docs.map((doc){
@@ -56,6 +68,7 @@ class DatabaseService{
         periodo: doc.data()['periodo'] ?? "",
         recomendacion: doc.data()['recomendacion'] ?? "",
         dosis: doc.data()['dosis'] ?? "",
+        uid:doc.id,
       );
     }).toList();
   }
@@ -99,6 +112,7 @@ class DatabaseService{
         periodo: snapshot.data()['periodo'],
         recomendacion: snapshot.data()['recomendacion'],
         dosis: snapshot.data()['dosis'],
+      uid: snapshot.id,
     );
   }
 

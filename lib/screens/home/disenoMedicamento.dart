@@ -13,6 +13,7 @@ class MedicamentoDiseno extends StatelessWidget {
   String formato = "am";
   @override
   Widget build(BuildContext context) {
+    print(medicamento.uid+" UID DISENOMEDICAMENTO");
     noti.setTime(medicamento.hora.year, medicamento.hora.month, medicamento.hora.day,medicamento.hora.hour,medicamento.hora.minute);
     noti.scheduleweeklyNotification(medicamento.idPaciente,medicamento.medicamentoNombre,medicamento.descripcion);
     hora = medicamento.hora.hour;

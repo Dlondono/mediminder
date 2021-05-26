@@ -34,7 +34,7 @@ class _VistaPacienteState extends State<VistaPaciente> {
                   icon: Icon(Icons.person),
                   label: Text("Salir"),
                   style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all(Colors.black),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
                   ),
                   onPressed: ()async{
                     await _auth.signOut();
