@@ -44,7 +44,7 @@ class _MedicamentosState extends State<Medicamentos> {
          periodo:item.periodo,idPaciente:item.idPaciente,dosis: item.dosis,uid: item.uid);
      alarmaLista.add(medi);
     });
-    alarmaLista.sort((alarmaA, alarmaB) => alarmaA.hora.hour>= alarmaB.hora.hour ? 1:0);
+    alarmaLista.sort((alarmaA, alarmaB) => alarmaA.hora.isBefore(alarmaB.hora) ? 0:1);
 
     return ListView.builder(
         itemCount: alarmaLista.length,

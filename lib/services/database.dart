@@ -39,6 +39,14 @@ class DatabaseService{
       "uid":idR,
     });
   }
+  Future updateMedicine(String hora,String minuto,String cantidad,String id) async{
+
+    return await coleccionMedicamentos.doc(id).update({
+      "cantidad": int.parse(cantidad),
+      "hora": int.parse(hora),
+      "minuto":int.parse(minuto),
+    });
+  }
 
   Future updateCantidad(int cantidad,String medUid) async{
     return await coleccionMedicamentos.doc(medUid).update({

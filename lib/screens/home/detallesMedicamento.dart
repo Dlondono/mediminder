@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:mediminder/models/alarmaMedicamento.dart';
 import 'package:mediminder/models/medicamento.dart';
+import 'package:mediminder/screens/home/vistaPaciente.dart';
 import 'package:mediminder/services/database.dart';
 import 'package:mediminder/services/local_noti.dart';
 import 'package:sizer/sizer.dart';
@@ -48,31 +49,41 @@ class detallesMedicamento extends StatelessWidget {
               icon: Icon(Icons.check,color: Colors.white,),
               label: Text("Ya me lo tomé",style: TextStyle(
                   fontSize: 20,color: Colors.white
-              ),),
+                ),
+              ),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
                 foregroundColor: MaterialStateProperty.all(Colors.black),
               ),
               onPressed:(){
                 medicamento.hora = medicamento.hora.add(Duration(hours: medicamento.periodo));
-                noti.setTime(medicamento.hora.year, medicamento.hora.month, medicamento.hora.day, medicamento.hora.hour, medicamento.hora.minute);
+                noti.setTime(medicamento.hora.year, medicamento.hora.month
+                    , medicamento.hora.day, medicamento.hora.hour, medicamento.hora.minute);
                 noti.scheduleweeklyNotification(medicamento.idPaciente,medicamento.medicamentoNombre,medicamento.descripcion);
                 this.medicamento.cantidad=this.medicamento.cantidad-1;
                 _database.updateCantidad(this.medicamento.cantidad,medicamento.uid);
-                print(medicamento.uid+"UIDs");
                 if(this.medicamento.cantidad<=5){
                   noti.showNotification("Quedan pocas unidades de"+this.medicamento.medicamentoNombre);
                 }
-
-                Navigator.pop(context);
-              },
+                print(medicamento.hora.hour);
+                print("minuto"+ medicamento.hora.minute.toString());
+                if(this.medicamento.cantidad<=0){
+                  this.medicamento.cantidad=0;
+                }
+                _database.updateMedicine(medicamento.hora.hour.toString(),
+                    medicamento.hora.minute.toString(), medicamento.cantidad.toString(), medicamento.uid);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context)=>
+                        VistaPaciente()));
+                },
             ),
             SizedBox(height: 2.0.h),
             TextButton.icon(
               icon: Icon(Icons.timer,color: Colors.white,),
               label: Text("Posponer",style: TextStyle(
                   fontSize: 20,color: Colors.white
-              ),),
+                ),
+              ),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
                 foregroundColor: MaterialStateProperty.all(Colors.black),
@@ -81,6 +92,8 @@ class detallesMedicamento extends StatelessWidget {
                 medicamento.hora = medicamento.hora.add(const Duration(minutes: 5));
                 noti.setTime(medicamento.hora.year, medicamento.hora.month, medicamento.hora.day, medicamento.hora.hour, medicamento.hora.minute);
                 noti.scheduleweeklyNotification(medicamento.idPaciente,medicamento.medicamentoNombre,medicamento.descripcion);
+                _database.updateMedicine(medicamento.hora.hour.toString(),
+                    medicamento.hora.minute.toString(), medicamento.cantidad.toString(), medicamento.uid);
                 Navigator.pop(context);
               },
             )
