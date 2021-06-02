@@ -1,9 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:mediminder/models/alarmaMedicamento.dart';
-import 'package:mediminder/models/medicamento.dart';
-import 'package:mediminder/screens/home/home.dart';
-import 'package:mediminder/screens/home/vistaPaciente.dart';
 import 'package:mediminder/services/database.dart';
 import 'package:mediminder/services/local_noti.dart';
 import 'package:sizer/sizer.dart';

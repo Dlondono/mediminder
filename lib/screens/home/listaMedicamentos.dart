@@ -21,7 +21,7 @@ class Medicamentos extends StatefulWidget {
 class _MedicamentosState extends State<Medicamentos> {
   final DatabaseService database=DatabaseService();
   final FirebaseAuth auth=FirebaseAuth.instance;
-  DateTime t = tz.TZDateTime.now(tz.local);
+  DateTime horaActualLocal = tz.TZDateTime.now(tz.local);
   @override
   Widget build(BuildContext context) {
     //final users= Provider.of<List<UserData>>(context)?? [];
@@ -32,11 +32,18 @@ class _MedicamentosState extends State<Medicamentos> {
     AlarmaMedicamento medi;
     medicamentos.removeWhere((item) => item.idPaciente!=uid);
     medicamentos.forEach((item) {
-      DateTime horaNueva = new DateTime(t.year,t.month,t.day,item.hora,item.minuto);
-      while(t.hour>horaNueva.hour && t.day==horaNueva.day){
-            horaNueva = horaNueva.add(Duration(hours: item.periodo));
+      DateTime horaNueva = new DateTime(item.year,
+          item.mes,item.dia,item.hora,item.minuto);
+
+      if(horaNueva.isBefore(horaActualLocal)) {
+        while (horaActualLocal.hour > horaNueva.hour && horaActualLocal.day == horaNueva.day) {
+          horaNueva = horaNueva.add(Duration(hours: item.periodo));
+          if(horaActualLocal.day>horaNueva.day){
+            horaNueva.add(Duration(days: 1));
+          }
+        }
       }
-      if(t.hour==horaNueva.hour && t.minute>horaNueva.minute){
+      if(horaActualLocal.hour==horaNueva.hour && horaActualLocal.minute>horaNueva.minute){
         horaNueva = horaNueva.add(Duration(hours: item.periodo));
       }
      medi = new AlarmaMedicamento(medicamentoNombre:item.medicamentoNombre,
