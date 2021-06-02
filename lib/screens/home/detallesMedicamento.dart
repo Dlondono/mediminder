@@ -1,8 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:mediminder/models/alarmaMedicamento.dart';
-import 'package:mediminder/models/medicamento.dart';
-import 'package:mediminder/screens/home/vistaPaciente.dart';
 import 'package:mediminder/services/database.dart';
 import 'package:mediminder/services/local_noti.dart';
 import 'package:sizer/sizer.dart';
@@ -56,25 +54,29 @@ class detallesMedicamento extends StatelessWidget {
                 foregroundColor: MaterialStateProperty.all(Colors.black),
               ),
               onPressed:(){
+                if(medicamento.hora.hour+medicamento.periodo>23){
+                  medicamento.dia=medicamento.dia+1;
+                  print(medicamento.dia);
+                }
                 medicamento.hora = medicamento.hora.add(Duration(hours: medicamento.periodo));
                 noti.setTime(medicamento.hora.year, medicamento.hora.month
-                    , medicamento.hora.day, medicamento.hora.hour, medicamento.hora.minute);
-                noti.scheduleweeklyNotification(medicamento.idPaciente,medicamento.medicamentoNombre,medicamento.descripcion);
+                    , medicamento.dia, medicamento.hora.hour, medicamento.hora.minute);
+                noti.scheduleweeklyNotification(medicamento.idPaciente,
+                    medicamento.medicamentoNombre,medicamento.descripcion);
                 this.medicamento.cantidad=this.medicamento.cantidad-1;
                 _database.updateCantidad(this.medicamento.cantidad,medicamento.uid);
                 if(this.medicamento.cantidad<=5){
-                  noti.showNotification("Quedan pocas unidades de"+this.medicamento.medicamentoNombre);
+                  noti.showNotification("Quedan pocas unidades de "+this.medicamento.medicamentoNombre);
                 }
-                print(medicamento.hora.hour);
-                print("minuto"+ medicamento.hora.minute.toString());
                 if(this.medicamento.cantidad<=0){
                   this.medicamento.cantidad=0;
                 }
-                _database.updateMedicine(medicamento.hora.hour.toString(),
-                    medicamento.hora.minute.toString(), medicamento.cantidad.toString(), medicamento.uid);
-                Navigator.push(context,
+                _database.updateMedicine(medicamento.dia,medicamento.hora.hour,
+                    medicamento.hora.minute, medicamento.cantidad, medicamento.uid);
+                /*Navigator.push(context,
                     MaterialPageRoute(builder: (context)=>
-                        VistaPaciente()));
+                        Home()));*/
+                Navigator.pop(context);
                 },
             ),
             SizedBox(height: 2.0.h),
@@ -92,8 +94,8 @@ class detallesMedicamento extends StatelessWidget {
                 medicamento.hora = medicamento.hora.add(const Duration(minutes: 5));
                 noti.setTime(medicamento.hora.year, medicamento.hora.month, medicamento.hora.day, medicamento.hora.hour, medicamento.hora.minute);
                 noti.scheduleweeklyNotification(medicamento.idPaciente,medicamento.medicamentoNombre,medicamento.descripcion);
-                _database.updateMedicine(medicamento.hora.hour.toString(),
-                    medicamento.hora.minute.toString(), medicamento.cantidad.toString(), medicamento.uid);
+                _database.updateMedicine(medicamento.dia,medicamento.hora.hour,
+                    medicamento.hora.minute, medicamento.cantidad, medicamento.uid);
                 Navigator.pop(context);
               },
             )

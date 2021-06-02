@@ -1,6 +1,6 @@
 import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:mediminder/models/medicamento.dart';
 import 'package:mediminder/models/paciente.dart';
 import 'package:mediminder/models/userLocal.dart';
@@ -24,7 +24,7 @@ class DatabaseService{
 
   Future addMedicine(String medicina,String id, String cantidad, String hora,
       String minuto, String periodo, String recomendacion, String dosis) async{
-    Random random=new Random(3);
+    Random random=new Random();
     int rnd=random.nextInt(100);
     String idR=id+rnd.toString();
     return await coleccionMedicamentos.doc(idR).set({
@@ -37,14 +37,17 @@ class DatabaseService{
       "recomendacion": recomendacion,
       "dosis": int.parse(dosis),
       "uid":idR,
+      "dia":DateTime.now().day,
+      "mes":DateTime.now().month,
+      "año":DateTime.now().year,
     });
   }
-  Future updateMedicine(String hora,String minuto,String cantidad,String id) async{
-
+  Future updateMedicine(int dia,int hora,int minuto,int cantidad,String id) async{
     return await coleccionMedicamentos.doc(id).update({
-      "cantidad": int.parse(cantidad),
-      "hora": int.parse(hora),
-      "minuto":int.parse(minuto),
+      "cantidad": cantidad,
+      "hora":hora,
+      "minuto":minuto,
+      "dia":dia,
     });
   }
 
@@ -77,6 +80,9 @@ class DatabaseService{
         recomendacion: doc.data()['recomendacion'] ?? "",
         dosis: doc.data()['dosis'] ?? "",
         uid:doc.id,
+        dia: doc.data()['dia'] ?? "",
+        mes:doc.data()['mes'] ?? "",
+        year:doc.data()['año'] ?? "",
       );
     }).toList();
   }
