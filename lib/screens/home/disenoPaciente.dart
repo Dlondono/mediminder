@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mediminder/models/paciente.dart';
+import 'package:mediminder/screens/home/listaInformes.dart';
 import 'package:mediminder/screens/home/settings_form.dart';
 import 'package:sizer/sizer.dart';
 
@@ -32,6 +33,18 @@ class PacienteDiseno extends StatelessWidget {
               onPressed: (){
                 Navigator.push(context, MaterialPageRoute(
                     builder: (context)=> SettingsForm(paciente: paciente)));
+
+              },
+            ),
+            TextButton.icon(
+              icon: Icon(Icons.arrow_forward_rounded),
+              label: Text("Ver informes"),
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all(Colors.black),
+              ),
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(
+                    builder: (context)=> listaInformes(paciente: paciente)));
 
               },
             ),
