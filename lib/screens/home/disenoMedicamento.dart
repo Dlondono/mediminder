@@ -40,7 +40,7 @@ class MedicamentoDiseno extends StatelessWidget {
           child: Column(
             children: <Widget>[
               ListTile(
-                title: Text("Medicamento: " +medicamento.medicamentoNombre,
+                title: Text(medicamento.dia.toString()+"Medicamento: " +medicamento.medicamentoNombre,
                   style: TextStyle(fontSize: 20,color: Colors.black)),
                 subtitle: Text("Cantidad disponible: " + medicamento.cantidad.toString()
                     + "\n" + "Dosis a tomar: " + medicamento.dosis.toString(),

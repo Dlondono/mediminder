@@ -41,7 +41,9 @@ class _MedicamentosState extends State<Medicamentos> {
       }
      medi = new AlarmaMedicamento(medicamentoNombre:item.medicamentoNombre,
          descripcion:item.recomendacion,cantidad:item.cantidad,hora:horaNueva,
-         periodo:item.periodo,idPaciente:item.idPaciente,dosis: item.dosis,uid: item.uid);
+         periodo:item.periodo,idPaciente:item.idPaciente,dosis: item.dosis,uid: item.uid,
+       dia: item.dia,mes: item.mes,year: item.year
+     );
      alarmaLista.add(medi);
     });
     alarmaLista.sort((alarmaA, alarmaB) => alarmaA.hora.isBefore(alarmaB.hora) ? 0:1);
