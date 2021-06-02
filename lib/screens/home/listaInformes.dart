@@ -27,16 +27,7 @@ class _listaInformesState extends State<listaInformes> {
         title: Text("Lista de informes"),
         backgroundColor: Color.fromRGBO(9, 111, 167, 50),
         actions: <Widget>[
-          TextButton.icon(
-            icon: Icon(Icons.person),
-            label: Text("Salir"),
-            style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all(Colors.white),
-            ),
-            onPressed: ()async{
-              //await _auth.signOut();
-            },
-          )
+          
         ],
       ),
       body: Container(
