@@ -7,9 +7,7 @@ import 'package:mediminder/models/userLocal.dart';
 import 'package:mediminder/screens/home/disenoMedicamento.dart';
 import 'package:mediminder/services/database.dart';
 import 'package:provider/provider.dart';
-import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
-
 
 class Medicamentos extends StatefulWidget {
   final String id;
