@@ -14,13 +14,40 @@ class listaInformes extends StatefulWidget {
 class _listaInformesState extends State<listaInformes> {
   @override
   Widget build(BuildContext context) {
-    final informes=Provider.of<List<Informe>>(context)?? [];
+    //final informes=Provider.of<List<Informe>>(context)?? [];
+    Informe inf=new Informe();
+    inf.delay="delay";
+    inf.nombreMedicamento="nombreMed";
+    inf.idMedicamento="id";
+    inf.fecha=DateTime.now();
+    List<Informe> informes=[inf];
 
-    return ListView.builder(
-      itemCount: informes.length,
-      itemBuilder: (context,index){
-        return InformeDiseno(informe: informes[index]);
-      }
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Lista de informes"),
+        backgroundColor: Color.fromRGBO(9, 111, 167, 50),
+        actions: <Widget>[
+          TextButton.icon(
+            icon: Icon(Icons.person),
+            label: Text("Salir"),
+            style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all(Colors.white),
+            ),
+            onPressed: ()async{
+              //await _auth.signOut();
+            },
+          )
+        ],
+      ),
+      body: Container(
+        decoration: BoxDecoration(color: Color.fromRGBO(157, 221, 234, 50)),
+        child: ListView.builder(
+          itemCount: informes.length,
+          itemBuilder: (context,index){
+            return InformeDiseno(informe: informes[index]);
+          }
+        ),
+      ),
     );
   }
 }

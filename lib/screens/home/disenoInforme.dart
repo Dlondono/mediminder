@@ -21,11 +21,9 @@ class InformeDiseno extends StatelessWidget {
           child: Column(
             children: <Widget>[
               ListTile(
-                title: Text(informe.nombreMedicamento+" "+informe.delay,
+                title: Text(informe.nombreMedicamento+ "\n" +informe.delay,
                     style: TextStyle(fontSize: 20,color: Colors.black)),
-                subtitle: Text( "asd",
-                    style: TextStyle(fontSize: 18,color: Colors.black)) ,
-              ),
+                ),
               /*TextButton.icon(
                 icon: Icon(Icons.medical_services),
                 label: Text("Hora de medicamento: " + hora.toString() +

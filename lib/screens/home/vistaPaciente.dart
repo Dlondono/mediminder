@@ -20,8 +20,8 @@ class _VistaPacienteState extends State<VistaPaciente> {
   Widget build(BuildContext context) {
   final User user=auth.currentUser;
   final String uid=user.uid;
-
   final CollectionReference coleccion = FirebaseFirestore.instance.collection("Usuarios");
+
         return StreamProvider<List<Medicamento>>.value(
           value: DatabaseService().medicamentos,
           child: Scaffold(
