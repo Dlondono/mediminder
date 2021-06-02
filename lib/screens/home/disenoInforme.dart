@@ -14,14 +14,14 @@ class InformeDiseno extends StatelessWidget {
               builder: (context)=> detallesMedicamento(medicamento:medicamento)));
         */
         },
-
         child: Card(
           color: Color.fromRGBO(255, 255, 255, 50),
           margin: EdgeInsets.symmetric(vertical: 1.0.h, horizontal: 3.0.h),
           child: Column(
             children: <Widget>[
               ListTile(
-                title: Text(informe.nombreMedicamento+ "\n" +informe.delay,
+                title: Text(informe.nombreMedicamento+ "\n" +informe.delay+ "\n"
+                    +informe.fecha.toString(),
                     style: TextStyle(fontSize: 20,color: Colors.black)),
                 ),
               /*TextButton.icon(
