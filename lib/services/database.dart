@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mediminder/models/alarmaMedicamento.dart';
 import 'package:mediminder/models/medicamento.dart';
 import 'package:mediminder/models/paciente.dart';
 import 'package:mediminder/models/userLocal.dart';
@@ -13,6 +14,7 @@ class DatabaseService{
   final CollectionReference coleccionUsuarios = FirebaseFirestore.instance.collection("Usuarios");
   final CollectionReference coleccionPacientes = FirebaseFirestore.instance.collection("Pacientes");
   final CollectionReference coleccionMedicamentos = FirebaseFirestore.instance.collection("Medicamentos");
+  final CollectionReference coleccionInformes=FirebaseFirestore.instance.collection("Informes");
 
   Future updateUserData(String nombre,String id, String tipo) async{
     return await coleccionUsuarios.doc(uid).set({
@@ -50,12 +52,25 @@ class DatabaseService{
       "dia":dia,
     });
   }
-
   Future updateCantidad(int cantidad,String medUid) async{
     return await coleccionMedicamentos.doc(medUid).update({
       "cantidad":cantidad,
     });
   }
+
+  Future addInforme(String id,AlarmaMedicamento medicamento,String nombrePaciente,String delay) async{
+    Random random=new Random();
+    int rnd=random.nextInt(100);
+    String idR=id+rnd.toString();
+    return await coleccionInformes.doc(idR).set({
+      "nombrePaciente":nombrePaciente,
+      "medicamentoNombre": medicamento.medicamentoNombre,
+      "idPaciente":medicamento.idPaciente,
+      "fecha":medicamento.hora,
+      "delay":delay
+    });
+  }
+
   //convetir pacientes desde la snapshot de firebase
   List<Paciente> _listaPacientesFromSnapshot(QuerySnapshot snapshot){
     return snapshot.docs.map((doc){

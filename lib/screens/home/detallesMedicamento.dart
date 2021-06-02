@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:mediminder/models/alarmaMedicamento.dart';
+import 'package:mediminder/models/informes.dart';
 import 'package:mediminder/services/database.dart';
 import 'package:mediminder/services/local_noti.dart';
 import 'package:sizer/sizer.dart';
@@ -10,6 +11,7 @@ class detallesMedicamento extends StatelessWidget {
   detallesMedicamento({this.medicamento});
   final DatabaseService _database=DatabaseService();
   final Notifications noti = new Notifications();
+  final Informe informe=new Informe();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +58,6 @@ class detallesMedicamento extends StatelessWidget {
               onPressed:(){
                 if(medicamento.hora.hour+medicamento.periodo>23){
                   medicamento.dia=medicamento.dia+1;
-                  print(medicamento.dia);
                 }
                 medicamento.hora = medicamento.hora.add(Duration(hours: medicamento.periodo));
                 noti.setTime(medicamento.hora.year, medicamento.hora.month
@@ -73,9 +74,9 @@ class detallesMedicamento extends StatelessWidget {
                 }
                 _database.updateMedicine(medicamento.dia,medicamento.hora.hour,
                     medicamento.hora.minute, medicamento.cantidad, medicamento.uid);
-                /*Navigator.push(context,
-                    MaterialPageRoute(builder: (context)=>
-                        Home()));*/
+                String delay=informe.calcularDelay(medicamento.hora, DateTime.now());
+                informe.crearInforme(medicamento.idPaciente, "nombrePaciente",
+                    medicamento, delay);
                 Navigator.pop(context);
                 },
             ),
