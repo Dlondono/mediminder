@@ -192,5 +192,10 @@ class DatabaseService{
       }
       );
 }
+  Future addToken(String token) async{
+    return await coleccionUsuarios.doc(uid).update({
+      "token": token,
+    });
+  }
 
 }
