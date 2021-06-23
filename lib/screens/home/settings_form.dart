@@ -33,10 +33,12 @@ class _SettingsFormState extends State<SettingsForm> {
   String _currentPrioridad;
   String _currentHorario;
   int _cantidadDiaria;
+  String _currentTipo;
 
   final List<String> prioridades=['1 - Prioridad máxima',
     '2 - Prioridad media','3 - Prioridad normal'];
   final List<String> horario=['Horas aproximadas','Por periodo'];
+  final List<String> tipoMedicamento=['Pastilla','Jarabe'];
   @override
   Widget build(BuildContext context) {
     final user=Provider.of<UserLocal>(context);
@@ -69,6 +71,25 @@ class _SettingsFormState extends State<SettingsForm> {
                                     ),
                                   ),
                                   SizedBox(height: 3.0.h),
+                                  DropdownButtonFormField(
+                                    value: _currentTipo ,
+                                    items: tipoMedicamento.map((tipo) {
+                                      return DropdownMenuItem(
+                                        value: tipo,
+                                        child:Text('$tipo'),
+                                      );
+                                    }).toList(),
+                                    onChanged: (val) =>
+                                        setState(() => _currentTipo = val),
+                                    decoration: textInputDecoraton.copyWith(
+                                        hintText: "Tipo medicamento"),
+                                    validator: (val) =>
+                                    val.isEmpty
+                                        ? "Por favor seleccione un tipo"
+                                        : null,
+                                  ),
+                                  SizedBox(height: 2.0.h),
+
                                   TextFormField(
                                     decoration: textInputDecoraton.copyWith(hintText: "Nombre del medicamento"),
                                     //initialValue: _paciente.nombre,
