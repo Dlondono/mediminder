@@ -9,6 +9,7 @@ import 'package:sizer/sizer.dart';
 
 class SettingsForm extends StatefulWidget {
   final Paciente paciente;
+
   SettingsForm({this.paciente});
   @override
   _SettingsFormState createState() => _SettingsFormState();
@@ -30,8 +31,12 @@ class _SettingsFormState extends State<SettingsForm> {
   String _currentRecomendacion;
   String _currentDosis;
   String _currentPrioridad;
+  String _currentHorario;
+  int _cantidadDiaria;
+
   final List<String> prioridades=['1 - Prioridad máxima',
     '2 - Prioridad media','3 - Prioridad normal'];
+  final List<String> horario=['Horas aproximadas','Por periodo'];
   @override
   Widget build(BuildContext context) {
     final user=Provider.of<UserLocal>(context);
@@ -84,7 +89,8 @@ class _SettingsFormState extends State<SettingsForm> {
                                       }).toList(),
                                     onChanged: (val) =>
                                         setState(() => _currentPrioridad = val),
-                                    decoration: textInputDecoraton.copyWith(hintText: "Prioridad"),
+                                    decoration: textInputDecoraton.copyWith(
+                                        hintText: "Prioridad"),
                                     validator: (val) =>
                                     val.isEmpty
                                         ? "Por favor seleccione una prioridad"
@@ -92,6 +98,7 @@ class _SettingsFormState extends State<SettingsForm> {
                                   ),
                                   SizedBox(height: 2.0.h),
                                   TextFormField(
+                                    keyboardType: TextInputType.number,
                                     decoration: textInputDecoraton.copyWith(hintText: "Cantidad disponible del medicamento"),
                                     validator: (val) =>
                                     val.isEmpty
@@ -101,34 +108,7 @@ class _SettingsFormState extends State<SettingsForm> {
                                   ),
                                   SizedBox(height: 2.0.h),
                                   TextFormField(
-                                    decoration: textInputDecoraton.copyWith(hintText: "Hora del medicamento"),
-                                    validator: (val) =>
-                                    val.isEmpty
-                                        ? "Por favor ingrese la hora del medicamento"
-                                        : null,
-                                    onChanged: (val) => setState(() => _currentHora = val),
-                                  ),
-                                  SizedBox(height: 2.0.h),
-                                  TextFormField(
-                                    decoration: textInputDecoraton.copyWith(hintText: "Minuto del medicamento"),
-                                    validator: (val) =>
-                                    val.isEmpty
-                                        ? "Por favor ingrese la hora del medicamento"
-                                        : null,
-                                    onChanged: (val) => setState(() => _currentMinuto = val),
-                                  ),
-                                  SizedBox(height: 2.0.h),
-                                  TextFormField(
-                                    decoration: textInputDecoraton.copyWith(hintText: "Cada cuanto debe tomar el medicamento"),
-                                    validator: (val) =>
-                                    val.isEmpty
-                                        ? "Por favor ingrese periodo del medicamento"
-                                        : null,
-                                    onChanged: (val) => setState(() => _currentPeriodo = val),
-                                  ),
-                                  SizedBox(height: 2.0.h),
-                                  TextFormField(
-                                    decoration: textInputDecoraton.copyWith(hintText: "Recomendaciones acerca del medicamento"),
+                                    decoration: textInputDecoraton.copyWith(hintText: "Recomendaciones del medicamento"),
                                     validator: (val) =>
                                     val.isEmpty
                                         ? "Por favor ingrese las recomendaciones del medicamento"
@@ -137,6 +117,7 @@ class _SettingsFormState extends State<SettingsForm> {
                                   ),
                                   SizedBox(height: 2.0.h),
                                   TextFormField(
+                                    keyboardType: TextInputType.number,
                                     decoration: textInputDecoraton.copyWith(hintText: "Dosis a tomar"),
                                     validator: (val) =>
                                     val.isEmpty
@@ -145,19 +126,41 @@ class _SettingsFormState extends State<SettingsForm> {
                                     onChanged: (val) => setState(() => _currentDosis = val),
                                   ),
                                   SizedBox(height: 2.0.h),
+                                  DropdownButtonFormField(
+                                    value: _currentHorario ,
+                                    items: horario.map((hor) {
+                                      return DropdownMenuItem(
+                                        value: hor,
+                                        child:Text('$hor'),
+                                      );
+                                    }).toList(),
+                                    onChanged: (val) =>
+                                        setState(() => _currentHorario = val),
+                                    decoration: textInputDecoraton.copyWith(
+                                        hintText: "Horario"),
+                                    validator: (val) =>
+                                    val.isEmpty
+                                        ? "Por favor seleccione una opción"
+                                        : null,
+                                  ),
+                                  SizedBox(height: 2.0.h),
+                                  _nuevoDropdown(),
                                   ElevatedButton(
                                       style: ButtonStyle(
                                         backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
                                         foregroundColor: MaterialStateProperty.all(Colors.black),
                                       ),
                                       child: Text(
-                                        "Actualizar",
+                                        "Guardar medicamento",
                                         style: TextStyle(color: Colors.white),
                                       ),
                                       onPressed: () async {
                                         if(_formKey.currentState.validate()){
                                           await DatabaseService()
-                                              .addMedicine(_currentName,_paciente.idPaciente,_currentCantidad,_currentHora,_currentMinuto,_currentPeriodo, _currentRecomendacion, _currentDosis);
+                                              .addMedicine(_currentName,_paciente.idPaciente,
+                                              _currentCantidad,_currentHora,_currentMinuto,
+                                              _currentPeriodo, _currentRecomendacion,
+                                              _currentDosis);
                                           Navigator.pop(context);
                                         }
                                       }
@@ -174,5 +177,86 @@ class _SettingsFormState extends State<SettingsForm> {
           ),
         ),
     );
+  }
+  Widget _nuevoDropdown() {
+    if (_currentHorario == 'Horas aproximadas') {
+      return Container(
+        child: Column(
+          children:<Widget>[
+            TextFormField(
+            keyboardType: TextInputType.number,
+            decoration: textInputDecoraton.copyWith(
+                hintText: "Cuantas veces al dia"),
+            validator: (val) =>
+            val.isEmpty
+                ? "Por favor ingrese el numero de veces que debe tomar el medicamento al dia"
+                : null,
+            onChanged: (val) => setState(() => _cantidadDiaria = int.parse(val)),
+            ),
+            SizedBox(height: 2.0.h),
+            _forCampo(),
+
+          ],
+        ),
+
+      );
+
+    }else if(_currentHorario=="Por periodo"){
+      return Container(
+        child: Column(
+          children:<Widget>[
+            TextFormField(
+              decoration: textInputDecoraton.copyWith(hintText: "Hora del medicamento"),
+              validator: (val) =>
+              val.isEmpty
+                  ? "Por favor ingrese la hora del medicamento" : null,
+        onChanged: (val) => setState(() => _currentHora = val),
+            ),
+          SizedBox(height: 2.0.h),
+          TextFormField(
+            decoration: textInputDecoraton.copyWith(hintText: "Minuto del medicamento"),
+              validator: (val) =>
+              val.isEmpty
+              ? "Por favor ingrese el minuto del medicamento" : null,
+        onChanged: (val) => setState(() => _currentMinuto = val),
+          ),
+        SizedBox(height: 2.0.h),
+        TextFormField(
+          decoration: textInputDecoraton.copyWith(hintText: "Cada cuanto debe tomar el medicamento"),
+          validator: (val) =>
+          val.isEmpty
+          ? "Por favor ingrese periodo del medicamento" : null,
+        onChanged: (val) => setState(() => _currentPeriodo = val),
+            ),
+        SizedBox(height: 2.0.h),
+          ],
+        ),
+      );
+    }else{
+      return Container();
+    }
+  }
+  Widget _forCampo(){
+    if(_cantidadDiaria!=null) {
+      return Container(
+        child: Column(
+          children: <Widget>[
+            for(int i=0;i<_cantidadDiaria;i++)
+              TextFormField(
+                decoration: textInputDecoraton.copyWith(
+                    hintText: "Hora" + (i+1).toString()),
+                validator: (val) =>
+                val.isEmpty
+                    ? "Por favor " : null,
+                onChanged: (val) => setState(() => _currentPeriodo = val),
+              ),
+              SizedBox(height: 2.0.h)
+          ],
+        ),
+      );
+
+    }else{
+      return Container();
+    }
   }
 }
