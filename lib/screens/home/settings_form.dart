@@ -205,6 +205,10 @@ class _SettingsFormState extends State<SettingsForm> {
       return Container(
         child: Column(
           children:<Widget>[
+            ElevatedButton(
+              child: Text("Seleccionar hora"),
+              onPressed: _selectTime,
+            ),
             TextFormField(
               decoration: textInputDecoraton.copyWith(hintText: "Hora del medicamento"),
               validator: (val) =>
@@ -257,6 +261,18 @@ class _SettingsFormState extends State<SettingsForm> {
 
     }else{
       return Container();
+    }
+  }
+  void _selectTime() async{
+    TimeOfDay _time=TimeOfDay(hour: 8, minute: 0);
+    final TimeOfDay newTime=await showTimePicker(
+        context: context,
+        initialTime: _time,
+    );
+  if(newTime!=null){
+    setState(() {
+      _time=newTime;
+    });
     }
   }
 }
