@@ -45,6 +45,41 @@ class DatabaseService{
       "año":DateTime.now().year,
     });
   }
+
+  Future addMedicinePorHoras(String medicina,String id, String cantidad, List<TimeOfDay> horas
+      , String recomendacion, String dosis) async{
+    Random random=new Random();
+    int rnd=random.nextInt(100);
+    String idR=id+rnd.toString();
+    print("database"+horas.toString());
+    addHoras(idR, horas);
+    print(idR+" idR en addmedic");
+    return await coleccionMedicamentos.doc(idR).set({
+      "medicamentoNombre": medicina,
+      "idPaciente": id,
+      "cantidad": int.parse(cantidad),
+      "recomendacion": recomendacion,
+      "dosis": int.parse(dosis),
+      "uid":idR,
+      "dia":DateTime.now().day,
+      "mes":DateTime.now().month,
+      "año":DateTime.now().year,
+    });
+  }
+  Future addHoras(String idR,List<TimeOfDay> horas) async {
+    print("addhoras"+horas.toString());
+    print(idR+" idR adhoras");
+    return
+    await Future.forEach(horas,(hora) async=> await coleccionMedicamentos.doc(idR).set({
+        "horas": FieldValue.arrayUnion([
+          {
+            "hora": hora.toString(),
+          }
+        ]),
+      }),
+    );
+  }
+
   Future updateMedicine(int dia,int hora,int minuto,int cantidad,String id) async{
     return await coleccionMedicamentos.doc(id).update({
       "cantidad": cantidad,

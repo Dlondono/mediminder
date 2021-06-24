@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mediminder/models/paciente.dart';
 import 'package:mediminder/models/userLocal.dart';
 import 'package:mediminder/services/database.dart';
@@ -39,6 +40,7 @@ class _SettingsFormState extends State<SettingsForm> {
     '2 - Prioridad media','3 - Prioridad normal'];
   final List<String> horario=['Horas aproximadas','Por periodo'];
   final List<String> tipoMedicamento=['Pastilla','Jarabe'];
+  final List<TimeOfDay> horas=[];
   @override
   Widget build(BuildContext context) {
     final user=Provider.of<UserLocal>(context);
@@ -89,7 +91,6 @@ class _SettingsFormState extends State<SettingsForm> {
                                         : null,
                                   ),
                                   SizedBox(height: 2.0.h),
-
                                   TextFormField(
                                     decoration: textInputDecoraton.copyWith(hintText: "Nombre del medicamento"),
                                     //initialValue: _paciente.nombre,
@@ -176,13 +177,17 @@ class _SettingsFormState extends State<SettingsForm> {
                                         style: TextStyle(color: Colors.white),
                                       ),
                                       onPressed: () async {
+                                        print(horas);
                                         if(_formKey.currentState.validate()){
                                           await DatabaseService()
-                                              .addMedicine(_currentName,_paciente.idPaciente,
+                                             /* .addMedicine(_currentName,_paciente.idPaciente,
                                               _currentCantidad,_currentHora,_currentMinuto,
                                               _currentPeriodo, _currentRecomendacion,
-                                              _currentDosis);
-                                          Navigator.pop(context);
+                                              _currentDosis);*/
+                                        .addMedicinePorHoras(_currentName,_paciente.idPaciente,
+                                        _currentCantidad,horas,
+                                        _currentRecomendacion, _currentDosis);
+                                         // Navigator.pop(context);
                                         }
                                       }
                                   ),
@@ -228,7 +233,7 @@ class _SettingsFormState extends State<SettingsForm> {
           children:<Widget>[
             ElevatedButton(
               child: Text("Seleccionar hora"),
-              onPressed: _selectTime,
+              onPressed: _selectTim,
             ),
             TextFormField(
               decoration: textInputDecoraton.copyWith(hintText: "Hora del medicamento"),
@@ -258,7 +263,9 @@ class _SettingsFormState extends State<SettingsForm> {
         ),
       );
     }else{
-      return Container();
+      return Container(
+        height: MediaQuery.of(context).size.height,
+      );
     }
   }
   Widget _forCampo(){
@@ -267,13 +274,9 @@ class _SettingsFormState extends State<SettingsForm> {
         child: Column(
           children: <Widget>[
             for(int i=0;i<_cantidadDiaria;i++)
-              TextFormField(
-                decoration: textInputDecoraton.copyWith(
-                    hintText: "Hora" + (i+1).toString()),
-                validator: (val) =>
-                val.isEmpty
-                    ? "Por favor " : null,
-                onChanged: (val) => setState(() => _currentPeriodo = val),
+              ElevatedButton(
+                child: Text("Seleccionar hora "+(i+1).toString()),
+                onPressed:()=> _selectTime(i),
               ),
               SizedBox(height: 2.0.h)
           ],
@@ -281,10 +284,12 @@ class _SettingsFormState extends State<SettingsForm> {
       );
 
     }else{
-      return Container();
+      return Container(
+        height: MediaQuery.of(context).size.height,
+      );
     }
   }
-  void _selectTime() async{
+  void _selectTime(int i) async{
     TimeOfDay _time=TimeOfDay(hour: 8, minute: 0);
     final TimeOfDay newTime=await showTimePicker(
         context: context,
@@ -292,8 +297,21 @@ class _SettingsFormState extends State<SettingsForm> {
     );
   if(newTime!=null){
     setState(() {
+      horas.add(newTime);
       _time=newTime;
     });
+    }
+  }
+  void _selectTim() async{
+    TimeOfDay _time=TimeOfDay(hour: 8, minute: 0);
+    final TimeOfDay newTime=await showTimePicker(
+      context: context,
+      initialTime: _time,
+    );
+    if(newTime!=null){
+      setState(() {
+        _time=newTime;
+      });
     }
   }
 }
