@@ -52,7 +52,7 @@ class DatabaseService{
     int rnd=random.nextInt(100);
     String idR=id+rnd.toString();
     print("database"+horas.toString());
-    addHoras(idR, horas);
+    //addHoras(idR, horas);
     print(idR+" idR en addmedic");
     return await coleccionMedicamentos.doc(idR).set({
       "medicamentoNombre": medicina,
@@ -60,6 +60,9 @@ class DatabaseService{
       "cantidad": int.parse(cantidad),
       "recomendacion": recomendacion,
       "dosis": int.parse(dosis),
+      "horas": FieldValue.arrayUnion([
+        horas.toString()
+      ]),
       "uid":idR,
       "dia":DateTime.now().day,
       "mes":DateTime.now().month,
@@ -72,9 +75,7 @@ class DatabaseService{
     return
     await Future.forEach(horas,(hora) async=> await coleccionMedicamentos.doc(idR).set({
         "horas": FieldValue.arrayUnion([
-          {
-            "hora": hora.toString(),
-          }
+          horas
         ]),
       }),
     );

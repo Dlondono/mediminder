@@ -187,7 +187,7 @@ class _SettingsFormState extends State<SettingsForm> {
                                         .addMedicinePorHoras(_currentName,_paciente.idPaciente,
                                         _currentCantidad,horas,
                                         _currentRecomendacion, _currentDosis);
-                                         // Navigator.pop(context);
+                                         Navigator.pop(context);
                                         }
                                       }
                                   ),

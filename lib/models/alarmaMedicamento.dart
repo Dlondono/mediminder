@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class AlarmaMedicamento{
     String medicamentoNombre;
     String descripcion;
@@ -10,11 +12,13 @@ class AlarmaMedicamento{
     int dia;
     int mes;
     int year;
+    List<TimeOfDay> listaHoras=[];
 
     AlarmaMedicamento({this.medicamentoNombre,this.descripcion,this.cantidad,
         this.hora, this.periodo, this.idPaciente,this.dosis,this.uid,
         this.dia,this.mes,this.year
     });
+
     setTime(DateTime t){
         this.hora = t;
     }
