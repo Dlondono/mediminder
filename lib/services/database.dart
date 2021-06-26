@@ -51,9 +51,6 @@ class DatabaseService{
     Random random=new Random();
     int rnd=random.nextInt(100);
     String idR=id+rnd.toString();
-    print("database"+horas.toString());
-    //addHoras(idR, horas);
-    print(idR+" idR en addmedic");
     return await coleccionMedicamentos.doc(idR).set({
       "medicamentoNombre": medicina,
       "idPaciente": id,
@@ -68,17 +65,6 @@ class DatabaseService{
       "mes":DateTime.now().month,
       "año":DateTime.now().year,
     });
-  }
-  Future addHoras(String idR,List<TimeOfDay> horas) async {
-    print("addhoras"+horas.toString());
-    print(idR+" idR adhoras");
-    return
-    await Future.forEach(horas,(hora) async=> await coleccionMedicamentos.doc(idR).set({
-        "horas": FieldValue.arrayUnion([
-          horas
-        ]),
-      }),
-    );
   }
 
   Future updateMedicine(int dia,int hora,int minuto,int cantidad,String id) async{
@@ -131,20 +117,35 @@ class DatabaseService{
 
   List<Medicamento> _listaMedicamentosFromSnapshot(QuerySnapshot snapshot){
     return snapshot.docs.map((doc){
-      return Medicamento(
+      if(doc.data()['periodo']!=null) {
+        return Medicamento(
+          medicamentoNombre: doc.data()['medicamentoNombre'] ?? "",
+          idPaciente: doc.data()['idPaciente'] ?? "",
+          cantidad: doc.data()['cantidad'] ?? "",
+          hora: doc.data()['hora'] ?? "",
+          minuto: doc.data()['minuto'] ?? "",
+          periodo: doc.data()['periodo'] ?? "",
+          recomendacion: doc.data()['recomendacion'] ?? "",
+          dosis: doc.data()['dosis'] ?? "",
+          uid: doc.id,
+          dia: doc.data()['dia'] ?? "",
+          mes: doc.data()['mes'] ?? "",
+          year: doc.data()['año'] ?? "",
+        );
+      }else{
+        return Medicamento.horas(
         medicamentoNombre: doc.data()['medicamentoNombre'] ?? "",
         idPaciente: doc.data()['idPaciente'] ?? "",
         cantidad: doc.data()['cantidad'] ?? "",
-        hora: doc.data()['hora'] ?? "",
-        minuto: doc.data()['minuto'] ?? "",
-        periodo: doc.data()['periodo'] ?? "",
+        listaHorasMed: doc.data()['horas'],
         recomendacion: doc.data()['recomendacion'] ?? "",
         dosis: doc.data()['dosis'] ?? "",
-        uid:doc.id,
+        uid: doc.id,
         dia: doc.data()['dia'] ?? "",
-        mes:doc.data()['mes'] ?? "",
-        year:doc.data()['año'] ?? "",
-      );
+        mes: doc.data()['mes'] ?? "",
+        year: doc.data()['año'] ?? "",
+        );
+      }
     }).toList();
   }
 

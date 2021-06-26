@@ -33,9 +33,12 @@ class PacienteDiseno extends StatelessWidget {
                   style: ButtonStyle(
                     foregroundColor: MaterialStateProperty.all(Colors.black),
                   ),
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(
-                        builder: (context)=> SettingsForm(paciente: paciente)));
+                  onPressed: ()async{
+                    await Navigator.push(context, MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return SettingsForm(paciente: paciente);
+                        }
+                        ));
                   },
                 ),
                 TextButton.icon(

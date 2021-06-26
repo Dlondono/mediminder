@@ -56,7 +56,7 @@ class _SettingsFormState extends State<SettingsForm> {
             color: Color.fromRGBO(157, 221, 234, 50),
             child: StreamBuilder<UserData>(
               stream: DatabaseService(uid: user.uid).userData,
-                    builder: (context, snapshot) {
+                    builder: (context, AsyncSnapshot snapshot) {
                       if (snapshot.hasData) {
                         return Form(
                           key: _formKey,
@@ -167,37 +167,13 @@ class _SettingsFormState extends State<SettingsForm> {
                                   ),
                                   SizedBox(height: 2.0.h),
                                   _nuevoDropdown(),
-                                  ElevatedButton(
-                                      style: ButtonStyle(
-                                        backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
-                                        foregroundColor: MaterialStateProperty.all(Colors.black),
-                                      ),
-                                      child: Text(
-                                        "Guardar medicamento",
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                      onPressed: () async {
-                                        print(horas);
-                                        if(_formKey.currentState.validate()){
-                                          await DatabaseService()
-                                             /* .addMedicine(_currentName,_paciente.idPaciente,
-                                              _currentCantidad,_currentHora,_currentMinuto,
-                                              _currentPeriodo, _currentRecomendacion,
-                                              _currentDosis);*/
-                                        .addMedicinePorHoras(_currentName,_paciente.idPaciente,
-                                        _currentCantidad,horas,
-                                        _currentRecomendacion, _currentDosis);
-                                         Navigator.pop(context);
-                                        }
-                                      }
-                                  ),
                                 ],
                               ),
                             ),
                             ],
                           ),
                         );
-                      }else return null;
+                      }else return Container();
                     }
                 ),
           ),
@@ -221,7 +197,26 @@ class _SettingsFormState extends State<SettingsForm> {
             ),
             SizedBox(height: 2.0.h),
             _forCampo(),
-
+            ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
+                  foregroundColor: MaterialStateProperty.all(Colors.black),
+                ),
+                child: Text(
+                  "Guardar medicamento",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () async {
+                  print(horas);
+                  if(_formKey.currentState.validate()){
+                    await DatabaseService()
+                        .addMedicinePorHoras(_currentName,_paciente.idPaciente,
+                        _currentCantidad,horas,
+                        _currentRecomendacion, _currentDosis);
+                    Navigator.pop(context);
+                  }
+                }
+            ),
           ],
         ),
 
@@ -259,6 +254,27 @@ class _SettingsFormState extends State<SettingsForm> {
         onChanged: (val) => setState(() => _currentPeriodo = val),
             ),
         SizedBox(height: 2.0.h),
+            ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
+                  foregroundColor: MaterialStateProperty.all(Colors.black),
+                ),
+                child: Text(
+                  "Guardar medicamento",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () async {
+                  print(horas);
+                  if(_formKey.currentState.validate()){
+                    await DatabaseService()
+                     .addMedicine(_currentName,_paciente.idPaciente,
+                                              _currentCantidad,_currentHora,_currentMinuto,
+                                              _currentPeriodo, _currentRecomendacion,
+                                              _currentDosis);
+                        Navigator.pop(context);
+                  }
+                }
+            ),
           ],
         ),
       );
@@ -285,6 +301,7 @@ class _SettingsFormState extends State<SettingsForm> {
 
     }else{
       return Container(
+        color: Color.fromRGBO(157, 221, 234, 50),
         height: MediaQuery.of(context).size.height,
       );
     }
