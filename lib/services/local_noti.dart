@@ -30,7 +30,9 @@ class Notifications {
         aMin.toString();
     dev.log('alarm Date:$alarmDate');
   }
-
+  Future<void> cancelarNotificaciones()async{
+    await flutterLocalNotificationsPlugin.cancelAll();
+  }
   init() async {
     final String currentTimeZone =
     await FlutterNativeTimezone.getLocalTimezone();

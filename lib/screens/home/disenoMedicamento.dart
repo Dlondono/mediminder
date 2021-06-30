@@ -13,19 +13,44 @@ class MedicamentoDiseno extends StatelessWidget {
   String formato = "am";
   @override
   Widget build(BuildContext context) {
-    noti.setTime(medicamento.hora.year, medicamento.hora.month, medicamento.hora.day,medicamento.hora.hour,medicamento.hora.minute);
-    noti.scheduleweeklyNotification(medicamento.idPaciente,medicamento.medicamentoNombre,medicamento.descripcion);
-    hora = medicamento.hora.hour;
-    if(hora>12){
-      hora = hora - 12;
-      formato = "pm";
-    }
-    if(hora==12){
-      formato = "pm";
-    }
-    if(hora==0){
-      hora = 12;
-      formato = "am";
+    noti.cancelarNotificaciones();
+    if(medicamento.listaHoras==null) {
+      noti.setTime(
+          medicamento.year, medicamento.mes, medicamento.dia,
+          medicamento.hora.hour, medicamento.hora.minute);
+      noti.scheduleweeklyNotification(
+          medicamento.idPaciente, medicamento.medicamentoNombre,
+          medicamento.descripcion);
+      hora = medicamento.hora.hour;
+
+      if (hora > 12) {
+        hora = hora - 12;
+        formato = "pm";
+      }
+      if (hora == 12) {
+        formato = "pm";
+      }
+      if (hora == 0) {
+        hora = 12;
+        formato = "am";
+      }
+    }else{
+      List<String> listaHorasString;
+      String horaString;
+      DateTime t;
+      horaString =medicamento.listaHoras.toString().replaceAll(new RegExp(r'[^0-9,]'),'');
+      listaHorasString=horaString.split(',');
+      for(String horaList in listaHorasString){
+        t=DateTime.parse(medicamento.year.toString()+medicamento.mes.toString().padLeft(2,'0')
+            +medicamento.dia.toString().padLeft(2,'0')+" "+horaList[0]+horaList[1]+":"+horaList[2]+horaList[3]+":"+"00");
+        medicamento.setTime(t);
+        noti.setTime(
+            medicamento.year, medicamento.mes, medicamento.dia,
+            t.hour, t.minute);
+        noti.scheduleweeklyNotification(
+            medicamento.idPaciente, medicamento.medicamentoNombre,
+            medicamento.descripcion);
+      }
     }
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 1.0.h, horizontal: 1.0.h),
@@ -48,8 +73,8 @@ class MedicamentoDiseno extends StatelessWidget {
                 ),
               TextButton.icon(
                 icon: Icon(Icons.medical_services),
-                label: Text("Hora de medicamento: " + hora.toString() +
-                    ":" + medicamento.hora.minute.toString() + " " + formato),
+                label: Text("Hora de medicamento: " + medicamento.hora.hour.toString() +
+                    ":" + medicamento.hora.minute.toString() + " " ),
                   style: ButtonStyle(
                     textStyle: MaterialStateProperty.all(TextStyle(fontSize: 18,color: Colors.black)),
                     foregroundColor: MaterialStateProperty.all(Colors.black),

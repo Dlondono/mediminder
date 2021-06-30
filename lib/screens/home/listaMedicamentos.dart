@@ -47,12 +47,6 @@ class _MedicamentosState extends State<Medicamentos> {
             horaActualLocal.minute > horaNueva.minute) {
           horaNueva = horaNueva.add(Duration(hours: item.periodo));
         }
-        print("BBBBBBBBBBBBBBBBBBB");
-        print(item.periodo.toString()+"periodo");
-        print(item.listaHorasMed.toString()+"");
-        print(item.hora);
-        print("BBBBBBBBBBBBBBBBB");
-
         medi = new AlarmaMedicamento(medicamentoNombre: item.medicamentoNombre,
             descripcion: item.recomendacion,
             cantidad: item.cantidad,
@@ -67,12 +61,6 @@ class _MedicamentosState extends State<Medicamentos> {
         );
         alarmaLista.add(medi);
       } else if (item.listaHorasMed != null) {
-        print("AAAAAAAAAAAAAAA");
-        print(item.periodo.toString()+"periodo");
-        print(item.listaHorasMed.toString()+"");
-        print(item.medicamentoNombre);
-        print(item.year);
-        print("AAAAAAAAAAAAAAA");
         mediH = new AlarmaMedicamento.horas(medicamentoNombre: item.medicamentoNombre,
             descripcion: item.recomendacion,
             cantidad: item.cantidad,
@@ -84,10 +72,7 @@ class _MedicamentosState extends State<Medicamentos> {
             mes: item.mes,
             year: item.year,
         );
-        print(medi.year.toString()+"YEAR STRING MEDI");
-        print(item.listaHorasMed);
         alarmaLista.add(mediH);
-        print(alarmaLista.length);
       } else {
         return Container(
           child: Text("no hora"),

@@ -56,9 +56,17 @@ class detallesMedicamento extends StatelessWidget {
                 foregroundColor: MaterialStateProperty.all(Colors.black),
               ),
               onPressed:(){
-                if(medicamento.hora.hour+medicamento.periodo>23){
-                  medicamento.dia=medicamento.dia+1;
-                }
+                if(medicamento.listaHoras!=null) {
+                  medicamento.periodo=24;
+                  }
+                  if (medicamento.hora.hour + medicamento.periodo > 23) {
+                    medicamento.dia = medicamento.dia + 1;
+                  }
+                  if(medicamento.dia>31){
+                    medicamento.dia=1;
+                    medicamento.mes=medicamento.mes+1;
+                  }
+
                 medicamento.hora = medicamento.hora.add(Duration(hours: medicamento.periodo));
                 noti.setTime(medicamento.hora.year, medicamento.hora.month
                     , medicamento.dia, medicamento.hora.hour, medicamento.hora.minute);
