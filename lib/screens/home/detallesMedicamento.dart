@@ -56,22 +56,29 @@ class detallesMedicamento extends StatelessWidget {
                 foregroundColor: MaterialStateProperty.all(Colors.black),
               ),
               onPressed:(){
-                if(medicamento.listaHoras!=null) {
-                  medicamento.periodo=24;
-                  }
+                if(medicamento.periodo!=null) {
                   if (medicamento.hora.hour + medicamento.periodo > 23) {
                     medicamento.dia = medicamento.dia + 1;
                   }
+                }
                   if(medicamento.dia>31){
                     medicamento.dia=1;
                     medicamento.mes=medicamento.mes+1;
                   }
-
-                medicamento.hora = medicamento.hora.add(Duration(hours: medicamento.periodo));
-                noti.setTime(medicamento.hora.year, medicamento.hora.month
-                    , medicamento.dia, medicamento.hora.hour, medicamento.hora.minute);
-                noti.scheduleweeklyNotification(medicamento.idPaciente,
-                    medicamento.medicamentoNombre,medicamento.descripcion);
+                  if(medicamento.periodo!=null) {
+                    medicamento.hora = medicamento.hora.add(
+                        Duration(hours: medicamento.periodo));
+                    /*noti.setTime(medicamento.hora.year, medicamento.hora.month
+                        , medicamento.dia, medicamento.hora.hour,
+                        medicamento.hora.minute);
+                    noti.scheduleweeklyNotification(medicamento.idPaciente,
+                        medicamento.medicamentoNombre, medicamento.descripcion);
+                     */
+                  }else{
+                    medicamento.hora = medicamento.hora.add(
+                        Duration(days: 1));
+                    medicamento.dia=medicamento.dia+1;
+                  }
                 this.medicamento.cantidad=this.medicamento.cantidad-1;
                 _database.updateCantidad(this.medicamento.cantidad,medicamento.uid);
                 if(this.medicamento.cantidad<=5){

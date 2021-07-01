@@ -33,6 +33,18 @@ class Notifications {
   Future<void> cancelarNotificaciones()async{
     await flutterLocalNotificationsPlugin.cancelAll();
   }
+  Future<void> notiActivas()async{
+   /* final List<ActiveNotification> activeNotifications=
+        await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+    AndroidFlutterLocalNotificationsPlugin>()?.getActiveNotifications();
+    print(activeNotifications.toString());
+    */
+    final List<PendingNotificationRequest> pending=
+        await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+    for(var noti in pending) {
+      print(noti.title);
+    }
+  }
   init() async {
     final String currentTimeZone =
     await FlutterNativeTimezone.getLocalTimezone();

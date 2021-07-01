@@ -35,6 +35,7 @@ class MedicamentoDiseno extends StatelessWidget {
         formato = "am";
       }
     }else{
+      print("YA NO ENTRO ACA");
       List<String> listaHorasString;
       String horaString;
       DateTime t;
@@ -43,6 +44,7 @@ class MedicamentoDiseno extends StatelessWidget {
       for(String horaList in listaHorasString){
         t=DateTime.parse(medicamento.year.toString()+medicamento.mes.toString().padLeft(2,'0')
             +medicamento.dia.toString().padLeft(2,'0')+" "+horaList[0]+horaList[1]+":"+horaList[2]+horaList[3]+":"+"00");
+
         medicamento.setTime(t);
         noti.setTime(
             medicamento.year, medicamento.mes, medicamento.dia,
@@ -74,12 +76,13 @@ class MedicamentoDiseno extends StatelessWidget {
               TextButton.icon(
                 icon: Icon(Icons.medical_services),
                 label: Text("Hora de medicamento: " + medicamento.hora.hour.toString() +
-                    ":" + medicamento.hora.minute.toString() + " " ),
+                    ":" + medicamento.hora.minute.toString().padLeft(2,'0') + " " ),
                   style: ButtonStyle(
                     textStyle: MaterialStateProperty.all(TextStyle(fontSize: 18,color: Colors.black)),
                     foregroundColor: MaterialStateProperty.all(Colors.black),
                   ),
                 onPressed: (){
+                  noti.notiActivas();
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context)=>
                           detallesMedicamento(medicamento: medicamento,)));
