@@ -82,6 +82,7 @@ class MedicamentoDiseno extends StatelessWidget {
                     foregroundColor: MaterialStateProperty.all(Colors.black),
                   ),
                 onPressed: (){
+                  print(medicamento.hora.toString()+"diseno");
                   noti.notiActivas();
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context)=>

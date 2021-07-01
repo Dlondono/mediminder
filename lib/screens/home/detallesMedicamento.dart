@@ -57,28 +57,21 @@ class detallesMedicamento extends StatelessWidget {
               ),
               onPressed:(){
                 if(medicamento.periodo!=null) {
-                  if (medicamento.hora.hour + medicamento.periodo > 23) {
-                    medicamento.dia = medicamento.dia + 1;
-                  }
+                  print(medicamento.hora.toString() + "hora");
+                  medicamento.hora = medicamento.hora.add(Duration(hours: medicamento.periodo));
+                    print(medicamento.hora.toString() + "hora");
                 }
-                  if(medicamento.dia>31){
-                    medicamento.dia=1;
-                    medicamento.mes=medicamento.mes+1;
-                  }
-                  if(medicamento.periodo!=null) {
-                    medicamento.hora = medicamento.hora.add(
-                        Duration(hours: medicamento.periodo));
                     /*noti.setTime(medicamento.hora.year, medicamento.hora.month
                         , medicamento.dia, medicamento.hora.hour,
                         medicamento.hora.minute);
                     noti.scheduleweeklyNotification(medicamento.idPaciente,
                         medicamento.medicamentoNombre, medicamento.descripcion);
                      */
-                  }else{
-                    medicamento.hora = medicamento.hora.add(
-                        Duration(days: 1));
-                    medicamento.dia=medicamento.dia+1;
+                  else {
+                  medicamento.hora = medicamento.hora.add(
+                      Duration(days: 1));
                   }
+
                 this.medicamento.cantidad=this.medicamento.cantidad-1;
                 _database.updateCantidad(this.medicamento.cantidad,medicamento.uid);
                 if(this.medicamento.cantidad<=5){
@@ -87,8 +80,9 @@ class detallesMedicamento extends StatelessWidget {
                 if(this.medicamento.cantidad<=0){
                   this.medicamento.cantidad=0;
                 }
-                _database.updateMedicine(medicamento.dia,medicamento.hora.hour,
-                    medicamento.hora.minute, medicamento.cantidad, medicamento.uid);
+                _database.updateMedicine(medicamento.hora.month,medicamento.hora.day,
+                    medicamento.hora.hour,medicamento.hora.minute,
+                    medicamento.cantidad, medicamento.uid);
                 String delay=informe.calcularDelay(medicamento.hora, DateTime.now());
                 informe.crearInforme(medicamento.idPaciente, "nombrePaciente",
                     medicamento, delay);
@@ -110,7 +104,7 @@ class detallesMedicamento extends StatelessWidget {
                 medicamento.hora = medicamento.hora.add(const Duration(minutes: 5));
                 noti.setTime(medicamento.hora.year, medicamento.hora.month, medicamento.hora.day, medicamento.hora.hour, medicamento.hora.minute);
                 noti.scheduleweeklyNotification(medicamento.idPaciente,medicamento.medicamentoNombre,medicamento.descripcion);
-                _database.updateMedicine(medicamento.dia,medicamento.hora.hour,
+                _database.updateMedicine(medicamento.mes,medicamento.dia,medicamento.hora.hour,
                     medicamento.hora.minute, medicamento.cantidad, medicamento.uid);
                 Navigator.pop(context);
               },
