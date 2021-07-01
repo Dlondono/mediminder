@@ -10,23 +10,22 @@ import 'package:provider/provider.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class Medicamentos extends StatefulWidget {
-  final String id;
-  Medicamentos({this.id});
+  final String id,tipo;
+  Medicamentos(this.id,this.tipo);
   @override
   _MedicamentosState createState() => _MedicamentosState();
 }
 
 class _MedicamentosState extends State<Medicamentos> {
-  final DatabaseService database=DatabaseService();
   final FirebaseAuth auth=FirebaseAuth.instance;
   DateTime horaActualLocal = tz.TZDateTime.now(tz.local);
   List<AlarmaMedicamento> alarmaLista = [];
   @override
   Widget build(BuildContext context) {
-    //final users= Provider.of<List<UserData>>(context)?? [];
     final medicamentos= Provider.of<List<Medicamento>>(context)?? [];
-    final User user= auth.currentUser;
-    final uid=user.uid;
+    //final User user= auth.currentUser;
+    final uid=widget.id;
+    final String tipo=widget.tipo;
     alarmaLista = [];
     AlarmaMedicamento medi;
     AlarmaMedicamento mediH;
@@ -115,7 +114,7 @@ class _MedicamentosState extends State<Medicamentos> {
               }
             }
           }
-          mediH =
+          medi =
           new AlarmaMedicamento(medicamentoNombre: item.medicamentoNombre,
             descripcion: item.recomendacion,
             cantidad: item.cantidad,
@@ -128,7 +127,7 @@ class _MedicamentosState extends State<Medicamentos> {
             mes: item.mes,
             year: item.year,
           );
-          alarmaLista.add(mediH);
+          alarmaLista.add(medi);
         }
       }else {
         return Container(
@@ -136,13 +135,14 @@ class _MedicamentosState extends State<Medicamentos> {
         );
       }
       print(alarmaLista.length);
-    });
-        alarmaLista.sort((alarmaA, alarmaB) => alarmaA.hora.isBefore(alarmaB.hora) ? 0:1,);
+      });
+
+    alarmaLista.sort((alarmaA, alarmaB) => alarmaA.hora.isBefore(alarmaB.hora) ? 0:1,);
         //closestDate();
         return ListView.builder(
             itemCount: alarmaLista.length,
             itemBuilder: (context,index) {
-              return MedicamentoDiseno(medicamento: alarmaLista[index]);
+              return MedicamentoDiseno(alarmaLista[index],tipo);
             }
         );
   }

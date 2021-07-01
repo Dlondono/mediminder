@@ -1,66 +1,85 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mediminder/models/alarmaMedicamento.dart';
 import 'package:mediminder/models/medicamento.dart';
 import 'package:mediminder/screens/home/detallesMedicamento.dart';
+import 'package:mediminder/screens/home/editarMedicamento.dart';
 import 'package:mediminder/services/local_noti.dart';
 import 'package:sizer/sizer.dart';
 
 class MedicamentoDiseno extends StatelessWidget {
   final AlarmaMedicamento medicamento;
+  final String tipo;
   int hora;
   final Notifications noti = new Notifications();
-  MedicamentoDiseno({this.medicamento});
+  MedicamentoDiseno(this.medicamento,this.tipo);
   String formato = "am";
+  final FirebaseAuth auth=  FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
-    noti.cancelarNotificaciones();
-    if(medicamento.listaHoras==null) {
-      noti.setTime(
-          medicamento.year, medicamento.mes, medicamento.dia,
-          medicamento.hora.hour, medicamento.hora.minute);
-      noti.scheduleweeklyNotification(
-          medicamento.idPaciente, medicamento.medicamentoNombre,
-          medicamento.descripcion);
-      hora = medicamento.hora.hour;
-
-      if (hora > 12) {
-        hora = hora - 12;
-        formato = "pm";
-      }
-      if (hora == 12) {
-        formato = "pm";
-      }
-      if (hora == 0) {
-        hora = 12;
-        formato = "am";
-      }
-    }else{
-      print("YA NO ENTRO ACA");
-      List<String> listaHorasString;
-      String horaString;
-      DateTime t;
-      horaString =medicamento.listaHoras.toString().replaceAll(new RegExp(r'[^0-9,]'),'');
-      listaHorasString=horaString.split(',');
-      for(String horaList in listaHorasString){
-        t=DateTime.parse(medicamento.year.toString()+medicamento.mes.toString().padLeft(2,'0')
-            +medicamento.dia.toString().padLeft(2,'0')+" "+horaList[0]+horaList[1]+":"+horaList[2]+horaList[3]+":"+"00");
-
-        medicamento.setTime(t);
+    final User user=auth.currentUser;
+    if(tipo=="paciente") {
+      noti.cancelarNotificaciones();
+      if (medicamento.listaHoras == null) {
         noti.setTime(
             medicamento.year, medicamento.mes, medicamento.dia,
-            t.hour, t.minute);
+            medicamento.hora.hour, medicamento.hora.minute);
         noti.scheduleweeklyNotification(
             medicamento.idPaciente, medicamento.medicamentoNombre,
             medicamento.descripcion);
+        hora = medicamento.hora.hour;
+
+        if (hora > 12) {
+          hora = hora - 12;
+          formato = "pm";
+        }
+        if (hora == 12) {
+          formato = "pm";
+        }
+        if (hora == 0) {
+          hora = 12;
+          formato = "am";
+        }
+      } else {
+        print("YA NO ENTRO ACA");
+        List<String> listaHorasString;
+        String horaString;
+        DateTime t;
+        horaString = medicamento.listaHoras.toString().replaceAll(
+            new RegExp(r'[^0-9,]'), '');
+        listaHorasString = horaString.split(',');
+        for (String horaList in listaHorasString) {
+          t = DateTime.parse(medicamento.year.toString() +
+              medicamento.mes.toString().padLeft(2, '0')
+              + medicamento.dia.toString().padLeft(2, '0') + " " + horaList[0] +
+              horaList[1] + ":" + horaList[2] + horaList[3] + ":" + "00");
+
+          medicamento.setTime(t);
+          noti.setTime(
+              medicamento.year, medicamento.mes, medicamento.dia,
+              t.hour, t.minute);
+          noti.scheduleweeklyNotification(
+              medicamento.idPaciente, medicamento.medicamentoNombre,
+              medicamento.descripcion);
+        }
       }
+    }else{
+      print(tipo);
     }
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 1.0.h, horizontal: 1.0.h),
       child: GestureDetector(//padding
         onTap: (){
+          if(tipo=="paciente") {
             Navigator.push(context, MaterialPageRoute(
-                builder: (context)=> detallesMedicamento(medicamento:medicamento)));
-          },
+                builder: (context) =>
+                    detallesMedicamento(medicamento: medicamento)));
+          }else{
+            Navigator.push(context, MaterialPageRoute(
+                builder: (context) =>
+                    editarMedicamento(medicamento: medicamento)));
+          }
+            },
         child: Card(
           color: Color.fromRGBO(255, 255, 255, 50),
           margin: EdgeInsets.symmetric(vertical: 1.0.h, horizontal: 3.0.h),
@@ -76,23 +95,44 @@ class MedicamentoDiseno extends StatelessWidget {
               TextButton.icon(
                 icon: Icon(Icons.medical_services),
                 label: Text("Hora de medicamento: " + medicamento.hora.hour.toString() +
-                    ":" + medicamento.hora.minute.toString().padLeft(2,'0') + " " ),
+                    ":" + medicamento.hora.minute.toString().padLeft(2,'0')),
                   style: ButtonStyle(
                     textStyle: MaterialStateProperty.all(TextStyle(fontSize: 18,color: Colors.black)),
                     foregroundColor: MaterialStateProperty.all(Colors.black),
                   ),
                 onPressed: (){
-                  print(medicamento.hora.toString()+"diseno");
-                  noti.notiActivas();
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context)=>
-                          detallesMedicamento(medicamento: medicamento,)));
-                },
+                  if(tipo=="paciente") {
+                    //noti.notiActivas();
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) =>
+                            detallesMedicamento(medicamento: medicamento,)));
+                  }else{
+                    //editar medicamento
+                  }
+                  },
               ),
+             // _editar(),
             ],
           ),
         ),
       ),
     );
+  }
+  Widget _editar(){
+    if(tipo=="supervisor"){
+      return Positioned(
+        top: 0,
+        right: 0,
+        child: IconButton(
+          onPressed: (){
+
+          },
+          icon: Icon(Icons.more_vert_sharp
+          ),
+        ),
+      );
+    }else{
+      return Container();
+    }
   }
 }

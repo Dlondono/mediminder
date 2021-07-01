@@ -39,7 +39,8 @@ class detallesMedicamento extends StatelessWidget {
                 leading: Icon(Icons.medical_services),
                 title: Text(medicamento.medicamentoNombre,
                     style: TextStyle(fontSize: 22,color: Colors.black)),
-                subtitle: Text(medicamento.hora.hour.toString()+":"+ medicamento.hora.minute.toString()
+                subtitle: Text(medicamento.hora.hour.toString().padLeft(2, '0')
+                    +":"+ medicamento.hora.minute.toString().padLeft(2, '0')
                     +"\n"+"Cantidad: "+this.medicamento.cantidad.toString()+"\n"+"\n"+medicamento.descripcion,
                     style: TextStyle(fontSize: 20,color: Colors.black)),
               ),

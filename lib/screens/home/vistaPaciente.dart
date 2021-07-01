@@ -21,7 +21,6 @@ class _VistaPacienteState extends State<VistaPaciente> {
   final User user=auth.currentUser;
   final String uid=user.uid;
   final CollectionReference coleccion = FirebaseFirestore.instance.collection("Usuarios");
-
         return StreamProvider<List<Medicamento>>.value(
           value: DatabaseService().medicamentos,
           child: Scaffold(
@@ -46,7 +45,7 @@ class _VistaPacienteState extends State<VistaPaciente> {
                 decoration: BoxDecoration(color: Color.fromRGBO(157, 221, 234, 50)),
                 child: Column(
                   children: <Widget>[
-                    Expanded(child: Medicamentos()),
+                    Expanded(child: Medicamentos(uid,"paciente")),
                   ],
                 )
             ),

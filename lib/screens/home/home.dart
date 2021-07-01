@@ -31,10 +31,8 @@ class Home extends StatelessWidget {
                   final userDoc = snapshot.data;
                   final user = userDoc.data();
                   if(user['tipo'] == 'Supervisor') {
-                    print("supervisor");
                     return InterfazSupervisor();
                   }else{
-                    print("paciente");
                     return VistaPaciente();
                   }
                 }else{
