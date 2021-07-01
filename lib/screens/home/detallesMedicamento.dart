@@ -14,6 +14,7 @@ class detallesMedicamento extends StatelessWidget {
   final Informe informe=new Informe();
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text(medicamento.medicamentoNombre,style: TextStyle(

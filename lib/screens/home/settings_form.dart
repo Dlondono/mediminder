@@ -41,7 +41,6 @@ class _SettingsFormState extends State<SettingsForm> {
   final List<String> horario=['Horas aproximadas','Por periodo'];
   final List<String> tipoMedicamento=['Pastilla','Jarabe'];
   final List<TimeOfDay> horas=[];
-  final List<int> dias=[];
   @override
   Widget build(BuildContext context) {
     final user=Provider.of<UserLocal>(context);
@@ -210,10 +209,19 @@ class _SettingsFormState extends State<SettingsForm> {
                 onPressed: () async {
                   print(horas);
                   if(_formKey.currentState.validate()){
-                    await DatabaseService()
-                        .addMedicinePorHoras(_currentName,_paciente.idPaciente,
-                        _currentCantidad,horas,
-                        _currentRecomendacion, _currentDosis,dias);
+                    for(var hora in horas) {
+                      await DatabaseService()
+                          .addMedicine(
+                          _currentName,
+                          _paciente.idPaciente,
+                          _currentCantidad,
+                          hora.hour.toString(),
+                          hora.minute.toString(),
+                          "24",
+                          _currentRecomendacion,
+                          _currentDosis,
+                          );
+                    }
                     Navigator.pop(context);
                   }
                 }
@@ -315,8 +323,6 @@ class _SettingsFormState extends State<SettingsForm> {
     );
   if(newTime!=null){
     setState(() {
-      horas.add(newTime);
-      dias.add(DateTime.now().day);
       _time=newTime;
     });
     }

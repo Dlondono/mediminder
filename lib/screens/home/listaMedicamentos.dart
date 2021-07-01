@@ -28,7 +28,6 @@ class _MedicamentosState extends State<Medicamentos> {
     final String tipo=widget.tipo;
     alarmaLista = [];
     AlarmaMedicamento medi;
-    AlarmaMedicamento mediH;
     medicamentos.removeWhere((item) => item.idPaciente!=uid);
     medicamentos.forEach((item) {
       if (item.periodo != null) {
@@ -70,7 +69,7 @@ class _MedicamentosState extends State<Medicamentos> {
         medi = new AlarmaMedicamento(medicamentoNombre: item.medicamentoNombre,
             descripcion: item.recomendacion,
             cantidad: item.cantidad,
-            hora: horaNueva,
+            hora: t,
             periodo: item.periodo,
             idPaciente: item.idPaciente,
             dosis: item.dosis,
@@ -80,6 +79,7 @@ class _MedicamentosState extends State<Medicamentos> {
             year: item.year,
         );
         alarmaLista.add(medi);
+        print(medi.dia.toString()+medi.medicamentoNombre+medi.hora.hour.toString());
       } else if (item.listaHorasMed != null) {
         List<String> listaHorasString,listaDiasString;
         DateTime t,now;
@@ -141,9 +141,9 @@ class _MedicamentosState extends State<Medicamentos> {
       }
       print(alarmaLista.length);
       });
+    alarmaLista.sort((alarmaA, alarmaB) => alarmaA.hora.isBefore(alarmaB.hora)? 0:1);
 
-    alarmaLista.sort((alarmaA, alarmaB) => alarmaA.hora.isBefore(alarmaB.hora) ? 0:1,);
-        //closestDate();
+    //closestDate();
         return ListView.builder(
             itemCount: alarmaLista.length,
             itemBuilder: (context,index) {
