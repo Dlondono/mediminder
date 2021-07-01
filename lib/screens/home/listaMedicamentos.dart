@@ -81,13 +81,18 @@ class _MedicamentosState extends State<Medicamentos> {
         );
         alarmaLista.add(medi);
       } else if (item.listaHorasMed != null) {
-        List<String> listaHorasString;
+        List<String> listaHorasString,listaDiasString;
         DateTime t,now;
         now=DateTime.now();
-        String horaString;
-        horaString =item.listaHorasMed.toString().replaceAll(new RegExp(r'[^0-9,]'),'');
+        String horaString,diasString;
+        horaString =item.listaHorasMed[0].toString().replaceAll(new RegExp(r'[^0-9,]'),'');
         listaHorasString=horaString.split(',');
+        diasString=item.listaHorasMed[1].toString().replaceAll(new RegExp(r'[^0-9,]'),'');
+        listaDiasString=diasString.split(',');
+        int i=0;
         for(String horaList in listaHorasString) {
+          int dia=int.parse(listaDiasString[i]);
+          i++;
           t = DateTime.parse(item.year.toString() +
               item.mes.toString().padLeft(2, '0')
               + item.dia.toString().padLeft(2, '0') + " " + horaList[0] +
@@ -123,7 +128,7 @@ class _MedicamentosState extends State<Medicamentos> {
             idPaciente: item.idPaciente,
             dosis: item.dosis,
             uid: item.uid,
-            dia: item.dia,
+            dia: dia,
             mes: item.mes,
             year: item.year,
           );

@@ -47,7 +47,7 @@ class DatabaseService{
   }
 
   Future addMedicinePorHoras(String medicina,String id, String cantidad, List<TimeOfDay> horas
-      , String recomendacion, String dosis) async{
+      , String recomendacion, String dosis,List<int> dias) async{
     Random random=new Random();
     int rnd=random.nextInt(100);
     String idR=id+rnd.toString();
@@ -58,7 +58,12 @@ class DatabaseService{
       "recomendacion": recomendacion,
       "dosis": int.parse(dosis),
       "horas": FieldValue.arrayUnion([
-        horas.toString()
+        {
+         "horas": horas.toString(),
+        },
+        {
+          "dias":dias.toString(),
+        },
       ]),
       "uid":idR,
       "dia":DateTime.now().day,
