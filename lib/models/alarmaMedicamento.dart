@@ -12,16 +12,18 @@ class AlarmaMedicamento{
     int dia;
     int mes;
     int year;
+    String prioridad;
+    String tipo;
+    String tipoHorario;
+    int veces;
     List<dynamic> listaHoras;
+    //String uidDatabase;
 
     AlarmaMedicamento({this.medicamentoNombre,this.descripcion,this.cantidad,
         this.hora, this.periodo, this.idPaciente,this.dosis,this.uid,
-        this.dia,this.mes,this.year
+        this.dia,this.mes,this.year,this.prioridad,this.tipo,this.tipoHorario,this.veces
     });
-    AlarmaMedicamento.horas({this.medicamentoNombre,this.descripcion,this.cantidad,
-        this.listaHoras, this.idPaciente,this.dosis,this.uid,
-        this.dia,this.mes,this.year
-    });
+
     setTime(DateTime t){
         this.hora = t;
     }

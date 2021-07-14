@@ -10,7 +10,6 @@ import 'package:sizer/sizer.dart';
 
 class SettingsForm extends StatefulWidget {
   final Paciente paciente;
-
   SettingsForm({this.paciente});
   @override
   _SettingsFormState createState() => _SettingsFormState();
@@ -20,7 +19,8 @@ class _SettingsFormState extends State<SettingsForm> {
   Paciente _paciente;
   @override
   void initState() {
-      _paciente = Paciente(id: this.widget.paciente.id, nombre: this.widget.paciente.nombre, idPaciente: this.widget.paciente.idPaciente);
+      _paciente = Paciente(id: this.widget.paciente.id, nombre: this.widget.paciente.nombre,
+          idPaciente: this.widget.paciente.idPaciente);
       super.initState();
   }
   final _formKey=GlobalKey<FormState>();
@@ -32,8 +32,8 @@ class _SettingsFormState extends State<SettingsForm> {
   String _currentRecomendacion;
   String _currentDosis;
   String _currentPrioridad;
-  String _currentHorario;
-  int _cantidadDiaria;
+  String _currentTipoHorario;
+  int _veces;
   String _currentTipo;
 
   final List<String> prioridades=['1 - Prioridad máxima',
@@ -149,7 +149,7 @@ class _SettingsFormState extends State<SettingsForm> {
                                   ),
                                   SizedBox(height: 2.0.h),
                                   DropdownButtonFormField(
-                                    value: _currentHorario ,
+                                    value: _currentTipoHorario ,
                                     items: horario.map((hor) {
                                       return DropdownMenuItem(
                                         value: hor,
@@ -157,7 +157,7 @@ class _SettingsFormState extends State<SettingsForm> {
                                       );
                                     }).toList(),
                                     onChanged: (val) =>
-                                        setState(() => _currentHorario = val),
+                                        setState(() => _currentTipoHorario = val),
                                     decoration: textInputDecoraton.copyWith(
                                         hintText: "Horario"),
                                     validator: (val) =>
@@ -181,7 +181,7 @@ class _SettingsFormState extends State<SettingsForm> {
     );
   }
   Widget _nuevoDropdown() {
-    if (_currentHorario == 'Horas aproximadas') {
+    if (_currentTipoHorario == 'Horas aproximadas') {
       return Container(
         child: Column(
           children:<Widget>[
@@ -193,7 +193,7 @@ class _SettingsFormState extends State<SettingsForm> {
             val.isEmpty
                 ? "Por favor ingrese el numero de veces que debe tomar el medicamento al dia"
                 : null,
-            onChanged: (val) => setState(() => _cantidadDiaria = int.parse(val)),
+            onChanged: (val) => setState(() => _veces = int.parse(val)),
             ),
             SizedBox(height: 2.0.h),
             _forCampo(),
@@ -207,7 +207,6 @@ class _SettingsFormState extends State<SettingsForm> {
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () async {
-                  print(horas);
                   if(_formKey.currentState.validate()){
                     for(var hora in horas) {
                       await DatabaseService()
@@ -220,6 +219,10 @@ class _SettingsFormState extends State<SettingsForm> {
                           "24",
                           _currentRecomendacion,
                           _currentDosis,
+                          _currentPrioridad,
+                          _currentTipo,
+                          _currentTipoHorario,
+                          _veces,
                           );
                     }
                     Navigator.pop(context);
@@ -231,7 +234,7 @@ class _SettingsFormState extends State<SettingsForm> {
 
       );
 
-    }else if(_currentHorario=="Por periodo"){
+    }else if(_currentTipoHorario=="Por periodo"){
       return Container(
         child: Column(
           children:<Widget>[
@@ -240,22 +243,6 @@ class _SettingsFormState extends State<SettingsForm> {
               onPressed: _selectTim,
             ),
             TextFormField(
-              decoration: textInputDecoraton.copyWith(hintText: "Hora del medicamento"),
-              validator: (val) =>
-              val.isEmpty
-                  ? "Por favor ingrese la hora del medicamento" : null,
-        onChanged: (val) => setState(() => _currentHora = val),
-            ),
-          SizedBox(height: 2.0.h),
-          TextFormField(
-            decoration: textInputDecoraton.copyWith(hintText: "Minuto del medicamento"),
-              validator: (val) =>
-              val.isEmpty
-              ? "Por favor ingrese el minuto del medicamento" : null,
-        onChanged: (val) => setState(() => _currentMinuto = val),
-          ),
-        SizedBox(height: 2.0.h),
-        TextFormField(
           decoration: textInputDecoraton.copyWith(hintText: "Cada cuanto debe tomar el medicamento"),
           validator: (val) =>
           val.isEmpty
@@ -276,10 +263,20 @@ class _SettingsFormState extends State<SettingsForm> {
                   print(horas);
                   if(_formKey.currentState.validate()){
                     await DatabaseService()
-                     .addMedicine(_currentName,_paciente.idPaciente,
-                                              _currentCantidad,_currentHora,_currentMinuto,
-                                              _currentPeriodo, _currentRecomendacion,
-                                              _currentDosis);
+                     .addMedicine(
+                      _currentName,
+                      _paciente.idPaciente,
+                      _currentCantidad,
+                      _currentHora,
+                      _currentMinuto,
+                      _currentPeriodo,
+                      _currentRecomendacion,
+                      _currentDosis,
+                      _currentPrioridad,
+                      _currentTipo,
+                      _currentTipoHorario,
+                      _veces,
+                    );
                         Navigator.pop(context);
                   }
                 }
@@ -294,11 +291,11 @@ class _SettingsFormState extends State<SettingsForm> {
     }
   }
   Widget _forCampo(){
-    if(_cantidadDiaria!=null) {
+    if(_veces!=null) {
       return Container(
         child: Column(
           children: <Widget>[
-            for(int i=0;i<_cantidadDiaria;i++)
+            for(int i=0;i<_veces;i++)
               ElevatedButton(
                 child: Text("Seleccionar hora "+(i+1).toString()),
                 onPressed:()=> _selectTime(i),
@@ -324,6 +321,7 @@ class _SettingsFormState extends State<SettingsForm> {
   if(newTime!=null){
     setState(() {
       _time=newTime;
+      horas.add(_time);
     });
     }
   }
@@ -336,6 +334,8 @@ class _SettingsFormState extends State<SettingsForm> {
     if(newTime!=null){
       setState(() {
         _time=newTime;
+        _currentHora=_time.hour.toString();
+        _currentMinuto=_time.minute.toString();
       });
     }
   }

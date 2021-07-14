@@ -33,14 +33,12 @@ class _MedicamentosState extends State<Medicamentos> {
       if (item.periodo != null) {
         DateTime horaNueva = new DateTime(item.year,
             item.mes, item.dia, item.hora, item.minuto);
-        print(horaNueva.toString()+"horanueva listamedica");
         DateTime t,now;
         now=DateTime.now();
         t = DateTime.parse(item.year.toString() +
             item.mes.toString().padLeft(2, '0')
             + item.dia.toString().padLeft(2, '0') + " " + horaNueva.hour.toString().padLeft(2,'0')
             + ":" + horaNueva.minute.toString().padLeft(2,'0') + ":" + "00");
-        print(t.toString()+"t listamedica primera definicion");
         if(t.isBefore(now)){
           item.dia =now.day;
           item.mes=now.month;
@@ -48,21 +46,18 @@ class _MedicamentosState extends State<Medicamentos> {
               item.mes.toString().padLeft(2, '0')
               + item.dia.toString().padLeft(2, '0') + " " + horaNueva.hour.toString().padLeft(2,'0')
               + ":" + horaNueva.minute.toString().padLeft(2,'0') + ":" + "00");
-          print(t.toString()+"t listamedica dia mes definicion");
           if(t.isBefore(now)){
             item.dia=now.day+1;
             t = DateTime.parse(item.year.toString() +
                 item.mes.toString().padLeft(2, '0')
                 + item.dia.toString().padLeft(2, '0') + " " + horaNueva.hour.toString().padLeft(2,'0')
                 + ":" + horaNueva.minute.toString().padLeft(2,'0') + ":" + "00");
-            print(t.toString()+"t listamedica dia+1 definicion");
             if(t.isBefore(now)){
               item.mes=now.month+1;
               t = DateTime.parse(item.year.toString() +
                   item.mes.toString().padLeft(2, '0')
                   + item.dia.toString().padLeft(2, '0') + " " + horaNueva.hour.toString().padLeft(2,'0')
                   + ":" + horaNueva.minute.toString().padLeft(2,'0') + ":" + "00");
-              print(t.toString()+"t listamedica mes+1 definicion");
             }
           }
         }
@@ -77,10 +72,13 @@ class _MedicamentosState extends State<Medicamentos> {
             dia: item.dia,
             mes: item.mes,
             year: item.year,
+            tipo: item.tipo,
+            tipoHorario: item.tipoHorario,
+            prioridad: item.prioridad,
+            veces:item.veces,
         );
         alarmaLista.add(medi);
-        print(medi.dia.toString()+medi.medicamentoNombre+medi.hora.hour.toString());
-      } else if (item.listaHorasMed != null) {
+         } else if (item.listaHorasMed != null) {
         List<String> listaHorasString,listaDiasString;
         DateTime t,now;
         now=DateTime.now();
