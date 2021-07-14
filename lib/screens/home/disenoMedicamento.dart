@@ -9,16 +9,16 @@ import 'package:sizer/sizer.dart';
 
 class MedicamentoDiseno extends StatelessWidget {
   final AlarmaMedicamento medicamento;
-  final String tipo;
+  final String rol;
   int hora;
   final Notifications noti = new Notifications();
-  MedicamentoDiseno(this.medicamento,this.tipo);
+  MedicamentoDiseno(this.medicamento,this.rol);
   String formato = "am";
   final FirebaseAuth auth=  FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     final User user=auth.currentUser;
-    if(tipo=="paciente") {
+    if(rol=="paciente") {
       noti.cancelarNotificaciones();
       if (medicamento.listaHoras == null) {
         noti.setTime(
@@ -64,13 +64,13 @@ class MedicamentoDiseno extends StatelessWidget {
         }
       }
     }else{
-      print(tipo);
+      print(rol);
     }
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 1.0.h, horizontal: 1.0.h),
       child: GestureDetector(//padding
         onTap: (){
-          if(tipo=="paciente") {
+          if(rol=="paciente") {
             Navigator.push(context, MaterialPageRoute(
                 builder: (context) =>
                     detallesMedicamento(medicamento: medicamento)));
@@ -101,7 +101,7 @@ class MedicamentoDiseno extends StatelessWidget {
                     foregroundColor: MaterialStateProperty.all(Colors.black),
                   ),
                 onPressed: (){
-                  if(tipo=="paciente") {
+                  if(rol=="paciente") {
                     //noti.notiActivas();
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) =>
@@ -119,7 +119,7 @@ class MedicamentoDiseno extends StatelessWidget {
     );
   }
   Widget _editar(){
-    if(tipo=="supervisor"){
+    if(rol=="supervisor"){
       return Positioned(
         top: 0,
         right: 0,

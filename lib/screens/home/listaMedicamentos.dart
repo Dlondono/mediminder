@@ -72,9 +72,17 @@ class _MedicamentosState extends State<Medicamentos> {
             dia: item.dia,
             mes: item.mes,
             year: item.year,
+            tipo: item.tipo,
+            tipoHorario: item.tipoHorario,
+            prioridad: item.prioridad,
+            veces:item.veces,
         );
         alarmaLista.add(medi);
+
       } else if (item.listaHorasMed != null) {
+
+         } else if (item.listaHorasMed != null) {
+
         List<String> listaHorasString,listaDiasString;
         DateTime t,now;
         now=DateTime.now();

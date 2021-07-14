@@ -26,7 +26,9 @@ class DatabaseService{
   }
 
   Future addMedicine(String medicina,String id, String cantidad, String hora,
-      String minuto, String periodo, String recomendacion, String dosis) async{
+      String minuto, String periodo, String recomendacion, String dosis,String prioridad,
+      String tipo,String tipoHorario,int veces
+      ) async{
     Random random=new Random();
     int rnd=random.nextInt(100);
     String idR=id+rnd.toString();
@@ -40,37 +42,42 @@ class DatabaseService{
       "recomendacion": recomendacion,
       "dosis": int.parse(dosis),
       "uid":idR,
+      "veces":veces,
+      "tipo":tipo,
+      "prioridad":prioridad,
+      "tipoHorario":tipoHorario,
+      "dia":DateTime.now().day,
+      "mes":DateTime.now().month,
+      "año":DateTime.now().year,
+    });
+  }
+  Future editMedicine(String medicina,String id, String cantidad, String hora,
+      String minuto, String periodo, String recomendacion, String dosis,String prioridad,
+      String tipo,String tipoHorario,int veces,String uid
+      ) async{
+    //Random random=new Random();
+    //int rnd=random.nextInt(100);
+    //String idR=id+rnd.toString();
+    return await coleccionMedicamentos.doc(uid).set({
+      "medicamentoNombre": medicina,
+      "idPaciente": id,
+      "cantidad": int.parse(cantidad),
+      "hora": int.parse(hora),
+      "minuto":int.parse(minuto),
+      "periodo": int.parse(periodo),
+      "recomendacion": recomendacion,
+      "dosis": int.parse(dosis),
+      "uid":uid,
+      "veces":veces,
+      "tipo":tipo,
+      "prioridad":prioridad,
+      "tipoHorario":tipoHorario,
       "dia":DateTime.now().day,
       "mes":DateTime.now().month,
       "año":DateTime.now().year,
     });
   }
 
-  Future addMedicinePorHoras(String medicina,String id, String cantidad, List<TimeOfDay> horas
-      , String recomendacion, String dosis,List<int> dias) async{
-    Random random=new Random();
-    int rnd=random.nextInt(100);
-    String idR=id+rnd.toString();
-    return await coleccionMedicamentos.doc(idR).set({
-      "medicamentoNombre": medicina,
-      "idPaciente": id,
-      "cantidad": int.parse(cantidad),
-      "recomendacion": recomendacion,
-      "dosis": int.parse(dosis),
-      "horas": FieldValue.arrayUnion([
-        {
-         "horas": horas.toString(),
-        },
-        {
-          "dias":dias.toString(),
-        },
-      ]),
-      "uid":idR,
-      "dia":DateTime.now().day,
-      "mes":DateTime.now().month,
-      "año":DateTime.now().year,
-    });
-  }
 
   Future updateMedicine(int mes,int dia,int hora,int minuto,int cantidad,String id) async{
     return await coleccionMedicamentos.doc(id).update({
@@ -134,6 +141,10 @@ class DatabaseService{
           recomendacion: doc.data()['recomendacion'] ?? "",
           dosis: doc.data()['dosis'] ?? "",
           uid: doc.id,
+          tipo: doc.data()['tipo'],
+          tipoHorario: doc.data()['tipoHorario'],
+          veces: doc.data()['veces'],
+          prioridad: doc.data()['prioridad'],
           dia: doc.data()['dia'] ?? "",
           mes: doc.data()['mes'] ?? "",
           year: doc.data()['año'] ?? "",

@@ -14,10 +14,15 @@ class Medicamento{
   int dia;
   int mes;
   int year;
+  String tipo;
+  String tipoHorario;
+  int veces;
+  String prioridad;
 
   Medicamento({this.medicamentoNombre,this.idPaciente,this.cantidad,
     this.hora,this.minuto,this.periodo, this.recomendacion, this.dosis,this.uid,
-    this.dia,this.mes,this.year});
+    this.dia,this.mes,this.year,this.prioridad,this.tipo,this.tipoHorario,this.veces
+  });
 
   Medicamento.horas({this.medicamentoNombre,this.idPaciente,this.cantidad,
     this.listaHorasMed,this.recomendacion, this.dosis,this.uid,
