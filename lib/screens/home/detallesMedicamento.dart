@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:mediminder/models/alarmaMedicamento.dart';
@@ -5,6 +7,7 @@ import 'package:mediminder/models/informes.dart';
 import 'package:mediminder/services/database.dart';
 import 'package:mediminder/services/local_noti.dart';
 import 'package:sizer/sizer.dart';
+import 'package:http/http.dart' as http;
 
 class detallesMedicamento extends StatelessWidget {
   final AlarmaMedicamento medicamento;
@@ -12,6 +15,34 @@ class detallesMedicamento extends StatelessWidget {
   final DatabaseService _database=DatabaseService();
   final Notifications noti = new Notifications();
   final Informe informe=new Informe();
+  final url = "https://fcm.googleapis.com/fcm/send";
+
+
+  Future<void> sendPushMessage() async {
+    final msg = jsonEncode({"to": "fit1AX-jTcenYi5LFJhPEa:APA91bE3YyeYwGbzqRDBe_WqCM4wBFo__y0dXgrJgEdkbUG8x5Ls5zJvuriumq0KfWXHCyFXGxQnpJXXxw--w9pDA5AdlDEKEYcgj787sF_OlSJcITDgi3UIFWIa1sZA5tNoYqTp1HL2",
+      "notification": {
+        "title": "Probando fcm api",
+        "body": "Body notificacion fcm"
+      },
+      "data": {
+        "medicamento": "Medicina"
+      }});
+    try {
+      var response = await http.post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization' : 'Key=AAAAhrjgfCE:APA91bHwxTFEQ1jU0ZCxAXfzT3jjNn4i48sYRtlUq4EFglcp21w4nTRUBsz6VjhAgdzuyqSrunmE3J63tmVaslarxqoM500fyKJHdy5jTYakcTaIWlIGb0gZQwwbhFjl8fDANJWcPlZO'
+        },
+        body: msg,
+      );
+      print('FCM request for device sent!');
+      print(response);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -59,9 +90,7 @@ class detallesMedicamento extends StatelessWidget {
               ),
               onPressed:(){
                 if(medicamento.periodo!=null) {
-                  print(medicamento.hora.toString() + "hora");
                   medicamento.hora = medicamento.hora.add(Duration(hours: medicamento.periodo));
-                    print(medicamento.hora.toString() + "hora");
                 }
                     /*noti.setTime(medicamento.hora.year, medicamento.hora.month
                         , medicamento.dia, medicamento.hora.hour,
@@ -103,6 +132,7 @@ class detallesMedicamento extends StatelessWidget {
                 foregroundColor: MaterialStateProperty.all(Colors.black),
               ),
               onPressed:(){
+                sendPushMessage();
                 medicamento.hora = medicamento.hora.add(const Duration(minutes: 5));
                 noti.setTime(medicamento.hora.year, medicamento.hora.month, medicamento.hora.day, medicamento.hora.hour, medicamento.hora.minute);
                 noti.scheduleweeklyNotification(medicamento.idPaciente,medicamento.medicamentoNombre,medicamento.descripcion);
