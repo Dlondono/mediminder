@@ -4,6 +4,7 @@ import 'package:mediminder/models/alarmaMedicamento.dart';
 import 'package:mediminder/models/medicamento.dart';
 import 'package:mediminder/screens/home/detallesMedicamento.dart';
 import 'package:mediminder/screens/home/editarMedicamento.dart';
+import 'package:mediminder/services/database.dart';
 import 'package:mediminder/services/local_noti.dart';
 import 'package:sizer/sizer.dart';
 
@@ -15,10 +16,10 @@ class MedicamentoDiseno extends StatelessWidget {
   MedicamentoDiseno(this.medicamento,this.rol);
   String formato = "am";
   final FirebaseAuth auth=  FirebaseAuth.instance;
+  final DatabaseService _database=DatabaseService();
   @override
   Widget build(BuildContext context) {
     final User user=auth.currentUser;
-    if(rol=="paciente") {
       noti.cancelarNotificaciones();
       if (medicamento.listaHoras == null) {
         noti.setTime(
@@ -40,32 +41,8 @@ class MedicamentoDiseno extends StatelessWidget {
           hora = 12;
           formato = "am";
         }
-      } else {
-        print("YA NO ENTRO ACA");
-        List<String> listaHorasString;
-        String horaString;
-        DateTime t;
-        horaString = medicamento.listaHoras.toString().replaceAll(
-            new RegExp(r'[^0-9,]'), '');
-        listaHorasString = horaString.split(',');
-        for (String horaList in listaHorasString) {
-          t = DateTime.parse(medicamento.year.toString() +
-              medicamento.mes.toString().padLeft(2, '0')
-              + medicamento.dia.toString().padLeft(2, '0') + " " + horaList[0] +
-              horaList[1] + ":" + horaList[2] + horaList[3] + ":" + "00");
-
-          medicamento.setTime(t);
-          noti.setTime(
-              medicamento.year, medicamento.mes, medicamento.dia,
-              t.hour, t.minute);
-          noti.scheduleweeklyNotification(
-              medicamento.idPaciente, medicamento.medicamentoNombre,
-              medicamento.descripcion);
-        }
       }
-    }else{
-      print(rol);
-    }
+
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 1.0.h, horizontal: 1.0.h),
       child: GestureDetector(//padding
@@ -75,18 +52,22 @@ class MedicamentoDiseno extends StatelessWidget {
                 builder: (context) =>
                     detallesMedicamento(medicamento: medicamento)));
           }else{
+            //_database.queryMedicamentos(medicamento.idPaciente);
             Navigator.push(context, MaterialPageRoute(
                 builder: (context) =>
                     editarMedicamento(medicamento: medicamento)));
           }
             },
         child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
           color: Color.fromRGBO(255, 255, 255, 50),
           margin: EdgeInsets.symmetric(vertical: 1.0.h, horizontal: 3.0.h),
           child: Column(
             children: <Widget>[
               ListTile(
-                title: Text(medicamento.dia.toString()+"Medicamento: " +medicamento.medicamentoNombre,
+                title: Text("Medicamento: " +medicamento.medicamentoNombre,
                   style: TextStyle(fontSize: 20,color: Colors.black)),
                 subtitle: Text("Cantidad disponible: " + medicamento.cantidad.toString()
                     + "\n" + "Dosis a tomar: " + medicamento.dosis.toString(),

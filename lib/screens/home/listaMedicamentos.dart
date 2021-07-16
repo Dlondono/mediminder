@@ -5,6 +5,7 @@ import 'package:mediminder/models/medicamento.dart';
 import 'package:mediminder/models/paciente.dart';
 import 'package:mediminder/models/userLocal.dart';
 import 'package:mediminder/screens/home/disenoMedicamento.dart';
+import 'package:mediminder/screens/home/editarMedicamento.dart';
 import 'package:mediminder/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/timezone.dart' as tz;
@@ -17,19 +18,29 @@ class Medicamentos extends StatefulWidget {
 }
 
 class _MedicamentosState extends State<Medicamentos> {
+  final DatabaseService _database=DatabaseService();
   final FirebaseAuth auth=FirebaseAuth.instance;
   DateTime horaActualLocal = tz.TZDateTime.now(tz.local);
+  List<Medicamento> medicamentos;
   List<AlarmaMedicamento> alarmaLista = [];
+  Future test()async{
+    medicamentos=await _database.queryMedicamentos(widget.id);
+    print(medicamentos.length.toString()+"medicamentos lista");
+  }
   @override
   Widget build(BuildContext context) {
-    final medicamentos= Provider.of<List<Medicamento>>(context)?? [];
-    //final User user= auth.currentUser;
     final uid=widget.id;
     final String tipo=widget.tipo;
+    test();
+    //print(_database.listaMedicamentos.length);
+    //final medicamentos=_database.queryMedicamentos(uid);
+    //Provider.of<List<Medicamento>>(context)?? [];
     alarmaLista = [];
+    print(uid+"uid");
     AlarmaMedicamento medi;
-    medicamentos.removeWhere((item) => item.idPaciente!=uid);
-    medicamentos.forEach((item) {
+    //medicamentos.removeWhere((item) => item.idPaciente!=uid);
+    for(var item in medicamentos??[]){
+      print(medicamentos.length.toString()+"medicamentos dentrofor");
       if (item.periodo != null) {
         DateTime horaNueva = new DateTime(item.year,
             item.mes, item.dia, item.hora, item.minuto);
@@ -141,7 +152,7 @@ class _MedicamentosState extends State<Medicamentos> {
           child: Text("ERROR"),
         );
       }
-      });
+      };
     alarmaLista.sort((alarmaA, alarmaB) => alarmaA.hora.isBefore(alarmaB.hora)? 0:1);
 
     //closestDate();

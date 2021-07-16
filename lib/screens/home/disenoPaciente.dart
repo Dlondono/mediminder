@@ -17,13 +17,16 @@ class PacienteDiseno extends StatelessWidget {
     return StreamProvider<List<Medicamento>>.value(
       value:DatabaseService().medicamentos,
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 2.0.h,horizontal: 2.0.h),
+          padding: EdgeInsets.symmetric(vertical: 1.0.h,horizontal: 2.0.h),
           child: GestureDetector(//padding
             onTap: (){
               Navigator.push(context, MaterialPageRoute(
               builder: (context)=> detallesPaciente(paciente: paciente)));
               },
       child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
           margin: EdgeInsets.symmetric(vertical: 1.0.h,horizontal: 1.0.h),
           color: Colors.white,
           child: Column(
