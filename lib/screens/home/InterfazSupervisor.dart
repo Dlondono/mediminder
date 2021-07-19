@@ -21,7 +21,8 @@ class InterfazSupervisor extends StatelessWidget {
       child: Scaffold(
         //backgroundColor: ,
         appBar: AppBar(
-          title: Text("Mediminder supervisor"),
+          elevation: 15,
+          title: Text("Lista de pacientes"),
           backgroundColor: Color.fromRGBO(9, 111, 167, 50),
           actions: <Widget>[
             TextButton.icon(

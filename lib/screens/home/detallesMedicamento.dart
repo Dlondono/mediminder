@@ -65,6 +65,9 @@ class detallesMedicamento extends StatelessWidget {
             ),
             SizedBox(height: 2.0.h),
             Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
               margin: EdgeInsets.symmetric(vertical: 1.0.h, horizontal: 3.0.h),
               child: ListTile(
                 //contentPadding: ,

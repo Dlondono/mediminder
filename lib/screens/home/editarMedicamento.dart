@@ -70,13 +70,6 @@ class _editarMedicamentoState extends State<editarMedicamento> {
                         Expanded(
                           child: Column(
                             children: <Widget>[
-                              Text(
-                                medicamento.medicamentoNombre,
-                                style: TextStyle(
-                                  fontSize: 20.0,
-                                  color: Colors.black,
-                                ),
-                              ),
                               SizedBox(height: 3.0.h),
                               DropdownButtonFormField(
                                 value: _currentTipo??medicamento.tipo ,

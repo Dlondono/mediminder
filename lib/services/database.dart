@@ -17,6 +17,35 @@ class DatabaseService{
   final CollectionReference coleccionMedicamentos = FirebaseFirestore.instance.collection("Medicamentos");
   final CollectionReference coleccionInformes=FirebaseFirestore.instance.collection("Informes");
 
+  Future queryMedicamentos(String idPaciente)async{
+    List<Medicamento> listaMedicamentos=[];
+    var result=await coleccionMedicamentos.where("idPaciente",isEqualTo: idPaciente).get();
+    //result.docs.forEach((doc){
+      for (var doc in result.docs) {
+        Medicamento med = new Medicamento(
+          medicamentoNombre: doc.data()['medicamentoNombre'] ?? "",
+          idPaciente: doc.data()['idPaciente'] ?? "",
+          cantidad: doc.data()['cantidad'] ?? "",
+          hora: doc.data()['hora'] ?? "",
+          minuto: doc.data()['minuto'] ?? "",
+          periodo: doc.data()['periodo'] ?? "",
+          recomendacion: doc.data()['recomendacion'] ?? "",
+          dosis: doc.data()['dosis'] ?? "",
+          uid: doc.id,
+          tipo: doc.data()['tipo'],
+          tipoHorario: doc.data()['tipoHorario'],
+          veces: doc.data()['veces'],
+          prioridad: doc.data()['prioridad'],
+          dia: doc.data()['dia'] ?? "",
+          mes: doc.data()['mes'] ?? "",
+          year: doc.data()['año'] ?? "",
+        );
+        listaMedicamentos.add(med);
+      }
+    return listaMedicamentos;
+    //print(listaMedicamentos.length.toString()+"LENGHT DATABASE");
+  }
+
   Future updateUserData(String nombre,String id, String tipo) async{
     return await coleccionUsuarios.doc(uid).set({
       "nombre": nombre,

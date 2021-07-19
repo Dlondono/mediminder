@@ -26,6 +26,7 @@ class _VistaPacienteState extends State<VistaPaciente> {
           child: Scaffold(
             //backgroundColor: Colors.blue[300],
             appBar: AppBar(
+              elevation: 15,
               title: Text("Lista de medicamentos"),
               backgroundColor: Color.fromRGBO(9, 111, 167, 50),
               actions: <Widget>[
