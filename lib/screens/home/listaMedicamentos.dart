@@ -21,17 +21,29 @@ class _MedicamentosState extends State<Medicamentos> {
   final DatabaseService _database=DatabaseService();
   final FirebaseAuth auth=FirebaseAuth.instance;
   DateTime horaActualLocal = tz.TZDateTime.now(tz.local);
-  List<Medicamento> medicamentos;
+  List<Medicamento> medicamentos,meds;
   List<AlarmaMedicamento> alarmaLista = [];
   Future test()async{
-    medicamentos=await _database.queryMedicamentos(widget.id);
+    meds=await _database.queryMedicamentos(widget.id);
+    if(this.mounted) {
+      print(mounted.toString()+"mounted");
+      setState(() {
+        medicamentos = meds;
+      });
+    }
     print(medicamentos.length.toString()+"medicamentos lista");
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    test();
   }
   @override
   Widget build(BuildContext context) {
     final uid=widget.id;
     final String tipo=widget.tipo;
-    test();
+    //test();
     //print(_database.listaMedicamentos.length);
     //final medicamentos=_database.queryMedicamentos(uid);
     //Provider.of<List<Medicamento>>(context)?? [];

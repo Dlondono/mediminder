@@ -21,25 +21,27 @@ class MedicamentoDiseno extends StatelessWidget {
   Widget build(BuildContext context) {
     final User user=auth.currentUser;
       noti.cancelarNotificaciones();
-      if (medicamento.listaHoras == null) {
-        noti.setTime(
-            medicamento.year, medicamento.mes, medicamento.dia,
-            medicamento.hora.hour, medicamento.hora.minute);
-        noti.scheduleweeklyNotification(
-            medicamento.idPaciente, medicamento.medicamentoNombre,
-            medicamento.descripcion);
-        hora = medicamento.hora.hour;
+      if(rol=="paciente") {
+        if (medicamento.listaHoras == null) {
+          noti.setTime(
+              medicamento.year, medicamento.mes, medicamento.dia,
+              medicamento.hora.hour, medicamento.hora.minute);
+          noti.scheduleweeklyNotification(
+              medicamento.idPaciente, medicamento.medicamentoNombre,
+              medicamento.descripcion);
+          hora = medicamento.hora.hour;
 
-        if (hora > 12) {
-          hora = hora - 12;
-          formato = "pm";
-        }
-        if (hora == 12) {
-          formato = "pm";
-        }
-        if (hora == 0) {
-          hora = 12;
-          formato = "am";
+          if (hora > 12) {
+            hora = hora - 12;
+            formato = "pm";
+          }
+          if (hora == 12) {
+            formato = "pm";
+          }
+          if (hora == 0) {
+            hora = 12;
+            formato = "am";
+          }
         }
       }
 
@@ -52,7 +54,6 @@ class MedicamentoDiseno extends StatelessWidget {
                 builder: (context) =>
                     detallesMedicamento(medicamento: medicamento)));
           }else{
-            //_database.queryMedicamentos(medicamento.idPaciente);
             Navigator.push(context, MaterialPageRoute(
                 builder: (context) =>
                     editarMedicamento(medicamento: medicamento)));
