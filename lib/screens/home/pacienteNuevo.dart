@@ -94,6 +94,7 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                         onPressed: () async{
                           if(_formKey.currentState.validate()){
                             setState(() {
+                              error="";
                               loading=true;
                             });
                             dynamic result= await _auth.registerEmailPassP
@@ -132,6 +133,11 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                   )
                 ],
               ),
+              onChanged: (){
+                setState(() {
+                  error="";
+                });
+              },
             ),
           ),
         ),

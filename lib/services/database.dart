@@ -290,7 +290,7 @@ class DatabaseService{
   }
 
   Future addPaciente(String nombre, String cedula,String uid,String uidPac) async{
-    return await coleccionPacientes.doc(cedula).set({
+    return await coleccionPacientes.doc(uidPac).set({
       "nombre": nombre,
       "cedula": cedula,
       "idSuper":uid,

@@ -16,38 +16,54 @@ class Pacientes extends StatefulWidget {
 }
 
 class _PacientesState extends State<Pacientes> {
-  bool loading=false;
-  final DatabaseService database=DatabaseService();
-  final FirebaseAuth auth=FirebaseAuth.instance;
-  List<Paciente> pacientes,pacs;
-  Future getPacientes()async{
-    setState(()=>loading=true);
-    pacs=await database.queryPacientes(widget.uid);
-    if(this.mounted) {
+  bool loading = false;
+  final DatabaseService database = DatabaseService();
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  List<Paciente> pacientes, pacs;
+
+  Future getPacientes() async {
+    setState(() => loading = true);
+    pacs = await database.queryPacientes(widget.uid);
+    if (this.mounted) {
       setState(() {
         pacientes = pacs;
-        loading=false;
+        loading = false;
       });
     }
   }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getPacientes();
   }
+
+  Widget _noPacientes() {
+    if(pacientes.length==0){
+    return Scaffold(
+      backgroundColor: Color.fromRGBO(157, 221, 234, 50),
+      body: Container(
+          decoration: BoxDecoration(color: Color.fromRGBO(157, 221, 234, 50)),
+          child: Text(
+              "Aun no tienes pacientes registrados"),
+      ),
+    );
+  }else{
+      return Container(
+        child: loading? Loading(): ListView.builder(
+            itemCount: pacientes.length,
+            itemBuilder: (context,index) {
+              return PacienteDiseno(paciente: pacientes[index]);
+            }
+        ),
+      );
+    }
+}
   @override
   Widget build(BuildContext context) {
-    //final pacientes= Provider.of<List<Paciente>>(context)?? [];
     final User user= auth.currentUser;
     final uid=user.uid;
-    //pacientes.removeWhere((item) => item.idSuper!=uid);
-
-    return loading? Loading(): ListView.builder(
-      itemCount: pacientes.length,
-      itemBuilder: (context,index) {
-         return PacienteDiseno(paciente: pacientes[index]);
-        }
-    );
+    return _noPacientes();
   }
 }
