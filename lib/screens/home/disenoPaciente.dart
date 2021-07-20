@@ -20,6 +20,7 @@ class PacienteDiseno extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 1.0.h,horizontal: 2.0.h),
           child: GestureDetector(//padding
             onTap: (){
+
               Navigator.push(context, MaterialPageRoute(
               builder: (context)=> detallesPaciente(paciente: paciente)));
               },

@@ -5,6 +5,7 @@ import 'package:mediminder/models/alarmaMedicamento.dart';
 import 'package:mediminder/models/informes.dart';
 import 'package:mediminder/models/medicamento.dart';
 import 'package:mediminder/models/paciente.dart';
+import 'package:mediminder/models/supervisor.dart';
 import 'package:mediminder/models/userLocal.dart';
 import '../models/paciente.dart';
 
@@ -57,6 +58,28 @@ class DatabaseService{
         listaPacientes.add(paciente);
       }
       return listaPacientes;
+  }
+  Future querySupervisores(String uid)async{
+    var doc = await FirebaseFirestore.instance.doc("Usuarios/$uid").get();
+    return Supervisor(
+      token:doc.data()['token'],
+      id: doc.data()['id: '],
+      nombre:doc.data()['nombre'],
+      );
+  }
+
+  Future queryPaciente(String idPaciente)async{
+    var result=await coleccionPacientes.where("uidPac",isEqualTo: idPaciente).get();
+    for(var doc in result.docs) {
+      Paciente pac=new Paciente(
+        nombre: doc.data()['nombre'] ?? "",
+        id: doc.data()['cedula'] ?? "",
+        idSuper: doc.data()['idSuper'] ?? "",
+        idPaciente: doc.data()['uidPac'] ?? "",
+      );
+      return pac;
+      }
+
   }
 
   Future updateUserData(String nombre,String id, String tipo) async{
@@ -195,16 +218,6 @@ class DatabaseService{
     }).toList();
   }
 
-  List<UserData> _listaUsuariosFromSnapshot(QuerySnapshot snapshot){
-    return snapshot.docs.map((doc){
-      return UserData(
-        nombre: doc.data()['nombre'] ?? "",
-        uid: doc.data()['id'] ?? "",
-        tipo: doc.data()['tipo']??"",
-      );
-    }).toList();
-  }
-
   //userData from snapshot
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot){
     return UserData(
@@ -259,9 +272,6 @@ class DatabaseService{
     return coleccionMedicamentos.snapshots().map(_listaMedicamentosFromSnapshot);
   }
 
-  Stream<List<UserData>> get users{
-    return coleccionUsuarios.snapshots().map(_listaUsuariosFromSnapshot);
-  }
   Stream<List<Informe>> get informes{
     return coleccionInformes.snapshots().map(_listaInformesFromSnapshot);
   }

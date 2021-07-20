@@ -43,9 +43,7 @@ class _SettingsFormState extends State<SettingsForm> {
   final List<TimeOfDay> horas=[];
   @override
   Widget build(BuildContext context) {
-    final user=Provider.of<UserLocal>(context);
     return Scaffold(
-      //backgroundColor: Color.fromRGBO(157, 221, 234, 50),
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(9, 111, 167, 50),
         title: Text('Nuevo medicamento'),
@@ -54,11 +52,7 @@ class _SettingsFormState extends State<SettingsForm> {
           child:  Container(
             padding: EdgeInsets.symmetric(vertical: 2.0.h, horizontal: 5.0.h),
             color: Color.fromRGBO(157, 221, 234, 50),
-            child: StreamBuilder<UserData>(
-              stream: DatabaseService(uid: user.uid).userData,
-                    builder: (context, AsyncSnapshot snapshot) {
-                      if (snapshot.hasData) {
-                        return Form(
+                        child: Form(
                           key: _formKey,
                           child: Row(
                             children:<Widget>[
@@ -172,10 +166,7 @@ class _SettingsFormState extends State<SettingsForm> {
                             ),
                             ],
                           ),
-                        );
-                      }else return Container();
-                    }
-                ),
+                        ),
           ),
         ),
     );

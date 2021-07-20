@@ -42,7 +42,8 @@ class AuthService {
   //register email and password
   Future registerEmailPass(String email, String password, String nombre, String id) async{
     try{
-      UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
       User user = result.user;
 
       //creacion de documento en firestore por uid

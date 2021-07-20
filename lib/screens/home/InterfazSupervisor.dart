@@ -16,16 +16,14 @@ class InterfazSupervisor extends StatefulWidget {
 
 class _InterfazSupervisorState extends State<InterfazSupervisor> {
   final AuthService _auth=AuthService();
-
   final FirebaseAuth auth=FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
+    DatabaseService _database=DatabaseService();
     final User user= auth.currentUser;
     final uid=user.uid;
-    return StreamProvider<List<Paciente>>.value(
-      value: DatabaseService().pacientes,
-      child: Scaffold(
+    return Scaffold(
         //backgroundColor: ,
         appBar: AppBar(
           elevation: 15,
@@ -67,7 +65,6 @@ class _InterfazSupervisorState extends State<InterfazSupervisor> {
               ],
             ),
           ),
-        ),
       );
 
   }
