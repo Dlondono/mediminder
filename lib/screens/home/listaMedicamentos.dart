@@ -7,6 +7,7 @@ import 'package:mediminder/models/userLocal.dart';
 import 'package:mediminder/screens/home/disenoMedicamento.dart';
 import 'package:mediminder/screens/home/editarMedicamento.dart';
 import 'package:mediminder/services/database.dart';
+import 'package:mediminder/shared/loading.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/timezone.dart' as tz;
 
@@ -18,16 +19,21 @@ class Medicamentos extends StatefulWidget {
 }
 
 class _MedicamentosState extends State<Medicamentos> {
+  bool loading=false;
   final DatabaseService _database=DatabaseService();
   final FirebaseAuth auth=FirebaseAuth.instance;
   DateTime horaActualLocal = tz.TZDateTime.now(tz.local);
   List<Medicamento> medicamentos,meds;
   List<AlarmaMedicamento> alarmaLista = [];
   Future getMedicamentos()async{
+    setState(() {
+      loading=true;
+    });
     meds=await _database.queryMedicamentos(widget.id);
     if(this.mounted) {
       setState(() {
         medicamentos = meds;
+        loading=false;
       });
     }
     }
@@ -93,10 +99,7 @@ class _MedicamentosState extends State<Medicamentos> {
         );
         alarmaLista.add(medi);
 
-      } else if (item.listaHorasMed != null) {
-
-         } else if (item.listaHorasMed != null) {
-
+      }  else if (item.listaHorasMed != null) {
         List<String> listaHorasString,listaDiasString;
         DateTime t,now;
         now=DateTime.now();
@@ -159,7 +162,7 @@ class _MedicamentosState extends State<Medicamentos> {
     alarmaLista.sort((alarmaA, alarmaB) => alarmaA.hora.isBefore(alarmaB.hora)? 0:1);
 
     //closestDate();
-        return ListView.builder(
+        return loading?Loading(): ListView.builder(
             itemCount: alarmaLista.length,
             itemBuilder: (context,index) {
               return MedicamentoDiseno(alarmaLista[index],tipo);

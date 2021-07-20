@@ -60,12 +60,8 @@ class _InterfazSupervisorState extends State<InterfazSupervisor> {
                       ),
                   onPressed:(){
                     Navigator.pushReplacement(context, MaterialPageRoute(
-                        builder: (context)=> PacienteNuevo())).then((value)=>
-                          setState((){
+                        builder: (context)=> PacienteNuevo()));
 
-                            print("refresh");
-                          })
-                    );
                   },
                 )
               ],
