@@ -40,26 +40,43 @@ class _PacientesState extends State<Pacientes> {
   }
 
   Widget _noPacientes() {
-    if(pacientes.length==0){
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(157, 221, 234, 50),
-      body: Container(
-          decoration: BoxDecoration(color: Color.fromRGBO(157, 221, 234, 50)),
-          child: Text(
-              "Aun no tienes pacientes registrados"),
-      ),
-    );
-  }else{
-      return Container(
-        child: loading? Loading(): ListView.builder(
-            itemCount: pacientes.length,
-            itemBuilder: (context,index) {
-              return PacienteDiseno(paciente: pacientes[index]);
-            }
-        ),
-      );
+    if (pacientes != null) {
+      if (pacientes.length == 0) {
+        setState(() {
+          loading = false;
+        });
+        return loading ? Loading() : Scaffold(
+          backgroundColor: Color.fromRGBO(157, 221, 234, 50),
+          body: Container(
+            decoration: BoxDecoration(color: Color.fromRGBO(157, 221, 234, 50)),
+            child: Center(
+              child: Text(
+                "Aun no tienes pacientes registrados, "
+                    "para registrar un paciente presiona el boton en la parte inferior",
+                style: TextStyle(fontSize: 18, color: Colors.black),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        );
+      } else {
+        return Container(
+          child: loading ? Loading() : ListView.builder(
+              itemCount: pacientes.length,
+              itemBuilder: (context, index) {
+                return PacienteDiseno(paciente: pacientes[index]);
+              }
+          ),
+        );
+      }
+    }else{
+      setState(() {
+        loading=true;
+      });
+      return Loading();
     }
-}
+  }
+
   @override
   Widget build(BuildContext context) {
     final User user= auth.currentUser;
