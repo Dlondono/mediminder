@@ -38,6 +38,7 @@ dependencies:
   flutter_native_timezone: ^1.0.10
   slide_digital_clock: ^1.0.0
   http: ^0.13.3
+  flutter_spinkit: ^5.0.0
 
 dev_dependencies:
   flutter_test:

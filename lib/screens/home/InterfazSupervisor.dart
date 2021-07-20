@@ -9,9 +9,16 @@ import 'package:mediminder/screens/home/pacienteNuevo.dart';
 import '../../services/auth.dart';
 import 'ListaPacientes.dart';
 
-class InterfazSupervisor extends StatelessWidget {
+class InterfazSupervisor extends StatefulWidget {
+  @override
+  _InterfazSupervisorState createState() => _InterfazSupervisorState();
+}
+
+class _InterfazSupervisorState extends State<InterfazSupervisor> {
   final AuthService _auth=AuthService();
+
   final FirebaseAuth auth=FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     final User user= auth.currentUser;
@@ -41,7 +48,7 @@ class InterfazSupervisor extends StatelessWidget {
           decoration: BoxDecoration(color: Color.fromRGBO(157, 221, 234, 50)),
           child: Column(
               children: <Widget>[
-                Expanded(child: Pacientes()),
+                Expanded(child: Pacientes(uid)),
                 TextButton.icon(
                   icon: Icon(Icons.person,color: Colors.white,),
                   label: Text("Agregar nuevo paciente",style: TextStyle(
@@ -52,7 +59,13 @@ class InterfazSupervisor extends StatelessWidget {
                       backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
                       ),
                   onPressed:(){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> PacienteNuevo()));
+                    Navigator.pushReplacement(context, MaterialPageRoute(
+                        builder: (context)=> PacienteNuevo())).then((value)=>
+                          setState((){
+
+                            print("refresh");
+                          })
+                    );
                   },
                 )
               ],
