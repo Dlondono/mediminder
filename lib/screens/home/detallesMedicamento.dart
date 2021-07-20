@@ -34,7 +34,6 @@ class _detallesMedicamentoState extends State<detallesMedicamento> {
         paciente=pac;
       });
       }
-    print(paciente.idSuper);
     getToken();
   }
   Future getToken()async{
@@ -44,14 +43,13 @@ class _detallesMedicamentoState extends State<detallesMedicamento> {
         supervisor=sup;
         });
     }
-    print(supervisor.token);
   }
 
   Future<void> sendPushMessage() async {
     final msg = jsonEncode({"to": supervisor.token,
       "notification": {
-        "title": "Probando fcm api",
-        "body": "Body notificacion fcm"
+        "title": paciente.nombre+" no se ha tomado el medicamento",
+        "body": widget.medicamento.medicamentoNombre,
       },
       "data": {
         "medicamento": "Medicina"
