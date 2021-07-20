@@ -99,69 +99,14 @@ class _MedicamentosState extends State<Medicamentos> {
         );
         alarmaLista.add(medi);
 
-      }  else if (item.listaHorasMed != null) {
-        List<String> listaHorasString,listaDiasString;
-        DateTime t,now;
-        now=DateTime.now();
-        String horaString,diasString;
-        horaString =item.listaHorasMed[0].toString().replaceAll(new RegExp(r'[^0-9,]'),'');
-        listaHorasString=horaString.split(',');
-        diasString=item.listaHorasMed[1].toString().replaceAll(new RegExp(r'[^0-9,]'),'');
-        listaDiasString=diasString.split(',');
-        int i=0;
-        for(String horaList in listaHorasString) {
-          int dia=int.parse(listaDiasString[i]);
-          i++;
-          t = DateTime.parse(item.year.toString() +
-              item.mes.toString().padLeft(2, '0')
-              + item.dia.toString().padLeft(2, '0') + " " + horaList[0] +
-              horaList[1] + ":" + horaList[2] + horaList[3] + ":" + "00");
-          if(t.isBefore(now.add(Duration(hours: 1)))){
-            item.dia =now.day;
-            item.mes=now.month;
-            t = DateTime.parse(item.year.toString() +
-                item.mes.toString().padLeft(2, '0')
-                + item.dia.toString().padLeft(2, '0') + " " + horaList[0] +
-                horaList[1] + ":" + horaList[2] + horaList[3] + ":" + "00");
-            if(t.isBefore(now)){
-              item.dia=now.day+1;
-              t = DateTime.parse(item.year.toString() +
-                  item.mes.toString().padLeft(2, '0')
-                  + item.dia.toString().padLeft(2, '0') + " " + horaList[0] +
-                  horaList[1] + ":" + horaList[2] + horaList[3] + ":" + "00");
-              if(t.isBefore(now)){
-                item.mes=now.month+1;
-                t = DateTime.parse(item.year.toString() +
-                    item.mes.toString().padLeft(2, '0')
-                    + item.dia.toString().padLeft(2, '0') + " " + horaList[0] +
-                    horaList[1] + ":" + horaList[2] + horaList[3] + ":" + "00");
-              }
-            }
-          }
-          medi =
-          new AlarmaMedicamento(medicamentoNombre: item.medicamentoNombre,
-            descripcion: item.recomendacion,
-            cantidad: item.cantidad,
-            hora: t,
-            //listaHoras: item.listaHorasMed,
-            idPaciente: item.idPaciente,
-            dosis: item.dosis,
-            uid: item.uid,
-            dia: dia,
-            mes: item.mes,
-            year: item.year,
-          );
-          alarmaLista.add(medi);
-        }
       }else {
         return Container(
-          child: Text("ERROR"),
+          child: Text("ERROR "),
         );
       }
       };
     alarmaLista.sort((alarmaA, alarmaB) => alarmaA.hora.isBefore(alarmaB.hora)? 0:1);
 
-    //closestDate();
         return loading?Loading(): ListView.builder(
             itemCount: alarmaLista.length,
             itemBuilder: (context,index) {
@@ -169,9 +114,5 @@ class _MedicamentosState extends State<Medicamentos> {
             }
         );
   }
-  void closestDate(){
-    DateTime today=DateTime.now();
-    final closestDateTimeToNow= alarmaLista.reduce((a,b)=>
-        a.hora.difference(today).abs() <b.hora.difference(today).abs()?a:b);
-  }
+
 }

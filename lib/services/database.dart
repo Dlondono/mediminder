@@ -120,9 +120,6 @@ class DatabaseService{
       String minuto, String periodo, String recomendacion, String dosis,String prioridad,
       String tipo,String tipoHorario,int veces,String uid
       ) async{
-    //Random random=new Random();
-    //int rnd=random.nextInt(100);
-    //String idR=id+rnd.toString();
     return await coleccionMedicamentos.doc(uid).set({
       "medicamentoNombre": medicina,
       "idPaciente": id,
@@ -252,8 +249,6 @@ class DatabaseService{
   }
 
     List<Paciente> pacienteFromQuery(QuerySnapshot snapshot){
-      //QuerySnapshot snapshot=
-      //await FirebaseFirestore.instance.collection("Pacientes").where('uid',isEqualTo: uid).get()
       return snapshot.docs.map(
               (doc)=> Paciente(
                 id: doc['id'],
@@ -262,11 +257,6 @@ class DatabaseService{
                 ),
       );
     }
-
-  // actualizacion de pacientes a supervisor
-  Stream<List<Paciente>> get pacientes{
-    return coleccionPacientes.snapshots().map(_listaPacientesFromSnapshot);
-  }
 
   Stream<List<Medicamento>> get medicamentos{
     return coleccionMedicamentos.snapshots().map(_listaMedicamentosFromSnapshot);

@@ -24,10 +24,6 @@ class Medicamento{
     this.dia,this.mes,this.year,this.prioridad,this.tipo,this.tipoHorario,this.veces
   });
 
-  Medicamento.horas({this.medicamentoNombre,this.idPaciente,this.cantidad,
-    this.listaHorasMed,this.recomendacion, this.dosis,this.uid,
-    this.dia,this.mes,this.year});
-
   setTime(int h, int m){
     hora = h;
     minuto = m;

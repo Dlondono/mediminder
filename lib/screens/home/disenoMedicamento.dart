@@ -84,7 +84,6 @@ class MedicamentoDiseno extends StatelessWidget {
                   ),
                 onPressed: (){
                   if(rol=="paciente") {
-                    //noti.notiActivas();
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) =>
                             detallesMedicamento(medicamento: medicamento,)));
@@ -100,21 +99,5 @@ class MedicamentoDiseno extends StatelessWidget {
       ),
     );
   }
-  Widget _editar(){
-    if(rol=="supervisor"){
-      return Positioned(
-        top: 0,
-        right: 0,
-        child: IconButton(
-          onPressed: (){
 
-          },
-          icon: Icon(Icons.more_vert_sharp
-          ),
-        ),
-      );
-    }else{
-      return Container();
-    }
-  }
 }

@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mediminder/models/userLocal.dart';
 import 'package:mediminder/screens/home/InterfazSupervisor.dart';
-import 'package:mediminder/screens/home/ListaPacientes.dart';
+import 'package:mediminder/screens/home/listaPacientes.dart';
 import 'package:mediminder/shared/constants.dart';
 import '../../services/database.dart';
 import '../../services/auth.dart';
@@ -32,7 +32,6 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
       final User user= auth.currentUser;
       final uidActual=user.uid;
       return Scaffold(
-        //backgroundColor: Colors.teal[100],
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(9, 111, 167, 50),
           elevation: 1.0,
@@ -143,5 +142,4 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
         ),
       );
     }
-
 }

@@ -3,7 +3,7 @@ import 'package:mediminder/models/medicamento.dart';
 import 'package:mediminder/models/paciente.dart';
 import 'package:mediminder/screens/home/detallesPaciente.dart';
 import 'package:mediminder/screens/home/listaInformes.dart';
-import 'package:mediminder/screens/home/settings_form.dart';
+import 'package:mediminder/screens/home/medicamentoNuevo.dart';
 import 'package:mediminder/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -14,9 +14,7 @@ class PacienteDiseno extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<List<Medicamento>>.value(
-      value:DatabaseService().medicamentos,
-        child: Padding(
+        return Padding(
           padding: EdgeInsets.symmetric(vertical: 1.0.h,horizontal: 2.0.h),
           child: GestureDetector(//padding
             onTap: (){
@@ -51,7 +49,7 @@ class PacienteDiseno extends StatelessWidget {
                     onPressed: ()async{
                       await Navigator.push(context, MaterialPageRoute(
                           builder: (BuildContext context) {
-                            return SettingsForm(paciente: paciente);
+                            return MedicamentoNuevo(paciente: paciente);
                           }
                           ));
                     },
@@ -73,7 +71,7 @@ class PacienteDiseno extends StatelessWidget {
           ),
         ),
       ),
-      ),
+
     );
   }
 }

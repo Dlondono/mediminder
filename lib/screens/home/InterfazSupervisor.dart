@@ -4,10 +4,10 @@ import 'package:mediminder/models/paciente.dart';
 import 'package:mediminder/services/auth.dart';
 import 'package:mediminder/services/database.dart';
 import 'package:provider/provider.dart';
-import 'package:mediminder/screens/home/ListaPacientes.dart';
+import 'package:mediminder/screens/home/listaPacientes.dart';
 import 'package:mediminder/screens/home/pacienteNuevo.dart';
 import '../../services/auth.dart';
-import 'ListaPacientes.dart';
+import 'listaPacientes.dart';
 
 class InterfazSupervisor extends StatefulWidget {
   @override
@@ -20,7 +20,6 @@ class _InterfazSupervisorState extends State<InterfazSupervisor> {
 
   @override
   Widget build(BuildContext context) {
-    DatabaseService _database=DatabaseService();
     final User user= auth.currentUser;
     final uid=user.uid;
     return Scaffold(

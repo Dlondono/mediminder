@@ -8,14 +8,14 @@ import 'package:mediminder/shared/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-class SettingsForm extends StatefulWidget {
+class MedicamentoNuevo extends StatefulWidget {
   final Paciente paciente;
-  SettingsForm({this.paciente});
+  MedicamentoNuevo({this.paciente});
   @override
-  _SettingsFormState createState() => _SettingsFormState();
+  _MedicamentoNuevoState createState() => _MedicamentoNuevoState();
 }
 
-class _SettingsFormState extends State<SettingsForm> {
+class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
   Paciente _paciente;
   @override
   void initState() {
@@ -176,6 +176,7 @@ class _SettingsFormState extends State<SettingsForm> {
       return Container(
         child: Column(
           children:<Widget>[
+
             TextFormField(
             keyboardType: TextInputType.number,
             decoration: textInputDecoraton.copyWith(
