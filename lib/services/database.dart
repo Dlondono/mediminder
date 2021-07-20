@@ -43,7 +43,20 @@ class DatabaseService{
         listaMedicamentos.add(med);
       }
     return listaMedicamentos;
-    //print(listaMedicamentos.length.toString()+"LENGHT DATABASE");
+  }
+  Future queryPacientes(String idSuper)async{
+    List<Paciente> listaPacientes=[];
+    var result=await coleccionPacientes.where("idSuper",isEqualTo: idSuper).get();
+      for(var doc in result.docs){
+        Paciente paciente=new  Paciente(
+          idSuper:doc.data()['uid'],
+          id: doc.data()['cedula'],
+          nombre:doc.data()['nombre'],
+          idPaciente: doc.data()['uidPac'],
+        );
+        listaPacientes.add(paciente);
+      }
+      return listaPacientes;
   }
 
   Future updateUserData(String nombre,String id, String tipo) async{
@@ -177,19 +190,6 @@ class DatabaseService{
           dia: doc.data()['dia'] ?? "",
           mes: doc.data()['mes'] ?? "",
           year: doc.data()['año'] ?? "",
-        );
-      }else{
-        return Medicamento.horas(
-        medicamentoNombre: doc.data()['medicamentoNombre'] ?? "",
-        idPaciente: doc.data()['idPaciente'] ?? "",
-        cantidad: doc.data()['cantidad'] ?? "",
-        listaHorasMed: doc.data()['horas'],
-        recomendacion: doc.data()['recomendacion'] ?? "",
-        dosis: doc.data()['dosis'] ?? "",
-        uid: doc.id,
-        dia: doc.data()['dia'] ?? "",
-        mes: doc.data()['mes'] ?? "",
-        year: doc.data()['año'] ?? "",
         );
       }
     }).toList();

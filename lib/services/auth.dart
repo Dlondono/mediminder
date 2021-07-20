@@ -54,20 +54,23 @@ class AuthService {
       return null;
     }
   }
-
+  FirebaseApp tempApp;
   Future registerEmailPassP(String email, String password, String nombre, String id) async{
     try{
-      FirebaseApp tempApp =await Firebase.initializeApp(
-          name: 'temporaryRegister',options: Firebase.app().options);
-      UserCredential result = await FirebaseAuth.instanceFor(app: tempApp).
-      createUserWithEmailAndPassword(email: email, password: password);
+         tempApp = await Firebase.initializeApp(
+            name: 'temporaRegister', options: Firebase
+            .app()
+            .options);
+        UserCredential result = await FirebaseAuth.instanceFor(app: tempApp).
+        createUserWithEmailAndPassword(email: email, password: password);
+        User user = result.user;
+         tempApp.delete();
+        //creacion de documento en firestore por uid
+        await DatabaseService(uid: user.uid).updateUserData(
+            nombre, id, "Paciente");
 
-      User user = result.user;
+        return _userFromFirebaseUser(user);
 
-      //creacion de documento en firestore por uid
-      await DatabaseService(uid:user.uid).updateUserData(nombre,id,"Paciente");
-      tempApp.delete();
-      return _userFromFirebaseUser(user);
     }catch(e){
       print(e.toString());
       return null;

@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mediminder/models/userLocal.dart';
+import 'package:mediminder/screens/home/InterfazSupervisor.dart';
+import 'package:mediminder/screens/home/ListaPacientes.dart';
 import 'package:mediminder/shared/constants.dart';
 import '../../services/database.dart';
 import '../../services/auth.dart';
@@ -26,8 +28,9 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
 
     @override
     Widget build(BuildContext context) {
+      bool loading=false;
       final User user= auth.currentUser;
-      final uid=user.uid;
+      final uidActual=user.uid;
       return Scaffold(
         //backgroundColor: Colors.teal[100],
         appBar: AppBar(
@@ -78,22 +81,49 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                       }
                   ),
                   SizedBox(height: 20.0),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
-                    ),
-                    child: Text("Agregar",
-                      style: TextStyle(color: Colors.white,fontSize: 16),
-                    ),
-                    onPressed: () async{
-                      if(_formKey.currentState.validate()){
-                        dynamic result= await _auth.registerEmailPassP(correo, codigo,nombre,cedula);
-                        UserLocal user = result;
-                        print(user.uid);
-                        _database.addPaciente(nombre, cedula,uid,user.uid);
-                        Navigator.pop(context);
-                      }
-                    },
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
+                        ),
+                        child: Text("Agregar",
+                          style: TextStyle(color: Colors.white,fontSize: 16),
+                        ),
+                        onPressed: () async{
+                          if(_formKey.currentState.validate()){
+                            setState(() {
+                              loading=true;
+                            });
+                            dynamic result= await _auth.registerEmailPassP
+                              (correo, codigo,nombre,cedula);
+                            if(result==null){
+                              setState(() {
+                                loading=false;
+                                error="error";
+
+                              });
+                            }
+                            UserLocal user = result;
+                            _database.addPaciente(nombre, cedula,uidActual,user.uid);
+                            Navigator.pushReplacement(context, MaterialPageRoute(
+                                builder: (context)=> InterfazSupervisor()));
+                          }
+                        },
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
+                        ),
+                        child: Text(
+                          "Cancelar",style: TextStyle(color: Colors.white,fontSize: 16),
+                      ),onPressed:() {
+                        Navigator.pushReplacement(context, MaterialPageRoute(
+                            builder: (context)=> InterfazSupervisor()));
+                      },
+                      ),
+                    ],
                   ),
                   SizedBox(height: 20.0),
                   Text(

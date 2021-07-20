@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mediminder/screens/home/home.dart';
 import 'package:mediminder/services/auth.dart';
 import 'package:mediminder/shared/constants.dart';
+import 'package:mediminder/shared/loading.dart';
 
 import '../wrapper.dart';
 
@@ -17,6 +18,7 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  bool loading=false;
   final AuthService _auth = AuthService();
   final _formKey= GlobalKey<FormState>();
   //text field para setState
@@ -25,7 +27,7 @@ class _SignInState extends State<SignIn> {
   String error="";
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
       //backgroundColor: Colors.blue[100],
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(9, 111, 167, 50),
@@ -80,9 +82,11 @@ class _SignInState extends State<SignIn> {
                   ),
                   onPressed: () async{
                     if(_formKey.currentState.validate()){
+                      loading=true;
                       dynamic result= await _auth.signInEmailPass(email, password);
                       if(result==null){
                         setState(()=>error="Correo o clave no validos");
+                        loading=false;
                       }
                       else{
                         Wrapper();

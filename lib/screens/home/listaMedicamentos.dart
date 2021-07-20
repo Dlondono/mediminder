@@ -23,36 +23,27 @@ class _MedicamentosState extends State<Medicamentos> {
   DateTime horaActualLocal = tz.TZDateTime.now(tz.local);
   List<Medicamento> medicamentos,meds;
   List<AlarmaMedicamento> alarmaLista = [];
-  Future test()async{
+  Future getMedicamentos()async{
     meds=await _database.queryMedicamentos(widget.id);
     if(this.mounted) {
-      print(mounted.toString()+"mounted");
       setState(() {
         medicamentos = meds;
       });
     }
-    print(medicamentos.length.toString()+"medicamentos lista");
-  }
+    }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    test();
+    getMedicamentos();
   }
   @override
   Widget build(BuildContext context) {
     final uid=widget.id;
     final String tipo=widget.tipo;
-    //test();
-    //print(_database.listaMedicamentos.length);
-    //final medicamentos=_database.queryMedicamentos(uid);
-    //Provider.of<List<Medicamento>>(context)?? [];
     alarmaLista = [];
-    print(uid+"uid");
     AlarmaMedicamento medi;
-    //medicamentos.removeWhere((item) => item.idPaciente!=uid);
     for(var item in medicamentos??[]){
-      print(medicamentos.length.toString()+"medicamentos dentrofor");
       if (item.periodo != null) {
         DateTime horaNueva = new DateTime(item.year,
             item.mes, item.dia, item.hora, item.minuto);
