@@ -53,7 +53,7 @@ class MedicamentoDiseno extends StatelessWidget {
                 builder: (context) =>
                     detallesMedicamento(medicamento: medicamento)));
           }else{
-            Navigator.push(context, MaterialPageRoute(
+            Navigator.pushReplacement(context, MaterialPageRoute(
                 builder: (context) =>
                     editarMedicamento(medicamento: medicamento)));
           }

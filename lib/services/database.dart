@@ -133,7 +133,7 @@ class DatabaseService{
   }
   Future editMedicine(String medicina,String id, String cantidad, String hora,
       String minuto, String periodo, String recomendacion, String dosis,String prioridad,
-      String tipo,String tipoHorario,int veces,String uid
+      String tipo,String tipoHorario,int veces,String uid,int prio
       ) async{
     return await coleccionMedicamentos.doc(uid).set({
       "medicamentoNombre": medicina,
@@ -146,6 +146,7 @@ class DatabaseService{
       "dosis": int.parse(dosis),
       "uid":uid,
       "veces":veces,
+      "prio":prio,
       "tipo":tipo,
       "prioridad":prioridad,
       "tipoHorario":tipoHorario,

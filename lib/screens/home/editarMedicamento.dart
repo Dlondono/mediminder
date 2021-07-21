@@ -29,6 +29,7 @@ class _editarMedicamentoState extends State<editarMedicamento> {
   String _currentTipoHorario;
   int _veces;
   String _currentTipo;
+  int _prio;
 
   final List<String> prioridades=['1 - Prioridad máxima',
     '2 - Prioridad media','3 - Prioridad normal'];
@@ -45,6 +46,7 @@ class _editarMedicamentoState extends State<editarMedicamento> {
       mes:this.widget.medicamento.mes,year:this.widget.medicamento.year,
         tipo: this.widget.medicamento.tipo,tipoHorario: this.widget.medicamento.tipoHorario,
       veces: this.widget.medicamento.veces,prioridad: this.widget.medicamento.prioridad,
+        prio: this.widget.medicamento.prio
     );
     setInitialData(medicamento);
     super.initState();
@@ -150,24 +152,6 @@ class _editarMedicamentoState extends State<editarMedicamento> {
                                 onChanged: (val) => setState(() => _currentDosis = val),
                               ),
                               SizedBox(height: 2.0.h),
-                              DropdownButtonFormField(
-                                value: _currentTipoHorario??medicamento.tipoHorario ,
-                                items: horario.map((hor) {
-                                  return DropdownMenuItem(
-                                    value: hor,
-                                    child:Text('$hor'),
-                                  );
-                                }).toList(),
-                                onChanged: (val) =>
-                                    setState(() => _currentTipoHorario = val),
-                                decoration: textInputDecoraton.copyWith(
-                                    hintText: "Horario"),
-                                validator: (val) =>
-                                val.isEmpty
-                                    ? "Por favor seleccione una opción"
-                                    : null,
-                              ),
-                              SizedBox(height: 2.0.h),
                               _nuevoDropdown(),
                             ],
                           ),
@@ -181,62 +165,7 @@ class _editarMedicamentoState extends State<editarMedicamento> {
   }
 
   Widget _nuevoDropdown() {
-    if (_currentTipoHorario== 'Horas aproximadas') {
-      return Container(
-        child: Column(
-          children:<Widget>[
-            TextFormField(
-              initialValue: _veces.toString()??medicamento.veces.toString(),
-              keyboardType: TextInputType.number,
-              decoration: textInputDecoraton.copyWith(
-                  hintText: "Cuantas veces al dia"),
-              validator: (val) =>
-              val.isEmpty
-                  ? "Por favor ingrese el numero de veces que debe tomar el medicamento al dia"
-                  : null,
-              onChanged: (val) => setState(() => _veces = int.parse(val)),
-            ),
-            SizedBox(height: 2.0.h),
-            _forCampo(),
-            ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
-                  foregroundColor: MaterialStateProperty.all(Colors.black),
-                ),
-                child: Text(
-                  "Guardar medicamento",
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () async {
-                  print(horas);
-                  if(_formKey.currentState.validate()){
-                    for(var hora in horas) {
-                      await DatabaseService()
-                          .editMedicine(
-                        _currentName,
-                        medicamento.idPaciente,
-                        _currentCantidad,
-                        hora.hour.toString(),
-                        hora.minute.toString(),
-                        "24",
-                        _currentRecomendacion,
-                        _currentDosis,
-                        _currentPrioridad,
-                        _currentTipo,
-                        _currentTipoHorario,
-                        _veces,
-                        medicamento.uid
-                      );
-                    }
-                    Navigator.pop(context);
-                  }
-                }
-            ),
-          ],
-        ),
-      );
-
-    }else if(_currentTipoHorario=="Por periodo"||medicamento.tipoHorario =="Por periodo"){
+    if(_currentPeriodo!=null){
       return Container(
         child: Column(
           children:<Widget>[
@@ -266,7 +195,7 @@ class _editarMedicamentoState extends State<editarMedicamento> {
                 onPressed: () async {
                   if(_formKey.currentState.validate()){
                     print(medicamento.uid+"medicamento uid en editar");
-                    print(_currentName);
+                    print(_currentName+"name");
                     await DatabaseService()
                         .editMedicine(
                         _currentName??medicamento.medicamentoNombre,
@@ -281,7 +210,8 @@ class _editarMedicamentoState extends State<editarMedicamento> {
                       _currentTipo??medicamento.tipo,
                       _currentTipoHorario??medicamento.tipoHorario,
                       _veces??medicamento.veces,
-                      medicamento.uid
+                      medicamento.uid,
+                      _prio,
                     );
                     Navigator.pop(context);
                   }
@@ -357,5 +287,6 @@ class _editarMedicamentoState extends State<editarMedicamento> {
     print(medicamento.medicamentoNombre.toString()+"medi.tipo");
     print(_currentRecomendacion.toString()+"current");
     _veces=medicamento.veces;
+    _prio=medicamento.prio;
   }
 }
