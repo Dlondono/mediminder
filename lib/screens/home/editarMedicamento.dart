@@ -46,6 +46,7 @@ class _editarMedicamentoState extends State<editarMedicamento> {
         tipo: this.widget.medicamento.tipo,tipoHorario: this.widget.medicamento.tipoHorario,
       veces: this.widget.medicamento.veces,prioridad: this.widget.medicamento.prioridad,
     );
+    setInitialData(medicamento);
     super.initState();
   }
   Widget build(BuildContext context) {
@@ -180,12 +181,12 @@ class _editarMedicamentoState extends State<editarMedicamento> {
   }
 
   Widget _nuevoDropdown() {
-    if (_currentTipoHorario??medicamento.tipoHorario == 'Horas aproximadas') {
+    if (_currentTipoHorario== 'Horas aproximadas') {
       return Container(
         child: Column(
           children:<Widget>[
             TextFormField(
-              initialValue: _veces??medicamento.veces.toString(),
+              initialValue: _veces.toString()??medicamento.veces.toString(),
               keyboardType: TextInputType.number,
               decoration: textInputDecoraton.copyWith(
                   hintText: "Cuantas veces al dia"),
@@ -233,10 +234,9 @@ class _editarMedicamentoState extends State<editarMedicamento> {
             ),
           ],
         ),
-
       );
 
-    }else if(_currentTipoHorario??medicamento.tipoHorario =="Por periodo"){
+    }else if(_currentTipoHorario=="Por periodo"||medicamento.tipoHorario =="Por periodo"){
       return Container(
         child: Column(
           children:<Widget>[
@@ -289,10 +289,6 @@ class _editarMedicamentoState extends State<editarMedicamento> {
             ),
           ],
         ),
-      );
-    }else{
-      return Container(
-        height: MediaQuery.of(context).size.height,
       );
     }
   }
