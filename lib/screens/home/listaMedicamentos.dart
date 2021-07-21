@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mediminder/models/alarmaMedicamento.dart';
 import 'package:mediminder/models/medicamento.dart';
@@ -107,13 +108,56 @@ class _MedicamentosState extends State<Medicamentos> {
       }
       };
     alarmaLista.sort((alarmaA, alarmaB) => alarmaA.hora.isBefore(alarmaB.hora)? 0:1);
+    return _numeroMedicamentos();
 
-        return loading?Loading(): ListView.builder(
-            itemCount: alarmaLista.length,
-            itemBuilder: (context,index) {
-              return MedicamentoDiseno(alarmaLista[index],tipo);
-            }
-        );
   }
+  Widget _numeroMedicamentos(){
+    if(medicamentos!=null){
+      if(alarmaLista.length==0){
+        setState(() {
+          loading = false;
+        });
+        return loading ? Loading() : Scaffold(
+          backgroundColor: Color.fromRGBO(157, 221, 234, 50),
+          body: Container(
+            decoration: BoxDecoration(color: Color.fromRGBO(157, 221, 234, 50)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: Text(
+                      "Aun no tiene medicamentos registrados, ",
+                          style: TextStyle(fontSize: 18, color: Colors.black),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Flexible(
+                    child: Text(
+                          "para registrar un medicamento contacte a su cuidador",
+                      style: TextStyle(fontSize: 18, color: Colors.black),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
 
+                ],
+              ),
+          ),
+        );
+      }else{
+        return Container(
+          child: loading?Loading(): ListView.builder(
+              itemCount: alarmaLista.length,
+              itemBuilder: (context,index) {
+                return MedicamentoDiseno(alarmaLista[index],widget.tipo);
+              }
+          ),
+        );
+      }
+    }else{
+      setState(() {
+        loading=true;
+      });
+      return Loading();
+      }
+  }
 }

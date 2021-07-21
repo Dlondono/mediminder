@@ -8,6 +8,7 @@ import 'package:mediminder/screens/home/InterfazSupervisor.dart';
 import 'package:mediminder/screens/home/vistaPaciente.dart';
 import 'package:mediminder/services/auth.dart';
 import 'package:mediminder/services/database.dart';
+import 'package:mediminder/shared/loading.dart';
 
 class Home extends StatelessWidget {
   final FirebaseAuth auth=FirebaseAuth.instance;
@@ -37,7 +38,7 @@ class Home extends StatelessWidget {
                   }
                 }else{
                   return Material(
-                    child: Center(child: CircularProgressIndicator(),),
+                    child: Center(child: Loading(),),
                   );
                 }
               },

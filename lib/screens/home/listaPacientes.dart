@@ -39,7 +39,7 @@ class _PacientesState extends State<Pacientes> {
     getPacientes();
   }
 
-  Widget _noPacientes() {
+  Widget numeroPacientes() {
     if (pacientes != null) {
       if (pacientes.length == 0) {
         setState(() {
@@ -50,11 +50,13 @@ class _PacientesState extends State<Pacientes> {
           body: Container(
             decoration: BoxDecoration(color: Color.fromRGBO(157, 221, 234, 50)),
             child: Center(
-              child: Text(
-                "Aun no tienes pacientes registrados, "
-                    "para registrar un paciente presiona el boton en la parte inferior",
-                style: TextStyle(fontSize: 18, color: Colors.black),
-                textAlign: TextAlign.center,
+              child: Flexible(
+                child: Text(
+                  "Aun no tienes pacientes registrados, "
+                      "para registrar un paciente presiona el boton en la parte inferior",
+                  style: TextStyle(fontSize: 18, color: Colors.black),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ),
@@ -81,6 +83,6 @@ class _PacientesState extends State<Pacientes> {
   Widget build(BuildContext context) {
     final User user= auth.currentUser;
     final uid=user.uid;
-    return _noPacientes();
+    return numeroPacientes();
   }
 }
