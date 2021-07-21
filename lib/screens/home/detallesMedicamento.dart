@@ -6,6 +6,7 @@ import 'package:mediminder/models/alarmaMedicamento.dart';
 import 'package:mediminder/models/informes.dart';
 import 'package:mediminder/models/paciente.dart';
 import 'package:mediminder/models/supervisor.dart';
+import 'package:mediminder/screens/home/vistaPaciente.dart';
 import 'package:mediminder/services/database.dart';
 import 'package:mediminder/services/local_noti.dart';
 import 'package:sizer/sizer.dart';
@@ -114,76 +115,97 @@ class _detallesMedicamentoState extends State<detallesMedicamento> {
               ),
             ),
             SizedBox(height: 2.0.h),
-            TextButton.icon(
-              icon: Icon(Icons.check,color: Colors.white,),
-              label: Text("Ya me lo tomé",style: TextStyle(
-                  fontSize: 20,color: Colors.white
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TextButton.icon(
+                  icon: Icon(Icons.check,color: Colors.white,),
+                  label: Text("Ya me lo tomé",style: TextStyle(
+                      fontSize: 20,color: Colors.white
+                    ),
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
+                    foregroundColor: MaterialStateProperty.all(Colors.black),
+                  ),
+                  onPressed:(){
+                    if(widget.medicamento.prioridad == "1 - Prioridad máxima" && (widget.medicamento.prio!=1 || horaActualLocal.minute-widget.medicamento.hora.minute>=5 || widget.medicamento.hora.hour<horaActualLocal.hour)){
+                      sendPushMessage("Se tomó un medicamento de prioridad máxima tarde");
+                    }
+                    if(widget.medicamento.prioridad == "2 - Prioridad media" && (widget.medicamento.prio>=5 || horaActualLocal.minute-widget.medicamento.hora.minute>=30 || horaActualLocal.hour-widget.medicamento.hora.hour>1 ||(horaActualLocal.hour-widget.medicamento.hora.hour==1 && widget.medicamento.hora.minute-horaActualLocal.minute>=30))){
+                      sendPushMessage("Se tomó un medicamento de prioridad media tarde");
+                    }
+
+                    if(widget.medicamento.periodo!=null) {
+                      widget.medicamento.hora = widget.medicamento.hora.add(Duration(hours: widget.medicamento.periodo));
+                    }
+
+                      else {
+                      widget.medicamento.hora = widget.medicamento.hora.add(
+                          Duration(days: 1));
+                      }
+
+                    this.widget.medicamento.cantidad=this.widget.medicamento.cantidad-1;
+                    _database.updateCantidad(this.widget.medicamento.cantidad,widget.medicamento.uid);
+                    if(this.widget.medicamento.cantidad<=5){
+                      noti.showNotification("Quedan pocas unidades de "+this.widget.medicamento.medicamentoNombre);
+                    }
+                    if(this.widget.medicamento.cantidad<=0){
+                      this.widget.medicamento.cantidad=0;
+                    }
+                    _database.updateMedicine(widget.medicamento.hora.month,widget.medicamento.hora.day,
+                        widget.medicamento.hora.hour,widget.medicamento.hora.minute,
+                        widget.medicamento.cantidad, widget.medicamento.uid,1);
+                    String delay=informe.calcularDelay(widget.medicamento.hora, DateTime.now());
+                    informe.crearInforme(widget.medicamento.idPaciente, "nombrePaciente",
+                        widget.medicamento, delay);
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) =>
+                            VistaPaciente()));
+                  },
                 ),
-              ),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
-                foregroundColor: MaterialStateProperty.all(Colors.black),
-              ),
-              onPressed:(){
-                if(widget.medicamento.prioridad == "1 - Prioridad máxima" && (widget.medicamento.prio!=1 || horaActualLocal.minute-widget.medicamento.hora.minute>=5 || widget.medicamento.hora.hour<horaActualLocal.hour)){
-                  sendPushMessage("Se tomó un medicamento de prioridad máxica tarde");
-                }
-                if(widget.medicamento.prioridad == "2 - Prioridad media" && (widget.medicamento.prio>=5 || horaActualLocal.minute-widget.medicamento.hora.minute>=30 || horaActualLocal.hour-widget.medicamento.hora.hour>1 ||(horaActualLocal.hour-widget.medicamento.hora.hour==1 && widget.medicamento.hora.minute-horaActualLocal.minute>=30))){
-                  sendPushMessage("Se tomó un medicamento de prioridad media tarde");
-                }
-
-                if(widget.medicamento.periodo!=null) {
-                  widget.medicamento.hora = widget.medicamento.hora.add(Duration(hours: widget.medicamento.periodo));
-                }
-
-                  else {
-                  widget.medicamento.hora = widget.medicamento.hora.add(
-                      Duration(days: 1));
-                  }
-
-                this.widget.medicamento.cantidad=this.widget.medicamento.cantidad-1;
-                _database.updateCantidad(this.widget.medicamento.cantidad,widget.medicamento.uid);
-                if(this.widget.medicamento.cantidad<=5){
-                  noti.showNotification("Quedan pocas unidades de "+this.widget.medicamento.medicamentoNombre);
-                }
-                if(this.widget.medicamento.cantidad<=0){
-                  this.widget.medicamento.cantidad=0;
-                }
-                _database.updateMedicine(widget.medicamento.hora.month,widget.medicamento.hora.day,
-                    widget.medicamento.hora.hour,widget.medicamento.hora.minute,
-                    widget.medicamento.cantidad, widget.medicamento.uid,1);
-                String delay=informe.calcularDelay(widget.medicamento.hora, DateTime.now());
-                informe.crearInforme(widget.medicamento.idPaciente, "nombrePaciente",
-                    widget.medicamento, delay);
-                Navigator.pop(context);
-                },
+                TextButton.icon(
+                  icon: Icon(Icons.timer,color: Colors.white,),
+                  label: Text("Posponer",style: TextStyle(
+                      fontSize: 20,color: Colors.white
+                  ),
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Color.fromRGBO(235, 90, 90, 50)),
+                    foregroundColor: MaterialStateProperty.all(Colors.black),
+                  ),
+                  onPressed:(){
+                    if(widget.medicamento.prioridad == "1 - Prioridad máxima"){
+                      sendPushMessage("No se ha tomado el medicamento de prioridad máxima");
+                    }
+                    else if(widget.medicamento.prio>=5 && widget.medicamento.prioridad == "2 - Prioridad media"){
+                      sendPushMessage("No se ha tomado el medicamento de prioridad media");
+                    }
+                    widget.medicamento.prio = widget.medicamento.prio+1;
+                    print(widget.medicamento.prio);
+                    widget.medicamento.hora = widget.medicamento.hora.add(const Duration(minutes: 5));
+                    noti.setTime(widget.medicamento.hora.year, widget.medicamento.hora.month, widget.medicamento.hora.day, widget.medicamento.hora.hour, widget.medicamento.hora.minute);
+                    noti.scheduleweeklyNotification(widget.medicamento.idPaciente,widget.medicamento.medicamentoNombre,widget.medicamento.descripcion);
+                    _database.updateMedicine(widget.medicamento.mes,widget.medicamento.dia,widget.medicamento.hora.hour,
+                        widget.medicamento.hora.minute, widget.medicamento.cantidad, widget.medicamento.uid, widget.medicamento.prio);
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) =>
+                            VistaPaciente()));
+                  },
+                )
+              ],
             ),
             SizedBox(height: 2.0.h),
             TextButton.icon(
-              icon: Icon(Icons.timer,color: Colors.white,),
-              label: Text("Posponer",style: TextStyle(
-                  fontSize: 20,color: Colors.white
-                ),
-              ),
+              icon: Icon(Icons.arrow_back, color: Colors.white,),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
-                foregroundColor: MaterialStateProperty.all(Colors.black),
-              ),
+              ),label: Text(
+              "Atras",style: TextStyle(color: Colors.white,fontSize: 20),
+            ),
               onPressed:(){
-                if(widget.medicamento.prioridad == "1 - Prioridad máxima"){
-                  sendPushMessage("No se ha tomado el medicamento de prioridad máxima");
-                }
-                else if(widget.medicamento.prio>=5 && widget.medicamento.prioridad == "2 - Prioridad media"){
-                  sendPushMessage("No se ha tomado el medicamento de prioridad media");
-                }
-                widget.medicamento.prio = widget.medicamento.prio+1;
-                print(widget.medicamento.prio);
-                widget.medicamento.hora = widget.medicamento.hora.add(const Duration(minutes: 5));
-                noti.setTime(widget.medicamento.hora.year, widget.medicamento.hora.month, widget.medicamento.hora.day, widget.medicamento.hora.hour, widget.medicamento.hora.minute);
-                noti.scheduleweeklyNotification(widget.medicamento.idPaciente,widget.medicamento.medicamentoNombre,widget.medicamento.descripcion);
-                _database.updateMedicine(widget.medicamento.mes,widget.medicamento.dia,widget.medicamento.hora.hour,
-                    widget.medicamento.hora.minute, widget.medicamento.cantidad, widget.medicamento.uid, widget.medicamento.prio);
-                Navigator.pop(context);
+                Navigator.pushReplacement(context, MaterialPageRoute(
+                    builder: (context)=> VistaPaciente()));
               },
             )
           ],

@@ -16,7 +16,7 @@ class Informe {
       _database.addInforme(idPaciente,medicamento, delay);
   }
   String calcularDelay(DateTime horaMed,DateTime horaToma){
-    int delay=horaToma.difference(horaMed).inHours;
+    int delay=horaToma.difference(horaMed).inHours.abs();
     return delay.toString();
   }
 }

@@ -50,7 +50,7 @@ class MedicamentoDiseno extends StatelessWidget {
       child: GestureDetector(//padding
         onTap: (){
           if(rol=="paciente") {
-            Navigator.push(context, MaterialPageRoute(
+            Navigator.pushReplacement(context, MaterialPageRoute(
                 builder: (context) =>
                     detallesMedicamento(medicamento: medicamento)));
           }else{
@@ -84,7 +84,7 @@ class MedicamentoDiseno extends StatelessWidget {
                   ),
                 onPressed: (){
                   if(rol=="paciente") {
-                    Navigator.push(context,
+                    Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) =>
                             detallesMedicamento(medicamento: medicamento,)));
                   }else{
