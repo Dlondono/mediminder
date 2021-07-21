@@ -47,10 +47,10 @@ class _detallesMedicamentoState extends State<detallesMedicamento> {
     }
   }
 
-  Future<void> sendPushMessage() async {
+  Future<void> sendPushMessage(String ms) async {
     final msg = jsonEncode({"to": supervisor.token,
       "notification": {
-        "title": paciente.nombre+" no se ha tomado el medicamento",
+        "title": paciente.nombre+" " + ms,
         "body": widget.medicamento.medicamentoNombre,
       },
       "data": {
@@ -68,6 +68,7 @@ class _detallesMedicamentoState extends State<detallesMedicamento> {
     } catch (e) {
       print(e);
     }
+    print(ms);
   }
   @override
   void initState() {
@@ -124,15 +125,17 @@ class _detallesMedicamentoState extends State<detallesMedicamento> {
                 foregroundColor: MaterialStateProperty.all(Colors.black),
               ),
               onPressed:(){
+                if(widget.medicamento.prioridad == "1 - Prioridad máxima" && (widget.medicamento.prio!=1 || horaActualLocal.minute-widget.medicamento.hora.minute>=5 || widget.medicamento.hora.hour<horaActualLocal.hour)){
+                  sendPushMessage("Se tomó un medicamento de prioridad máxica tarde");
+                }
+                if(widget.medicamento.prioridad == "2 - Prioridad media" && (widget.medicamento.prio>=5 || horaActualLocal.minute-widget.medicamento.hora.minute>=30 || horaActualLocal.hour-widget.medicamento.hora.hour>1 ||(horaActualLocal.hour-widget.medicamento.hora.hour==1 && widget.medicamento.hora.minute-horaActualLocal.minute>=30))){
+                  sendPushMessage("Se tomó un medicamento de prioridad media tarde");
+                }
+
                 if(widget.medicamento.periodo!=null) {
                   widget.medicamento.hora = widget.medicamento.hora.add(Duration(hours: widget.medicamento.periodo));
                 }
-                    /*noti.setTime(medicamento.hora.year, medicamento.hora.month
-                        , medicamento.dia, medicamento.hora.hour,
-                        medicamento.hora.minute);
-                    noti.scheduleweeklyNotification(medicamento.idPaciente,
-                        medicamento.medicamentoNombre, medicamento.descripcion);
-                     */
+
                   else {
                   widget.medicamento.hora = widget.medicamento.hora.add(
                       Duration(days: 1));
@@ -168,11 +171,10 @@ class _detallesMedicamentoState extends State<detallesMedicamento> {
               ),
               onPressed:(){
                 if(widget.medicamento.prioridad == "1 - Prioridad máxima"){
-                  sendPushMessage();
+                  sendPushMessage("No se ha tomado el medicamento de prioridad máxima");
                 }
                 else if(widget.medicamento.prio>=5 && widget.medicamento.prioridad == "2 - Prioridad media"){
-                  print(widget.medicamento.prioridad);
-                  sendPushMessage();
+                  sendPushMessage("No se ha tomado el medicamento de prioridad media");
                 }
                 widget.medicamento.prio = widget.medicamento.prio+1;
                 print(widget.medicamento.prio);
