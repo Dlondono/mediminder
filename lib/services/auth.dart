@@ -40,9 +40,12 @@ class AuthService {
       await DatabaseService(uid:user.uid).updateUserData(nombre,id,"Supervisor");
 
       return _userFromFirebaseUser(user);
-    }catch(e){
-      print(e.toString());
-      return null;
+    }on FirebaseAuthException catch(e){
+      if(e.code=='email-already-in-use'){
+        return ("");
+        }else{
+        return null;
+      }
     }
   }
   FirebaseApp tempApp;

@@ -115,10 +115,11 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
                                   SizedBox(height: 2.0.h),
                                   TextFormField(
                                     keyboardType: TextInputType.number,
-                                    decoration: textInputDecoraton.copyWith(hintText: "Cantidad disponible del medicamento"),
+                                    decoration: textInputDecoraton.copyWith(
+                                        hintText: "Cantidad disponible del medicamento"),
                                     validator: (val) =>
                                     val.isEmpty
-                                        ? "Por favor ingrese una unidad"
+                                        ? "Por favor ingrese un numero"
                                         : null,
                                     onChanged: (val) => setState(() => _currentCantidad = val),
                                   ),
@@ -176,7 +177,6 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
       return Container(
         child: Column(
           children:<Widget>[
-
             TextFormField(
             keyboardType: TextInputType.number,
             decoration: textInputDecoraton.copyWith(
@@ -199,10 +199,11 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () async {
-                  if(_formKey.currentState.validate()){
-                    for(var hora in horas) {
-                      await DatabaseService()
-                          .addMedicine(
+                  try {
+                    if (_formKey.currentState.validate()) {
+                      for (var hora in horas) {
+                        await DatabaseService()
+                            .addMedicine(
                           _currentName,
                           _paciente.idPaciente,
                           _currentCantidad,
@@ -215,9 +216,13 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
                           _currentTipo,
                           _currentTipoHorario,
                           _veces,
-                          );
+                        );
+                      }
+                      Navigator.pop(context);
                     }
-                    Navigator.pop(context);
+                  }on FormatException catch(_){
+                    final snackBar=SnackBar(content: Text("Error en el formato de numeros"));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 }
             ),

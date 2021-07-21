@@ -135,25 +135,31 @@ class DatabaseService{
       String minuto, String periodo, String recomendacion, String dosis,String prioridad,
       String tipo,String tipoHorario,int veces,String uid,int prio
       ) async{
-    return await coleccionMedicamentos.doc(uid).set({
-      "medicamentoNombre": medicina,
-      "idPaciente": id,
-      "cantidad": int.parse(cantidad),
-      "hora": int.parse(hora),
-      "minuto":int.parse(minuto),
-      "periodo": int.parse(periodo),
-      "recomendacion": recomendacion,
-      "dosis": int.parse(dosis),
-      "uid":uid,
-      "veces":veces,
-      "prio":prio,
-      "tipo":tipo,
-      "prioridad":prioridad,
-      "tipoHorario":tipoHorario,
-      "dia":DateTime.now().day,
-      "mes":DateTime.now().month,
-      "año":DateTime.now().year,
-    });
+      return await coleccionMedicamentos.doc(uid).set({
+        "medicamentoNombre": medicina,
+        "idPaciente": id,
+        "cantidad": int.parse(cantidad),
+        "hora": int.parse(hora),
+        "minuto": int.parse(minuto),
+        "periodo": int.parse(periodo),
+        "recomendacion": recomendacion,
+        "dosis": int.parse(dosis),
+        "uid": uid,
+        "veces": veces,
+        "prio": prio,
+        "tipo": tipo,
+        "prioridad": prioridad,
+        "tipoHorario": tipoHorario,
+        "dia": DateTime
+            .now()
+            .day,
+        "mes": DateTime
+            .now()
+            .month,
+        "año": DateTime
+            .now()
+            .year,
+      });
   }
 
 

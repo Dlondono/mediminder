@@ -93,6 +93,9 @@ class _RegisterState extends State<Register> {
                       dynamic result= await _auth.registerEmailPass(email, password,nombre,id);
                       if(result==null){
                         setState(()=>error="Correo o clave no validos");
+                      }else{
+                        setState(()=>error="Ya existe una cuenta creada para este correo");
+
                       }
                     }
                   },
