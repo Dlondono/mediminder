@@ -25,6 +25,7 @@ class _InterfazSupervisorState extends State<InterfazSupervisor> {
     return Scaffold(
         //backgroundColor: ,
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           elevation: 15,
           title: Text("Lista de pacientes"),
           backgroundColor: Color.fromRGBO(9, 111, 167, 50),

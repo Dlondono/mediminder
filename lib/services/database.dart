@@ -103,7 +103,9 @@ class DatabaseService{
       "tipo": tipo,
     });
   }
-
+  Future borrarMedicamento(String uid)async{
+    return await coleccionMedicamentos.doc(uid).delete();
+  }
   Future addMedicine(String medicina,String id, String cantidad, String hora,
       String minuto, String periodo, String recomendacion, String dosis,String prioridad,
       String tipo,String tipoHorario,int veces

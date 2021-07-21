@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mediminder/models/alarmaMedicamento.dart';
 import 'package:mediminder/models/paciente.dart';
 import 'package:mediminder/models/userLocal.dart';
+import 'package:mediminder/screens/home/InterfazSupervisor.dart';
 import 'package:mediminder/services/database.dart';
 import 'package:mediminder/shared/constants.dart';
 import 'package:mediminder/shared/constants.dart';
@@ -65,6 +66,40 @@ class _editarMedicamentoState extends State<editarMedicamento> {
            ),
         ),
         backgroundColor: Color.fromRGBO(9, 111, 167, 50),
+        actions: <Widget>[
+          TextButton.icon(
+              icon: Icon(Icons.delete),
+              label: Text("Borrar"),
+            style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all(Colors.white),
+            ),
+            onPressed: (){
+                showDialog(
+                    context: context,
+                    builder:(context)=>AlertDialog(title: Text("Eliminar medicamento"),
+                      content: Text("¿Desea borrar el medicamento?"),
+                      actions: <Widget>[
+                        ElevatedButton(
+                          child: Text("Si"),
+                          onPressed: ()async{
+                            await DatabaseService().borrarMedicamento(widget.medicamento.uid);
+                            Navigator.pop(context);
+                            Navigator.pushReplacement(context, MaterialPageRoute(
+                                builder: (context)=> InterfazSupervisor()));
+                          },
+                        ),
+                        ElevatedButton(
+                          child: Text("Cancelar"),
+                        onPressed: (){
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    ),
+                );
+            },
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child:  Container(

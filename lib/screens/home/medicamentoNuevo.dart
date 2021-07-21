@@ -292,7 +292,6 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
                 child: Text("Seleccionar hora "+(i+1).toString()),
                 onPressed:(){
                   _selectTime(i);
-
                 },
               ),
               SizedBox(height: 2.0.h)
@@ -316,10 +315,7 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
   if(newTime!=null){
     setState(() {
       _time=newTime;
-      if(horas.isNotEmpty) {
-        horas.removeAt(i);
-      }
-      horas.insert(i,_time);
+      horas.add(_time);
     });
     }
   }
