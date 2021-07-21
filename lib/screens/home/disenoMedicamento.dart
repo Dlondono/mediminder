@@ -20,7 +20,6 @@ class MedicamentoDiseno extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final User user=auth.currentUser;
-      noti.cancelarNotificaciones();
       if(rol=="paciente") {
         if (medicamento.listaHoras == null) {
           noti.setTime(

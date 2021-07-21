@@ -5,6 +5,7 @@ import 'package:mediminder/models/medicamento.dart';
 import 'package:mediminder/screens/home/listaMedicamentos.dart';
 import 'package:mediminder/services/auth.dart';
 import 'package:mediminder/services/database.dart';
+import 'package:mediminder/services/local_noti.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -16,14 +17,14 @@ class VistaPaciente extends StatefulWidget {
 class _VistaPacienteState extends State<VistaPaciente> {
   final FirebaseAuth auth=  FirebaseAuth.instance;
   final AuthService _auth=AuthService();
+  final Notifications noti=new Notifications();
   @override
   Widget build(BuildContext context) {
-  final User user=auth.currentUser;
+    noti.cancelarNotificaciones();
+    final User user=auth.currentUser;
   final String uid=user.uid;
   final CollectionReference coleccion = FirebaseFirestore.instance.collection("Usuarios");
-        return StreamProvider<List<Medicamento>>.value(
-          value: DatabaseService().medicamentos,
-          child: Scaffold(
+        return Scaffold(
             //backgroundColor: Colors.blue[300],
             appBar: AppBar(
               elevation: 15,
@@ -50,7 +51,6 @@ class _VistaPacienteState extends State<VistaPaciente> {
                   ],
                 )
             ),
-          ),
         );
       }
 }
