@@ -2,11 +2,12 @@ import 'package:mediminder/models/alarmaMedicamento.dart';
 import 'package:mediminder/services/database.dart';
 
 class Informe {
-  DateTime fecha;
+  String fecha;
   String idMedicamento;
   String nombreMedicamento;
   String delay;
-  Informe({this.fecha,this.idMedicamento,this.nombreMedicamento,this.delay});
+  String idPaciente;
+  Informe({this.fecha,this.idPaciente,this.idMedicamento,this.nombreMedicamento,this.delay});
 
   final DatabaseService _database=DatabaseService();
 

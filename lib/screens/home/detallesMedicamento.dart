@@ -39,7 +39,7 @@ class _detallesMedicamentoState extends State<detallesMedicamento> {
     getToken();
   }
   Future getToken()async{
-    sup=await _database.querySupervisores(paciente.idSuper);
+    sup=await _database.querySupervisor(paciente.idSuper);
     if(this.mounted) {
       setState(() {
         supervisor=sup;

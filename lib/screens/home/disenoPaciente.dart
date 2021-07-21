@@ -62,7 +62,7 @@ class PacienteDiseno extends StatelessWidget {
                     ),
                     onPressed: (){
                       Navigator.push(context, MaterialPageRoute(
-                          builder: (context)=> listaInformes()));
+                          builder: (context)=> listaInformes(idPaciente: paciente.idPaciente,)));
                     },
                   ),
                 ]

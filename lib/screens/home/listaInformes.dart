@@ -2,27 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:mediminder/models/informes.dart';
 import 'package:mediminder/models/paciente.dart';
 import 'package:mediminder/screens/home/disenoInforme.dart';
+import 'package:mediminder/services/database.dart';
+import 'package:mediminder/shared/loading.dart';
 import 'package:provider/provider.dart';
 
 class listaInformes extends StatefulWidget {
-  final Paciente paciente;
-  listaInformes({this.paciente});
+  final String idPaciente;
+  listaInformes({this.idPaciente});
   @override
   _listaInformesState createState() => _listaInformesState();
 }
-
 class _listaInformesState extends State<listaInformes> {
+
+  String idPaciente;
+  bool loading=false;
+  final DatabaseService _database = DatabaseService();
+  List<Informe> listaInformes,informes;
+  Future getInformes()async{
+    setState(() => loading = true);
+    listaInformes=await _database.queryInformes(widget.idPaciente);
+    if (this.mounted) {
+      setState(() {
+        informes = listaInformes;
+        loading = false;
+      });
+    }
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getInformes();
+  }
   @override
   Widget build(BuildContext context) {
-    //final informes=Provider.of<List<Informe>>(context)?? [];
-    Informe inf=new Informe();
-    inf.delay="delay";
-    inf.nombreMedicamento="nombreMed";
-    inf.idMedicamento="id";
-    inf.fecha=DateTime.now();
-    List<Informe> informes=[inf];
-
-    return Scaffold(
+    return loading? Loading(): Scaffold(
       appBar: AppBar(
         title: Text("Lista de informes"),
         backgroundColor: Color.fromRGBO(9, 111, 167, 50),

@@ -60,7 +60,7 @@ class DatabaseService{
       }
       return listaPacientes;
   }
-  Future querySupervisores(String uid)async{
+  Future querySupervisor(String uid)async{
     var doc = await FirebaseFirestore.instance.doc("Usuarios/$uid").get();
     return Supervisor(
       token:doc.data()['token'],
@@ -68,7 +68,6 @@ class DatabaseService{
       nombre:doc.data()['nombre'],
       );
   }
-
   Future queryPaciente(String idPaciente)async{
     var result=await coleccionPacientes.where("uidPac",isEqualTo: idPaciente).get();
     for(var doc in result.docs) {
@@ -80,7 +79,21 @@ class DatabaseService{
       );
       return pac;
       }
-
+  }
+  Future queryInformes(String idPaciente)async{
+    List<Informe> listaInformes=[];
+    var result=await coleccionInformes.where("idPaciente",isEqualTo: idPaciente).get();
+    for (var doc in result.docs){
+      Informe informe=new Informe(
+        fecha: doc.data()['fecha']??"",
+        delay: doc.data()['delay']??"",
+        idPaciente: doc.data()['idPaciente']??"",
+        nombreMedicamento: doc.data()['nombreMedicamento']??"",
+        idMedicamento: doc.data()['idMedicamento']??"",
+      );
+      listaInformes.add(informe);
+    }
+    return listaInformes;
   }
 
   Future updateUserData(String nombre,String id, String tipo) async{
@@ -167,7 +180,7 @@ class DatabaseService{
       "idMedicamento": medicamento.uid,
       "nombreMedicamento":medicamento.medicamentoNombre,
       "idPaciente":medicamento.idPaciente,
-      "fecha":medicamento.hora,
+      "fecha":medicamento.hora.toString(),
       "delay":delay
     });
   }
