@@ -4,6 +4,7 @@ import 'package:mediminder/models/paciente.dart';
 import 'package:mediminder/models/userLocal.dart';
 import 'package:mediminder/services/database.dart';
 import 'package:mediminder/shared/constants.dart';
+import 'package:mediminder/shared/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -30,6 +31,7 @@ class _editarMedicamentoState extends State<editarMedicamento> {
   int _veces;
   String _currentTipo;
   int _prio;
+  Validator validator = new Validator();
 
   final List<String> prioridades=['1 - Prioridad máxima',
     '2 - Prioridad media','3 - Prioridad normal'];
@@ -51,6 +53,8 @@ class _editarMedicamentoState extends State<editarMedicamento> {
     setInitialData(medicamento);
     super.initState();
   }
+
+
   Widget build(BuildContext context) {
     //setInitialData(medicamento);
     final user=Provider.of<UserLocal>(context);
@@ -125,9 +129,7 @@ class _editarMedicamentoState extends State<editarMedicamento> {
                                 keyboardType: TextInputType.number,
                                 decoration: textInputDecoraton.copyWith(hintText: "Cantidad disponible del medicamento"),
                                 validator: (val) =>
-                                val.isEmpty
-                                    ? "Por favor ingrese una unidad"
-                                    : null,
+                                    validator.validarDato(val),
                                 onChanged: (val) => setState(() => _currentCantidad = val),
                               ),
                               SizedBox(height: 2.0.h),
@@ -146,9 +148,7 @@ class _editarMedicamentoState extends State<editarMedicamento> {
                                 keyboardType: TextInputType.number,
                                 decoration: textInputDecoraton.copyWith(hintText: "Dosis a tomar"),
                                 validator: (val) =>
-                                val.isEmpty
-                                    ? "Por favor ingrese la dosis correspondiente"
-                                    : null,
+                                    validator.validarDato(val),
                                 onChanged: (val) => setState(() => _currentDosis = val),
                               ),
                               SizedBox(height: 2.0.h),
@@ -178,8 +178,7 @@ class _editarMedicamentoState extends State<editarMedicamento> {
               initialValue: _currentPeriodo??medicamento.periodo.toString(),
               decoration: textInputDecoraton.copyWith(hintText: "Cada cuanto debe tomar el medicamento"),
               validator: (val) =>
-              val.isEmpty
-                  ? "Por favor ingrese periodo del medicamento" : null,
+                  validator.validarDato(val),
               onChanged: (val) => setState(() => _currentPeriodo = val),
             ),
             SizedBox(height: 2.0.h),
@@ -284,8 +283,6 @@ class _editarMedicamentoState extends State<editarMedicamento> {
     _currentPrioridad=medicamento.prioridad;
     _currentTipoHorario=medicamento.tipoHorario;
     _currentTipo=medicamento.tipo;
-    print(medicamento.medicamentoNombre.toString()+"medi.tipo");
-    print(_currentRecomendacion.toString()+"current");
     _veces=medicamento.veces;
     _prio=medicamento.prio;
   }
