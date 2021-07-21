@@ -35,6 +35,7 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
   String _currentTipoHorario;
   int _veces;
   String _currentTipo;
+  Validator validator = new Validator();
 
   final List<String> prioridades=['1 - Prioridad máxima',
     '2 - Prioridad media','3 - Prioridad normal'];
@@ -118,9 +119,7 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
                                     decoration: textInputDecoraton.copyWith(
                                         hintText: "Cantidad disponible del medicamento"),
                                     validator: (val) =>
-                                    val.isEmpty
-                                        ? "Por favor ingrese un numero"
-                                        : null,
+                                        validator.validarDato(val),
                                     onChanged: (val) => setState(() => _currentCantidad = val),
                                   ),
                                   SizedBox(height: 2.0.h),
@@ -137,9 +136,7 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
                                     keyboardType: TextInputType.number,
                                     decoration: textInputDecoraton.copyWith(hintText: "Dosis a tomar"),
                                     validator: (val) =>
-                                    val.isEmpty
-                                        ? "Por favor ingrese la dosis correspondiente"
-                                        : null,
+                                        validator.validarDato(val),
                                     onChanged: (val) => setState(() => _currentDosis = val),
                                   ),
                                   SizedBox(height: 2.0.h),
@@ -182,9 +179,7 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
             decoration: textInputDecoraton.copyWith(
                 hintText: "Cuantas veces al dia"),
             validator: (val) =>
-            val.isEmpty
-                ? "Por favor ingrese el numero de veces que debe tomar el medicamento al dia"
-                : null,
+                validator.validarDato(val),
             onChanged: (val) => setState(() => _veces = int.parse(val)),
             ),
             SizedBox(height: 2.0.h),
@@ -242,8 +237,7 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
             TextFormField(
           decoration: textInputDecoraton.copyWith(hintText: "Cada cuanto debe tomar el medicamento"),
           validator: (val) =>
-          val.isEmpty
-          ? "Por favor ingrese periodo del medicamento" : null,
+              validator.validarDato(val),
         onChanged: (val) => setState(() => _currentPeriodo = val),
             ),
         SizedBox(height: 2.0.h),
