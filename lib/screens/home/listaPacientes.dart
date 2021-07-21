@@ -50,7 +50,7 @@ class _PacientesState extends State<Pacientes> {
           body: Container(
             decoration: BoxDecoration(color: Color.fromRGBO(157, 221, 234, 50)),
             child: Center(
-              child: Flexible(
+              child: Container(
                 child: Text(
                   "Aun no tienes pacientes registrados, "
                       "para registrar un paciente presiona el boton en la parte inferior",

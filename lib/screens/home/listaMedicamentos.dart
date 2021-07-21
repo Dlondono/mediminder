@@ -133,9 +133,8 @@ class _MedicamentosState extends State<Medicamentos> {
           body: Container(
             decoration: BoxDecoration(color: Color.fromRGBO(157, 221, 234, 50)),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Flexible(
+                  Container(
                     child: Text(
                       msg1,
                           style: TextStyle(fontSize: 18, color: Colors.black),

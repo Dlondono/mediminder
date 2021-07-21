@@ -282,6 +282,7 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
       );
     }
   }
+
   Widget _forCampo(){
     if(_veces!=null) {
       return Container(
@@ -290,7 +291,10 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
             for(int i=0;i<_veces;i++)
               ElevatedButton(
                 child: Text("Seleccionar hora "+(i+1).toString()),
-                onPressed:()=> _selectTime(i),
+                onPressed:(){
+                  _selectTime(i);
+
+                },
               ),
               SizedBox(height: 2.0.h)
           ],
@@ -313,7 +317,10 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
   if(newTime!=null){
     setState(() {
       _time=newTime;
-      horas.add(_time);
+      if(horas.isNotEmpty) {
+        horas.removeAt(i);
+      }
+      horas.insert(i,_time);
     });
     }
   }
