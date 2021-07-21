@@ -13,6 +13,7 @@ class AlarmaMedicamento{
     int mes;
     int year;
     String prioridad;
+    int prio;
     String tipo;
     String tipoHorario;
     int veces;
@@ -21,7 +22,7 @@ class AlarmaMedicamento{
 
     AlarmaMedicamento({this.medicamentoNombre,this.descripcion,this.cantidad,
         this.hora, this.periodo, this.idPaciente,this.dosis,this.uid,
-        this.dia,this.mes,this.year,this.prioridad,this.tipo,this.tipoHorario,this.veces
+        this.dia,this.mes,this.year,this.prioridad,this.prio,this.tipo,this.tipoHorario,this.veces
     });
 
     setTime(DateTime t){

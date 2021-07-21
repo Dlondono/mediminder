@@ -81,6 +81,7 @@ class _MedicamentosState extends State<Medicamentos> {
             }
           }
         }
+
         medi = new AlarmaMedicamento(medicamentoNombre: item.medicamentoNombre,
             descripcion: item.recomendacion,
             cantidad: item.cantidad,
@@ -95,6 +96,7 @@ class _MedicamentosState extends State<Medicamentos> {
             tipo: item.tipo,
             tipoHorario: item.tipoHorario,
             prioridad: item.prioridad,
+            prio: item.prio,
             veces:item.veces,
         );
         alarmaLista.add(medi);
@@ -150,6 +152,7 @@ class _MedicamentosState extends State<Medicamentos> {
             dia: dia,
             mes: item.mes,
             year: item.year,
+            prio: item.prio,
           );
           alarmaLista.add(medi);
         }
