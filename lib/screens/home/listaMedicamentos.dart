@@ -21,6 +21,7 @@ class Medicamentos extends StatefulWidget {
 
 class _MedicamentosState extends State<Medicamentos> {
   bool loading=false;
+  String msg1, msg2;
   final DatabaseService _database=DatabaseService();
   final FirebaseAuth auth=FirebaseAuth.instance;
   DateTime horaActualLocal = tz.TZDateTime.now(tz.local);
@@ -50,6 +51,15 @@ class _MedicamentosState extends State<Medicamentos> {
     final String tipo=widget.tipo;
     alarmaLista = [];
     AlarmaMedicamento medi;
+
+    if(tipo=="supervisor"){
+      msg1 = "El paciente aun no tiene registrado ningun medicamento, ";
+      msg2 = "porfavor registre algun medicamento antes de realizar cualquier consulta.";
+    }
+    if(tipo=="paciente"){
+      msg1 = "Aun no tiene medicamentos registrados, ";
+      msg2 = "para registrar un medicamento contacte a su cuidador.";
+  }
     for(var item in medicamentos??[]){
       if (item.periodo != null) {
         DateTime horaNueva = new DateTime(item.year,
@@ -111,6 +121,7 @@ class _MedicamentosState extends State<Medicamentos> {
     return _numeroMedicamentos();
 
   }
+
   Widget _numeroMedicamentos(){
     if(medicamentos!=null){
       if(alarmaLista.length==0){
@@ -126,14 +137,14 @@ class _MedicamentosState extends State<Medicamentos> {
                 children: [
                   Flexible(
                     child: Text(
-                      "Aun no tiene medicamentos registrados, ",
+                      msg1,
                           style: TextStyle(fontSize: 18, color: Colors.black),
                       textAlign: TextAlign.center,
                     ),
                   ),
                   Flexible(
                     child: Text(
-                          "para registrar un medicamento contacte a su cuidador",
+                         msg2,
                       style: TextStyle(fontSize: 18, color: Colors.black),
                       textAlign: TextAlign.center,
                     ),
