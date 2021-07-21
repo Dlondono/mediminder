@@ -37,6 +37,7 @@ class DatabaseService{
           tipoHorario: doc.data()['tipoHorario'],
           veces: doc.data()['veces'],
           prioridad: doc.data()['prioridad'],
+          prio: doc.data()['prio'] ?? "",
           dia: doc.data()['dia'] ?? "",
           mes: doc.data()['mes'] ?? "",
           year: doc.data()['año'] ?? "",
@@ -110,6 +111,7 @@ class DatabaseService{
       "veces":veces,
       "tipo":tipo,
       "prioridad":prioridad,
+      "prio": 1,
       "tipoHorario":tipoHorario,
       "dia":DateTime.now().day,
       "mes":DateTime.now().month,
@@ -141,13 +143,14 @@ class DatabaseService{
   }
 
 
-  Future updateMedicine(int mes,int dia,int hora,int minuto,int cantidad,String id) async{
+  Future updateMedicine(int mes,int dia,int hora,int minuto,int cantidad,String id, int prio) async{
     return await coleccionMedicamentos.doc(id).update({
       "cantidad": cantidad,
       "hora":hora,
       "minuto":minuto,
       "dia":dia,
       "mes":mes,
+      "prio": prio,
     });
   }
   Future updateCantidad(int cantidad,String medUid) async{
@@ -207,6 +210,7 @@ class DatabaseService{
           tipoHorario: doc.data()['tipoHorario'],
           veces: doc.data()['veces'],
           prioridad: doc.data()['prioridad'],
+          prio: doc.data()['prio'],
           dia: doc.data()['dia'] ?? "",
           mes: doc.data()['mes'] ?? "",
           year: doc.data()['año'] ?? "",

@@ -81,6 +81,7 @@ class _MedicamentosState extends State<Medicamentos> {
             }
           }
         }
+
         medi = new AlarmaMedicamento(medicamentoNombre: item.medicamentoNombre,
             descripcion: item.recomendacion,
             cantidad: item.cantidad,
@@ -95,10 +96,10 @@ class _MedicamentosState extends State<Medicamentos> {
             tipo: item.tipo,
             tipoHorario: item.tipoHorario,
             prioridad: item.prioridad,
+            prio: item.prio,
             veces:item.veces,
         );
         alarmaLista.add(medi);
-
       }else {
         return Container(
           child: Text("ERROR "),

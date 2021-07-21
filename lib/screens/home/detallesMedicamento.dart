@@ -10,6 +10,7 @@ import 'package:mediminder/services/database.dart';
 import 'package:mediminder/services/local_noti.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
+import 'package:timezone/timezone.dart' as tz;
 
 class detallesMedicamento extends StatefulWidget {
   final AlarmaMedicamento medicamento;
@@ -24,6 +25,7 @@ class _detallesMedicamentoState extends State<detallesMedicamento> {
   final Notifications noti = new Notifications();
   final Informe informe=new Informe();
   final url = "https://fcm.googleapis.com/fcm/send";
+  DateTime horaActualLocal = tz.TZDateTime.now(tz.local);
   Paciente pac,paciente;
   String token,idSuper;
   Supervisor sup,supervisor;
@@ -63,8 +65,6 @@ class _detallesMedicamentoState extends State<detallesMedicamento> {
         },
         body: msg,
       );
-      print('FCM request for device sent!');
-      print(response);
     } catch (e) {
       print(e);
     }
@@ -148,7 +148,7 @@ class _detallesMedicamentoState extends State<detallesMedicamento> {
                 }
                 _database.updateMedicine(widget.medicamento.hora.month,widget.medicamento.hora.day,
                     widget.medicamento.hora.hour,widget.medicamento.hora.minute,
-                    widget.medicamento.cantidad, widget.medicamento.uid);
+                    widget.medicamento.cantidad, widget.medicamento.uid,1);
                 String delay=informe.calcularDelay(widget.medicamento.hora, DateTime.now());
                 informe.crearInforme(widget.medicamento.idPaciente, "nombrePaciente",
                     widget.medicamento, delay);
@@ -167,12 +167,20 @@ class _detallesMedicamentoState extends State<detallesMedicamento> {
                 foregroundColor: MaterialStateProperty.all(Colors.black),
               ),
               onPressed:(){
-                sendPushMessage();
+                if(widget.medicamento.prioridad == "1 - Prioridad máxima"){
+                  sendPushMessage();
+                }
+                else if(widget.medicamento.prio>=5 && widget.medicamento.prioridad == "2 - Prioridad media"){
+                  print(widget.medicamento.prioridad);
+                  sendPushMessage();
+                }
+                widget.medicamento.prio = widget.medicamento.prio+1;
+                print(widget.medicamento.prio);
                 widget.medicamento.hora = widget.medicamento.hora.add(const Duration(minutes: 5));
                 noti.setTime(widget.medicamento.hora.year, widget.medicamento.hora.month, widget.medicamento.hora.day, widget.medicamento.hora.hour, widget.medicamento.hora.minute);
                 noti.scheduleweeklyNotification(widget.medicamento.idPaciente,widget.medicamento.medicamentoNombre,widget.medicamento.descripcion);
                 _database.updateMedicine(widget.medicamento.mes,widget.medicamento.dia,widget.medicamento.hora.hour,
-                    widget.medicamento.hora.minute, widget.medicamento.cantidad, widget.medicamento.uid);
+                    widget.medicamento.hora.minute, widget.medicamento.cantidad, widget.medicamento.uid, widget.medicamento.prio);
                 Navigator.pop(context);
               },
             )
