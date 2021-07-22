@@ -79,7 +79,7 @@ class _MedicamentosState extends State<Medicamentos> {
               + item.dia.toString().padLeft(2, '0') + " " + horaNueva.hour.toString().padLeft(2,'0')
               + ":" + horaNueva.minute.toString().padLeft(2,'0') + ":" + "00");
           if(t.isBefore(now)){
-            //item.dia=now.day+1;
+            item.dia=now.day+1;
             t = DateTime.parse(item.year.toString() +
                 item.mes.toString().padLeft(2, '0')
                 + item.dia.toString().padLeft(2, '0') + " " + horaNueva.hour.toString().padLeft(2,'0')

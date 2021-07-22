@@ -1,6 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mediminder/services/auth.dart';
 import 'package:mediminder/shared/constants.dart';
+import 'package:sizer/sizer.dart';
+
 class Register extends StatefulWidget {
   final Function toggleView;
   Register({this.toggleView});
@@ -25,18 +28,6 @@ class _RegisterState extends State<Register> {
         backgroundColor: Color.fromRGBO(9, 111, 167, 50),
         elevation: 1.0,
         title: Text('Registro'),
-        actions: <Widget>[
-          TextButton.icon(
-            icon: Icon(Icons.person),
-            label: Text("Iniciar sesion"),
-            style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all(Colors.white),
-            ),
-            onPressed: (){
-              widget.toggleView();
-            },
-          )
-        ],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -95,16 +86,32 @@ class _RegisterState extends State<Register> {
                         setState(()=>error="Correo o clave no validos");
                       }else{
                         setState(()=>error="Ya existe una cuenta creada para este correo");
-
                       }
                     }
                   },
                 ),
-                SizedBox(height: 15.0),
+                SizedBox(height: 2.0.h),
                 Text(
                     error,
                   style: TextStyle(color: Colors.red),
-                )
+                ),RichText(
+                  text: TextSpan(
+                      text: "Ya tiene una cuenta? \n",
+                      style: TextStyle(
+                          fontSize: 18,color: Colors.black
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(text: 'Inicie sesion',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,color: Colors.blue.shade800),
+                            recognizer: TapGestureRecognizer()..onTap=(){
+                              widget.toggleView();
+                            }
+
+                        ),
+                      ]
+                  ),
+                ),
               ],
             ),
           ),
