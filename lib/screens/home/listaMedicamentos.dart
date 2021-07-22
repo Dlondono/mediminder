@@ -65,12 +65,13 @@ class _MedicamentosState extends State<Medicamentos> {
         DateTime horaNueva = new DateTime(item.year,
             item.mes, item.dia, item.hora, item.minuto);
         DateTime t,now;
-        now=DateTime.now();
+        now=DateTime.now().add(Duration(hours: -2));
         t = DateTime.parse(item.year.toString() +
             item.mes.toString().padLeft(2, '0')
             + item.dia.toString().padLeft(2, '0') + " " + horaNueva.hour.toString().padLeft(2,'0')
             + ":" + horaNueva.minute.toString().padLeft(2,'0') + ":" + "00");
         if(t.isBefore(now)){
+          //dia y mes antes
           item.dia =now.day;
           item.mes=now.month;
           t = DateTime.parse(item.year.toString() +
@@ -78,7 +79,7 @@ class _MedicamentosState extends State<Medicamentos> {
               + item.dia.toString().padLeft(2, '0') + " " + horaNueva.hour.toString().padLeft(2,'0')
               + ":" + horaNueva.minute.toString().padLeft(2,'0') + ":" + "00");
           if(t.isBefore(now)){
-            item.dia=now.day+1;
+            //item.dia=now.day+1;
             t = DateTime.parse(item.year.toString() +
                 item.mes.toString().padLeft(2, '0')
                 + item.dia.toString().padLeft(2, '0') + " " + horaNueva.hour.toString().padLeft(2,'0')
