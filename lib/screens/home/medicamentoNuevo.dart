@@ -115,15 +115,7 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
                                         : null,
                                   ),
                                   SizedBox(height: 2.0.h),
-                                  TextFormField(
-                                    keyboardType: TextInputType.number,
-                                    decoration: textInputDecoraton.copyWith(
-                                        hintText: "Cantidad disponible del medicamento"),
-                                    validator: (val) =>
-                                        validator.validarDato(val),
-                                    onChanged: (val) => setState(() => _currentCantidad = val),
-                                  ),
-                                  SizedBox(height: 2.0.h),
+                                  _formCantidad(),
                                   TextFormField(
                                     decoration: textInputDecoraton.copyWith(hintText: "Recomendaciones del medicamento"),
                                     validator: (val) =>
@@ -134,8 +126,6 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
                                   ),
                                   SizedBox(height: 2.0.h),
                                   _formDosis(),
-
-                                  SizedBox(height: 2.0.h),
                                   DropdownButtonFormField(
                                     value: _currentTipoHorario ,
                                     items: horario.map((hor) {
@@ -190,7 +180,6 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () async {
-                  try {
                     if (_formKey.currentState.validate()) {
                       for (var hora in horas) {
                         await DatabaseService()
@@ -211,10 +200,7 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
                       }
                       Navigator.pop(context);
                     }
-                  }on FormatException catch(_){
-                    final snackBar=SnackBar(content: Text("Error en el formato de numeros"));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  }
+
                 }
             ),
           ],
@@ -276,25 +262,73 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
       );
     }
   }
-  Widget _formDosis(){
+  Widget _formCantidad(){
     if(_currentTipo=="Pastilla"){
       return Container(
-        child: TextFormField(
-          keyboardType: TextInputType.number,
-          decoration: textInputDecoraton.copyWith(hintText: "Dosis a tomar en miligramos"),
-          validator: (val) =>
-              validator.validarDato(val),
-          onChanged: (val) => setState(() => _currentDosis = val),
+        child: Column(
+          children: [
+            TextFormField(
+              keyboardType: TextInputType.number,
+              decoration: textInputDecoraton.copyWith(
+                  hintText: "Cantidad disponible de pastillas"),
+              validator: (val) =>
+                  validator.validarDato(val),
+              onChanged: (val) => setState(() => _currentCantidad = val),
+            ),
+            SizedBox(height: 2.0.h),
+          ],
         ),
       );
     }else if (_currentTipo=="Jarabe"){
       return Container(
-        child: TextFormField(
-          keyboardType: TextInputType.number,
-          decoration: textInputDecoraton.copyWith(hintText: "Dosis a tomar en mililitros"),
-          validator: (val) =>
-              validator.validarDato(val),
-          onChanged: (val) => setState(() => _currentDosis = val),
+        child: Column(
+          children: [
+            TextFormField(
+              keyboardType: TextInputType.number,
+              decoration: textInputDecoraton.copyWith(
+                  hintText: "Cantidad disponible en mililitros"),
+              validator: (val) =>
+                  validator.validarDato(val),
+              onChanged: (val) => setState(() => _currentCantidad = val),
+            ),
+            SizedBox(height: 2.0.h),
+          ],
+        ),
+      );
+    }
+    else return Container(
+      );
+  }
+  Widget _formDosis(){
+    if(_currentTipo=="Pastilla"){
+      return Container(
+        child: Column(
+          children: [
+            TextFormField(
+              keyboardType: TextInputType.number,
+              decoration: textInputDecoraton.copyWith(
+                  hintText: "Cuantas pastillas debe tomar por dosis"),
+              validator: (val) =>
+                  validator.validarDato(val),
+              onChanged: (val) => setState(() => _currentDosis = val),
+            ),
+            SizedBox(height: 2.0.h),
+          ],
+        ),
+      );
+    }else if (_currentTipo=="Jarabe"){
+      return Container(
+        child: Column(
+          children: [
+            TextFormField(
+              keyboardType: TextInputType.number,
+              decoration: textInputDecoraton.copyWith(hintText: "Dosis a tomar en mililitros"),
+              validator: (val) =>
+                  validator.validarDato(val),
+              onChanged: (val) => setState(() => _currentDosis = val),
+            ),
+            SizedBox(height: 2.0.h),
+          ],
         ),
       );
     }

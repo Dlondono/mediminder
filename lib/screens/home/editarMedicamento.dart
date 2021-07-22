@@ -197,7 +197,8 @@ class _editarMedicamentoState extends State<editarMedicamento> {
         child: TextFormField(
           initialValue: medicamento.dosis.toString(),
           keyboardType: TextInputType.number,
-          decoration: textInputDecoraton.copyWith(hintText: "Dosis a tomar en miligramos"),
+          decoration: textInputDecoraton.copyWith
+            (hintText: "Cuantas pastillas debe tomar por dosis"),
           validator: (val) =>
               validator.validarDato(val),
           onChanged: (val) => setState(() => _currentDosis = val),

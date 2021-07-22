@@ -137,18 +137,20 @@ class _detallesMedicamentoState extends State<detallesMedicamento> {
                     }
 
                     if(widget.medicamento.periodo!=null) {
-                      widget.medicamento.hora = widget.medicamento.hora.add(Duration(hours: widget.medicamento.periodo));
-                    }
-
-                      else {
+                      widget.medicamento.hora = widget.medicamento.hora.add(
+                          Duration(hours: widget.medicamento.periodo));
+                    }else {
                       widget.medicamento.hora = widget.medicamento.hora.add(
                           Duration(days: 1));
                       }
 
-                    this.widget.medicamento.cantidad=this.widget.medicamento.cantidad-1;
-                    _database.updateCantidad(this.widget.medicamento.cantidad,widget.medicamento.uid);
+                    this.widget.medicamento.cantidad=
+                        this.widget.medicamento.cantidad-this.widget.medicamento.dosis;
+                    _database.updateCantidad(this.widget.medicamento.cantidad,
+                        widget.medicamento.uid);
                     if(this.widget.medicamento.cantidad<=5){
-                      noti.showNotification("Quedan pocas unidades de "+this.widget.medicamento.medicamentoNombre);
+                      noti.showNotification("Quedan pocas unidades de ",
+                          this.widget.medicamento.medicamentoNombre);
                     }
                     if(this.widget.medicamento.cantidad<=0){
                       this.widget.medicamento.cantidad=0;

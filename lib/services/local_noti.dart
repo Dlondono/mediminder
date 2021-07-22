@@ -67,7 +67,7 @@ class Notifications {
         initializationSettings);
   }
 
-  Future<void> showNotification(String title) async {
+  Future<void> showNotification(String title,String medi) async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
     AndroidNotificationDetails(
       "Your channel",
@@ -82,7 +82,7 @@ class Notifications {
     );
     await this
         .flutterLocalNotificationsPlugin
-        .show(0, title, "Notificación inmediata", platformChannelSpecifics,
+        .show(0, title, medi, platformChannelSpecifics,
       //Payload es lo que se ejecuta al recibir clickear la notificación
     );
   }
