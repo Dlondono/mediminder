@@ -76,8 +76,9 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
                                         child:Text('$tipo'),
                                       );
                                     }).toList(),
-                                    onChanged: (val) =>
-                                        setState(() => _currentTipo = val),
+                                    onChanged: (val) {
+                                      setState(() => _currentTipo = val);
+                                    },
                                     decoration: textInputDecoraton.copyWith(
                                         hintText: "Tipo medicamento"),
                                     validator: (val) =>
@@ -132,13 +133,8 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
                                     onChanged: (val) => setState(() => _currentRecomendacion = val),
                                   ),
                                   SizedBox(height: 2.0.h),
-                                  TextFormField(
-                                    keyboardType: TextInputType.number,
-                                    decoration: textInputDecoraton.copyWith(hintText: "Dosis a tomar"),
-                                    validator: (val) =>
-                                        validator.validarDato(val),
-                                    onChanged: (val) => setState(() => _currentDosis = val),
-                                  ),
+                                  _formDosis(),
+
                                   SizedBox(height: 2.0.h),
                                   DropdownButtonFormField(
                                     value: _currentTipoHorario ,
@@ -225,7 +221,6 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
         ),
 
       );
-
     }else if(_currentTipoHorario=="Por periodo"){
       return Container(
         child: Column(
@@ -280,6 +275,31 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
         height: MediaQuery.of(context).size.height,
       );
     }
+  }
+  Widget _formDosis(){
+    if(_currentTipo=="Pastilla"){
+      return Container(
+        child: TextFormField(
+          keyboardType: TextInputType.number,
+          decoration: textInputDecoraton.copyWith(hintText: "Dosis a tomar en miligramos"),
+          validator: (val) =>
+              validator.validarDato(val),
+          onChanged: (val) => setState(() => _currentDosis = val),
+        ),
+      );
+    }else if (_currentTipo=="Jarabe"){
+      return Container(
+        child: TextFormField(
+          keyboardType: TextInputType.number,
+          decoration: textInputDecoraton.copyWith(hintText: "Dosis a tomar en mililitros"),
+          validator: (val) =>
+              validator.validarDato(val),
+          onChanged: (val) => setState(() => _currentDosis = val),
+        ),
+      );
+    }
+    else return Container(
+      );
   }
 
   Widget _forCampo(){

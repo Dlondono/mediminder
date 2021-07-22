@@ -178,14 +178,7 @@ class _editarMedicamentoState extends State<editarMedicamento> {
                                 onChanged: (val) => setState(() => _currentRecomendacion = val),
                               ),
                               SizedBox(height: 2.0.h),
-                              TextFormField(
-                                initialValue: medicamento.dosis.toString(),
-                                keyboardType: TextInputType.number,
-                                decoration: textInputDecoraton.copyWith(hintText: "Dosis a tomar"),
-                                validator: (val) =>
-                                    validator.validarDato(val),
-                                onChanged: (val) => setState(() => _currentDosis = val),
-                              ),
+                              _formDosis(),
                               SizedBox(height: 2.0.h),
                               _nuevoDropdown(),
                             ],
@@ -197,6 +190,33 @@ class _editarMedicamentoState extends State<editarMedicamento> {
         ),
       ),
     );
+  }
+  Widget _formDosis(){
+    if(_currentTipo=="Pastilla"){
+      return Container(
+        child: TextFormField(
+          initialValue: medicamento.dosis.toString(),
+          keyboardType: TextInputType.number,
+          decoration: textInputDecoraton.copyWith(hintText: "Dosis a tomar en miligramos"),
+          validator: (val) =>
+              validator.validarDato(val),
+          onChanged: (val) => setState(() => _currentDosis = val),
+        ),
+      );
+    }else if (_currentTipo=="Jarabe"){
+      return Container(
+        child: TextFormField(
+          initialValue: medicamento.dosis.toString(),
+          keyboardType: TextInputType.number,
+          decoration: textInputDecoraton.copyWith(hintText: "Dosis a tomar en mililitros"),
+          validator: (val) =>
+              validator.validarDato(val),
+          onChanged: (val) => setState(() => _currentDosis = val),
+        ),
+      );
+    }
+    else return Container(
+      );
   }
 
   Widget _nuevoDropdown() {
