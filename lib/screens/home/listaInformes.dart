@@ -34,25 +34,56 @@ class _listaInformesState extends State<listaInformes> {
     super.initState();
     getInformes();
   }
+  Widget numeroInformes(){
+    if (informes != null) {
+      if (informes.length == 0) {
+        setState(() {
+          loading = false;
+        });
+        return loading ? Loading() : Scaffold(
+          backgroundColor: Color.fromRGBO(157, 221, 234, 50),
+          body: Container(
+            decoration: BoxDecoration(color: Color.fromRGBO(157, 221, 234, 50)),
+            child: Center(
+              child: Container(
+                child: Text(
+                  "Este paciente aun no tiene informes generados, "
+                      "los informes se generan automáticamente "
+                      "según el comportamiento de paciente",
+                  style: TextStyle(fontSize: 18, color: Colors.black),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+        );
+      } else {
+        return  Container(
+          decoration: BoxDecoration(color: Color.fromRGBO(157, 221, 234, 50)),
+          child: ListView.builder(
+              itemCount: informes.length,
+              itemBuilder: (context,index){
+                return InformeDiseno(informe: informes[index]);
+              }
+          ),
+        );
+    }
+    }else{
+      setState(() {
+        loading=true;
+      });
+      return Loading();
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return loading? Loading(): Scaffold(
       appBar: AppBar(
         title: Text("Lista de informes"),
         backgroundColor: Color.fromRGBO(9, 111, 167, 50),
-        actions: <Widget>[
-          
-        ],
+
       ),
-      body: Container(
-        decoration: BoxDecoration(color: Color.fromRGBO(157, 221, 234, 50)),
-        child: ListView.builder(
-          itemCount: informes.length,
-          itemBuilder: (context,index){
-            return InformeDiseno(informe: informes[index]);
-          }
-        ),
-      ),
+      body: numeroInformes(),
     );
   }
 }

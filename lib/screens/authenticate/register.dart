@@ -76,7 +76,7 @@ class _RegisterState extends State<Register> {
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
                   ),
-                  child: Text("Agregar",
+                  child: Text("Registrarse",
                     style: TextStyle(color: Colors.white,fontSize: 16),
                   ),
                   onPressed: () async{
