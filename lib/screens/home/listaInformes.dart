@@ -49,7 +49,7 @@ class _listaInformesState extends State<listaInformes> {
                 child: Text(
                   "Este paciente aun no tiene informes generados, "
                       "los informes se generan automáticamente "
-                      "según el comportamiento de paciente",
+                      "según el comportamiento del paciente",
                   style: TextStyle(fontSize: 18, color: Colors.black),
                   textAlign: TextAlign.center,
                 ),

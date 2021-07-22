@@ -70,8 +70,7 @@ class MedicamentoDiseno extends StatelessWidget {
                 title: Text("Medicamento: " +medicamento.medicamentoNombre,
                   style: TextStyle(fontSize: 20,color: Colors.black)),
                 subtitle: Text("Cantidad disponible: " + medicamento.cantidad.toString()
-                    + "\n" + "Dosis a tomar: " + medicamento.dosis.toString()+"\n"+
-                    "Dia"+medicamento.hora.day.toString()+"mes"+medicamento.hora.month.toString(),
+                    + "\n" + "Dosis a tomar: " + medicamento.dosis.toString(),
                   style: TextStyle(fontSize: 18,color: Colors.black)) ,
                 ),
               TextButton.icon(

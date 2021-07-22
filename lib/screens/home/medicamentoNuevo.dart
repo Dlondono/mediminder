@@ -88,6 +88,7 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
                                   ),
                                   SizedBox(height: 2.0.h),
                                   TextFormField(
+                                    textInputAction: TextInputAction.next,
                                     decoration: textInputDecoraton.copyWith(hintText: "Nombre del medicamento"),
                                     //initialValue: _paciente.nombre,
                                     validator: (val) =>
@@ -117,6 +118,7 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
                                   SizedBox(height: 2.0.h),
                                   _formCantidad(),
                                   TextFormField(
+                                    textInputAction: TextInputAction.next,
                                     decoration: textInputDecoraton.copyWith(hintText: "Recomendaciones del medicamento"),
                                     validator: (val) =>
                                     val.isEmpty
@@ -161,6 +163,7 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
         child: Column(
           children:<Widget>[
             TextFormField(
+              textInputAction: TextInputAction.next,
             keyboardType: TextInputType.number,
             decoration: textInputDecoraton.copyWith(
                 hintText: "Cuantas veces al dia"),
@@ -200,12 +203,10 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
                       }
                       Navigator.pop(context);
                     }
-
                 }
             ),
           ],
         ),
-
       );
     }else if(_currentTipoHorario=="Por periodo"){
       return Container(
@@ -216,6 +217,7 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
               onPressed: _selectTim,
             ),
             TextFormField(
+              textInputAction: TextInputAction.next,
           decoration: textInputDecoraton.copyWith(hintText: "Cada cuanto debe tomar el medicamento"),
           validator: (val) =>
               validator.validarDato(val),
@@ -268,6 +270,7 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
         child: Column(
           children: [
             TextFormField(
+              textInputAction: TextInputAction.next,
               keyboardType: TextInputType.number,
               decoration: textInputDecoraton.copyWith(
                   hintText: "Cantidad disponible de pastillas"),
@@ -284,6 +287,7 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
         child: Column(
           children: [
             TextFormField(
+              textInputAction: TextInputAction.next,
               keyboardType: TextInputType.number,
               decoration: textInputDecoraton.copyWith(
                   hintText: "Cantidad disponible en mililitros"),
@@ -305,6 +309,7 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
         child: Column(
           children: [
             TextFormField(
+              textInputAction: TextInputAction.next,
               keyboardType: TextInputType.number,
               decoration: textInputDecoraton.copyWith(
                   hintText: "Cuantas pastillas debe tomar por dosis"),
@@ -321,6 +326,7 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
         child: Column(
           children: [
             TextFormField(
+              textInputAction: TextInputAction.next,
               keyboardType: TextInputType.number,
               decoration: textInputDecoraton.copyWith(hintText: "Dosis a tomar en mililitros"),
               validator: (val) =>

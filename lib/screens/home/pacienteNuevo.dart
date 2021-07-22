@@ -48,6 +48,7 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                 children: <Widget>[
                   SizedBox(height: 20.0),
                   TextFormField(
+                      textInputAction: TextInputAction.next,
                       decoration: textInputDecoraton.copyWith(hintText: "Correo"),
                       validator: (val)=> val.isEmpty ? "Ingrese el correo de su paciente":null,
                       onChanged: (val){
@@ -56,6 +57,7 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                   ),
                   SizedBox(height: 20.0),
                   TextFormField(
+                      textInputAction: TextInputAction.next,
                       decoration: textInputDecoraton.copyWith(hintText: "Nombre"),
                       validator: (val)=> val.isEmpty ? "Ingrese el nombre de su paciente":null,
                       onChanged: (val){
@@ -64,6 +66,7 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                   ),
                   SizedBox(height: 20.0),
                   TextFormField(
+                      textInputAction: TextInputAction.next,
                       decoration: textInputDecoraton.copyWith(hintText: "Cedula"),
                       validator: (val)=> val.isEmpty ? "Ingrese la cedula de su paciente":null,
                       onChanged: (val){
@@ -72,6 +75,7 @@ class _PacienteNuevoState extends State<PacienteNuevo> {
                   ),
                   SizedBox(height: 20.0),
                   TextFormField(
+                      textInputAction: TextInputAction.next,
                       decoration: textInputDecoraton.copyWith(hintText: "Clave"),
                       obscureText: true,
                       validator: (val)=> val.length<6 ? "El codigo de acceso debe ser mayor a 6 caracteres":null,
