@@ -34,8 +34,7 @@ class _SignInState extends State<SignIn> {
       //backgroundColor: Colors.blue[100],
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(9, 111, 167, 50),
-        elevation: 1.0,
-        title: Text('Mediminder',),
+        elevation: 15.0,
 
       ),
       body: SingleChildScrollView(
@@ -53,7 +52,7 @@ class _SignInState extends State<SignIn> {
                   text: TextSpan(
                       text: "Mediminder",
                       style: TextStyle(
-                          fontSize: 30,color: Colors.black,
+                          fontSize: 30,color: Colors.black,fontWeight: FontWeight.bold,
                           fontStyle: FontStyle.italic,fontFamily:"Roboto",letterSpacing: 3
                       ),
                   ),
