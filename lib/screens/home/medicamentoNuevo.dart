@@ -121,6 +121,7 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
                                   SizedBox(height: 2.0.h),
                                   _formCantidad(),
                                   TextFormField(
+                                    maxLines: null,
                                     textInputAction: TextInputAction.next,
                                     decoration: textInputDecoraton.copyWith(
                                         hintText: "Recomendaciones del medicamento",

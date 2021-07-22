@@ -173,6 +173,7 @@ class _editarMedicamentoState extends State<editarMedicamento> {
                               ),
                               SizedBox(height: 2.0.h),
                               TextFormField(
+                                maxLines: null,
                                 initialValue: medicamento.descripcion,
                                 decoration: textInputDecoraton.copyWith(hintText: "Recomendaciones del medicamento"),
                                 validator: (val) =>
