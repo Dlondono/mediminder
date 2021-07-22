@@ -51,8 +51,8 @@ class _detallesMedicamentoState extends State<detallesMedicamento> {
   Future<void> sendPushMessage(String ms) async {
     final msg = jsonEncode({"to": supervisor.token,
       "notification": {
-        "title": paciente.nombre+" " + ms,
-        "body": widget.medicamento.medicamentoNombre,
+        "title": paciente.nombre,
+        "body": ms+" "+widget.medicamento.medicamentoNombre,
       },
       "data": {
         "medicamento": "Medicina"
@@ -76,6 +76,13 @@ class _detallesMedicamentoState extends State<detallesMedicamento> {
     // TODO: implement initState
     super.initState();
     getPaciente();
+    }
+    void notificacionesSupervisor(){
+      if(widget.medicamento.prioridad == "1 - Prioridad máxima" && (widget.medicamento.prio!=1 || horaActualLocal.minute-widget.medicamento.hora.minute>=5 || widget.medicamento.hora.hour<horaActualLocal.hour)){
+        sendPushMessage("Se tomó un medicamento de prioridad máxima tarde");
+      }else if(widget.medicamento.prioridad == "2 - Prioridad media" && (widget.medicamento.prio>=5  || horaActualLocal.minute-widget.medicamento.hora.minute>=30 || horaActualLocal.hour-widget.medicamento.hora.hour>1 ||(horaActualLocal.hour-widget.medicamento.hora.hour==1 && widget.medicamento.hora.minute-horaActualLocal.minute>=30))){
+        sendPushMessage("Se tomó un medicamento de prioridad media tarde");
+      }
     }
   @override
   Widget build(BuildContext context) {
@@ -129,12 +136,7 @@ class _detallesMedicamentoState extends State<detallesMedicamento> {
                     foregroundColor: MaterialStateProperty.all(Colors.black),
                   ),
                   onPressed:(){
-                    if(widget.medicamento.prioridad == "1 - Prioridad máxima" && (widget.medicamento.prio!=1 || horaActualLocal.minute-widget.medicamento.hora.minute>=5 || widget.medicamento.hora.hour<horaActualLocal.hour)){
-                      sendPushMessage("Se tomó un medicamento de prioridad máxima tarde");
-                    }
-                    if(widget.medicamento.prioridad == "2 - Prioridad media" && (widget.medicamento.prio>=5  || horaActualLocal.minute-widget.medicamento.hora.minute>=30 || horaActualLocal.hour-widget.medicamento.hora.hour>1 ||(horaActualLocal.hour-widget.medicamento.hora.hour==1 && widget.medicamento.hora.minute-horaActualLocal.minute>=30))){
-                      sendPushMessage("Se tomó un medicamento de prioridad media tarde");
-                    }
+                    notificacionesSupervisor();
 
                     if(widget.medicamento.periodo!=null) {
                       widget.medicamento.hora = widget.medicamento.hora.add(

@@ -97,7 +97,7 @@ class Notifications {
     await this.flutterLocalNotificationsPlugin.zonedSchedule(
       0,
       nombre,
-      descripcion+"periodica",
+      descripcion,
       scheduleDate,
       details,
       uiLocalNotificationDateInterpretation:
@@ -114,9 +114,12 @@ class Notifications {
   Future<void> scheduleweeklyNotification(String id,String name,String description) async {
     var random= new Random();
     var idR=random.nextInt(50);
+    var bigTextStyleInformation=BigTextStyleInformation(description);
     final details = NotificationDetails(
       android: AndroidNotificationDetails("id", "name", "description",
-          priority: Priority.max, importance: Importance.max),
+          priority: Priority.max,
+          importance: Importance.max,
+          styleInformation:bigTextStyleInformation ),
     );
     await this.flutterLocalNotificationsPlugin.zonedSchedule(
       idR,
@@ -128,6 +131,7 @@ class Notifications {
       UILocalNotificationDateInterpretation.absoluteTime,
       androidAllowWhileIdle: true,
       matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
+
     );
   }
 
