@@ -17,6 +17,7 @@ class MedicamentoNuevo extends StatefulWidget {
 
 class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
   Paciente _paciente;
+  String error="";
   @override
   void initState() {
       _paciente = Paciente(id: this.widget.paciente.id, nombre: this.widget.paciente.nombre,
@@ -165,6 +166,7 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
         ),
     );
   }
+
   Widget _nuevoDropdown() {
     if (_currentTipoHorario == 'Horas aproximadas') {
       return Container(
@@ -181,6 +183,10 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
             ),
             SizedBox(height: 2.0.h),
             _forCampo(),
+            Text(
+              error,
+              style: TextStyle(color: Colors.red),
+            ),
             ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Color.fromRGBO(9, 111, 167, 50)),
@@ -191,7 +197,14 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () async {
-                    if (_formKey.currentState.validate()) {
+                  if(horas.length==0||horas.length==null){
+                    print("vacio");
+                    setState(()=>error="Por favor seleccione al menos 1 hora");
+                  }
+                    if (_formKey.currentState.validate()&&horas.length!=0) {
+                      setState(() {
+                        error="";
+                      });
                       for (var hora in horas) {
                         await DatabaseService()
                             .addMedicine(
@@ -389,6 +402,7 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
     setState(() {
       _time=newTime;
       horas.add(_time);
+      error="";
     });
     }
   }
@@ -403,6 +417,7 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
         _time=newTime;
         _currentHora=_time.hour.toString();
         _currentMinuto=_time.minute.toString();
+        error="null";
       });
     }
   }
