@@ -221,7 +221,10 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
           children:<Widget>[
             ElevatedButton(
               child: Text("Seleccionar hora"),
-              onPressed: _selectTim,
+              onPressed:() {
+                _selectTim();
+                FocusScope.of(context).requestFocus(new FocusNode());
+              },
             ),
             TextFormField(
               textInputAction: TextInputAction.next,
@@ -360,6 +363,7 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
                 child: Text("Seleccionar hora "+(i+1).toString()),
                 onPressed:(){
                   _selectTime(i);
+                  FocusScope.of(context).requestFocus(new FocusNode());
                 },
               ),
               SizedBox(height: 2.0.h)

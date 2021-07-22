@@ -231,7 +231,10 @@ class _editarMedicamentoState extends State<editarMedicamento> {
           children:<Widget>[
             ElevatedButton(
               child: Text("Seleccionar hora"),
-              onPressed: _selectTim,
+              onPressed:(){
+                _selectTim();
+                FocusScope.of(context).requestFocus(new FocusNode());
+              },
             ),
             SizedBox(height: 2.0.h),
             TextFormField(
@@ -290,13 +293,15 @@ class _editarMedicamentoState extends State<editarMedicamento> {
             for(int i=0;i<_veces;i++)
               ElevatedButton(
                 child: Text("Seleccionar hora "+(i+1).toString()),
-                onPressed:()=> _selectTime(i),
+                onPressed:() {
+                  _selectTime(i);
+                  FocusScope.of(context).requestFocus(new FocusNode());
+                }
               ),
             SizedBox(height: 2.0.h)
           ],
         ),
       );
-
     }else{
       return Container(
         color: Color.fromRGBO(157, 221, 234, 50),
