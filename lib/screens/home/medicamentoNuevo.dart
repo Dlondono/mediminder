@@ -198,7 +198,6 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
                 ),
                 onPressed: () async {
                   if(horas.length==0||horas.length==null){
-                    print("vacio");
                     setState(()=>error="Por favor seleccione al menos 1 hora");
                   }
                     if (_formKey.currentState.validate()&&horas.length!=0) {
