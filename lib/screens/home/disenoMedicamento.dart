@@ -17,8 +17,19 @@ class MedicamentoDiseno extends StatelessWidget {
   String formato = "am";
   final FirebaseAuth auth=  FirebaseAuth.instance;
   final DatabaseService _database=DatabaseService();
+  String dia;
+  String determinarDia(){
+    if (medicamento.dia==DateTime.now().day){
+      dia="Hoy";
+    }else if(medicamento.dia==DateTime.now().day+1){
+      dia="Mañana";
+    }else{
+      dia=medicamento.dia.toString();
+    }
+  }
   @override
   Widget build(BuildContext context) {
+    determinarDia();
     final User user=auth.currentUser;
       if(rol=="paciente") {
         if (medicamento.listaHoras == null) {
@@ -43,7 +54,6 @@ class MedicamentoDiseno extends StatelessWidget {
           }
         }
       }
-
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 1.0.h, horizontal: 1.0.h),
       child: GestureDetector(//padding
@@ -69,14 +79,15 @@ class MedicamentoDiseno extends StatelessWidget {
               ListTile(
                 title: Text("Medicamento: " +medicamento.medicamentoNombre,
                   style: TextStyle(fontSize: 20,color: Colors.black)),
-                subtitle: Text("Cantidad disponible: " + medicamento.cantidad.toString()
-                    + "\n" + "Dosis a tomar: " + medicamento.dosis.toString(),
-                  style: TextStyle(fontSize: 18,color: Colors.black)) ,
+                subtitle: Text("Dosis a tomar: " + medicamento.dosis.toString(),
+                  style: TextStyle(fontSize: 18,color: Colors.black)),
                 ),
               TextButton.icon(
                 icon: Icon(Icons.medical_services),
                 label: Text("Hora de medicamento: " + medicamento.hora.hour.toString() +
-                    ":" + medicamento.hora.minute.toString().padLeft(2,'0')),
+                    ":" + medicamento.hora.minute.toString().padLeft(2,'0')+"\n"+
+                  dia
+                ),
                   style: ButtonStyle(
                     textStyle: MaterialStateProperty.all(TextStyle(fontSize: 18,color: Colors.black)),
                     foregroundColor: MaterialStateProperty.all(Colors.black),

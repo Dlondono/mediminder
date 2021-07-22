@@ -78,6 +78,7 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
                                     }).toList(),
                                     onChanged: (val) {
                                       setState(() => _currentTipo = val);
+                                      FocusScope.of(context).requestFocus(new FocusNode());
                                     },
                                     decoration: textInputDecoraton.copyWith(
                                         hintText: "Tipo medicamento"),
@@ -106,8 +107,10 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
                                           child:Text('$prior'),
                                         );
                                       }).toList(),
-                                    onChanged: (val) =>
-                                        setState(() => _currentPrioridad = val),
+                                    onChanged: (val) {
+                                        setState(() => _currentPrioridad = val);
+                                      FocusScope.of(context).requestFocus(new FocusNode());
+                                      },
                                     decoration: textInputDecoraton.copyWith(
                                         hintText: "Prioridad"),
                                     validator: (val) =>
@@ -119,7 +122,9 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
                                   _formCantidad(),
                                   TextFormField(
                                     textInputAction: TextInputAction.next,
-                                    decoration: textInputDecoraton.copyWith(hintText: "Recomendaciones del medicamento"),
+                                    decoration: textInputDecoraton.copyWith(
+                                        hintText: "Recomendaciones del medicamento",
+                                    hintMaxLines: 2 ),
                                     validator: (val) =>
                                     val.isEmpty
                                         ? "Por favor ingrese las recomendaciones del medicamento"
@@ -136,8 +141,10 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
                                         child:Text('$hor'),
                                       );
                                     }).toList(),
-                                    onChanged: (val) =>
-                                        setState(() => _currentTipoHorario = val),
+                                    onChanged: (val) {
+                                        setState(() => _currentTipoHorario = val);
+                                        FocusScope.of(context).requestFocus(new FocusNode());
+                                        },
                                     decoration: textInputDecoraton.copyWith(
                                         hintText: "Horario"),
                                     validator: (val) =>
@@ -312,7 +319,8 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.number,
               decoration: textInputDecoraton.copyWith(
-                  hintText: "Cuantas pastillas debe tomar por dosis"),
+                  hintText: "Cuantas pastillas debe tomar por dosis",
+              hintMaxLines: 2),
               validator: (val) =>
                   validator.validarDato(val),
               onChanged: (val) => setState(() => _currentDosis = val),

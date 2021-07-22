@@ -121,8 +121,10 @@ class _editarMedicamentoState extends State<editarMedicamento> {
                                     child:Text('$tipo'),
                                   );
                                 }).toList(),
-                                onChanged: (val) =>
-                                    setState(() => _currentTipo = val),
+                                onChanged: (val) {
+                                    setState(() => _currentTipo = val);
+                                    FocusScope.of(context).requestFocus(new FocusNode());
+                                },
                                 decoration: textInputDecoraton.copyWith(
                                     hintText: medicamento.tipo.toString()),
                                 validator: (val) =>
@@ -149,8 +151,10 @@ class _editarMedicamentoState extends State<editarMedicamento> {
                                     child:Text('$prior'),
                                   );
                                 }).toList(),
-                                onChanged: (val) =>
-                                    setState(() => _currentPrioridad = val),
+                                onChanged: (val) {
+                                    setState(() => _currentPrioridad = val);
+                                    FocusScope.of(context).requestFocus(new FocusNode());
+                                },
                                 decoration: textInputDecoraton.copyWith(
                                     hintText: "Prioridad"),
                                 validator: (val) =>

@@ -117,7 +117,8 @@ class _detallesMedicamentoState extends State<detallesMedicamento> {
                     style: TextStyle(fontSize: 22,color: Colors.black)),
                 subtitle: Text(widget.medicamento.hora.hour.toString().padLeft(2, '0')
                     +":"+ widget.medicamento.hora.minute.toString().padLeft(2, '0')
-                    +"\n"+"Cantidad: "+this.widget.medicamento.cantidad.toString()+"\n"+"\n"+widget.medicamento.descripcion,
+                    +"\n"+"Cantidad disponible: "+this.widget.medicamento.cantidad.toString()
+                    +"\n"+"\n"+widget.medicamento.descripcion,
                     style: TextStyle(fontSize: 20,color: Colors.black)),
               ),
             ),
