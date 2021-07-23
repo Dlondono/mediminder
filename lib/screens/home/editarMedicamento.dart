@@ -175,7 +175,9 @@ class _editarMedicamentoState extends State<editarMedicamento> {
                               TextFormField(
                                 maxLines: null,
                                 initialValue: medicamento.descripcion,
-                                decoration: textInputDecoraton.copyWith(hintText: "Recomendaciones del medicamento"),
+                                decoration: textInputDecoraton.copyWith(
+                                    hintText: "Recomendaciones del medicamento",
+                                hintMaxLines: 2),
                                 validator: (val) =>
                                 val.isEmpty
                                     ? "Por favor ingrese las recomendaciones del medicamento"
@@ -203,7 +205,8 @@ class _editarMedicamentoState extends State<editarMedicamento> {
           initialValue: medicamento.dosis.toString(),
           keyboardType: TextInputType.number,
           decoration: textInputDecoraton.copyWith
-            (hintText: "Cuantas pastillas debe tomar por dosis"),
+            (hintText: "Cuantas pastillas debe tomar por dosis",
+          hintMaxLines: 2),
           validator: (val) =>
               validator.validarDato(val),
           onChanged: (val) => setState(() => _currentDosis = val),
@@ -240,7 +243,9 @@ class _editarMedicamentoState extends State<editarMedicamento> {
             SizedBox(height: 2.0.h),
             TextFormField(
               initialValue: _currentPeriodo??medicamento.periodo.toString(),
-              decoration: textInputDecoraton.copyWith(hintText: "Cada cuanto debe tomar el medicamento"),
+              keyboardType: TextInputType.number,
+              decoration: textInputDecoraton.copyWith(hintText: "Cada cuanto debe tomar el medicamento (horas)",
+                  hintMaxLines: 2),
               validator: (val) =>
                   validator.validarDato(val),
               onChanged: (val) => setState(() => _currentPeriodo = val),

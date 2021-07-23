@@ -32,7 +32,6 @@ class MedicamentoDiseno extends StatelessWidget {
     determinarDia();
     final User user=auth.currentUser;
       if(rol=="paciente") {
-        if (medicamento.listaHoras == null) {
           noti.setTime(
               medicamento.year, medicamento.mes, medicamento.dia,
               medicamento.hora.hour, medicamento.hora.minute);
@@ -53,7 +52,7 @@ class MedicamentoDiseno extends StatelessWidget {
             formato = "am";
           }
         }
-      }
+
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 1.0.h, horizontal: 1.0.h),
       child: GestureDetector(//padding

@@ -241,7 +241,8 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
             ),
             TextFormField(
               textInputAction: TextInputAction.next,
-          decoration: textInputDecoraton.copyWith(hintText: "Cada cuanto debe tomar el medicamento",
+          keyboardType: TextInputType.number,
+          decoration: textInputDecoraton.copyWith(hintText: "Cada cuanto debe tomar el medicamento (horas)",
           hintMaxLines: 2),
           validator: (val) =>
               validator.validarDato(val),
@@ -276,6 +277,10 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
                       _veces,
                     );
                         Navigator.pop(context);
+                  }else{
+                    setState(() {
+                      error="Por favor corrija los datos";
+                    });
                   }
                 }
             ),
