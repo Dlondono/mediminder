@@ -241,7 +241,8 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
             ),
             TextFormField(
               textInputAction: TextInputAction.next,
-          decoration: textInputDecoraton.copyWith(hintText: "Cada cuanto debe tomar el medicamento"),
+          decoration: textInputDecoraton.copyWith(hintText: "Cada cuanto debe tomar el medicamento",
+          hintMaxLines: 2),
           validator: (val) =>
               validator.validarDato(val),
         onChanged: (val) => setState(() => _currentPeriodo = val),
@@ -416,6 +417,10 @@ class _MedicamentoNuevoState extends State<MedicamentoNuevo> {
         _time=newTime;
         _currentHora=_time.hour.toString();
         _currentMinuto=_time.minute.toString();
+        error="";
+      });
+    }else{
+      setState(() {
         error="null";
       });
     }
